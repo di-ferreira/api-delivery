@@ -5,5 +5,7 @@
     "module": "commonjs",
     "rootDir": "./src",
     "outDir": "./dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   }
 }
