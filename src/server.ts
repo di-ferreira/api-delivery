@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import routes from "./routes";
+import "reflect-metadata";
+import "./database";
 
 const app = express();
 const port = 3333;
