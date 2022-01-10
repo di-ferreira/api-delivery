@@ -4,10 +4,6 @@ import Client from "../database/models/Client";
 
 const clienteRoutes = Router();
 
-// clienteRoutes.get("/", async (req, res) => {
-//   res.send("Rota de Cliente");
-// });
-
 clienteRoutes.post("/", async (request, response) => {
   try {
     const repo = getRepository(Client);
