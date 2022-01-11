@@ -16,9 +16,13 @@ class PhoneNumbers {
   @Column({ name: "phone_number" })
   phoneNumber: string;
 
-  @ManyToOne((type) => Client, (phoneNumbers) => PhoneNumbers)
-  @Column({ name: "client_id" })
-  client: Client;
+  @ManyToOne((type) => Client, (client) => client.phoneNumbers, {
+    cascade: ["insert", "remove"],
+    eager: true,
+    nullable: false,
+    onDelete: "CASCADE",
+  })
+  client: number;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

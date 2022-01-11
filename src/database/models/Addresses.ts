@@ -28,9 +28,13 @@ class Addresses {
   @Column()
   complement: string;
 
-  @ManyToOne((type) => Client, (adresses) => Addresses)
-  @Column({ name: "client_id" })
-  client: Client;
+  @ManyToOne((type) => Client, (client) => client.adresses, {
+    cascade: ["insert", "remove"],
+    eager: true,
+    nullable: false,
+    onDelete: "CASCADE",
+  })
+  client: number;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

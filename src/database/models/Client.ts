@@ -19,10 +19,10 @@ class Client {
   })
   name: string;
 
-  @OneToMany((type) => Addresses, (client) => Client)
+  @OneToMany((type) => Addresses, (address) => address.client)
   adresses: Addresses[];
 
-  @OneToMany((type) => PhoneNumbers, (client) => Client)
+  @OneToMany((type) => PhoneNumbers, (phoneNumber) => phoneNumber.client)
   phoneNumbers: PhoneNumbers[];
 
   @CreateDateColumn({ name: "created_at" })
