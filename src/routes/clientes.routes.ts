@@ -1,12 +1,24 @@
 import { Router } from "express";
 import { getRepository } from "typeorm";
+import Addresses from "../database/models/Addresses";
 import Client from "../database/models/Client";
+import PhoneNumbers from "../database/models/PhoneNumbers";
 
 const clienteRoutes = Router();
 
 clienteRoutes.post("/", async (request, response) => {
   try {
     const repo = getRepository(Client);
+
+    const client = new Client();
+    client.name = request.body.name;
+    await repo.manager.save(client);
+
+    const phones = new PhoneNumbers();
+    phones.client = client;
+
+    const addresses = new Addresses();
+
     const res = await repo.save(request.body);
     return response.status(201).json(res);
   } catch (err) {

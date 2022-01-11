@@ -22,7 +22,7 @@ class PhoneNumbers {
     nullable: false,
     onDelete: "CASCADE",
   })
-  client: number;
+  client: Client;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
