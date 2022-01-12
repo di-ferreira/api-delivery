@@ -22,10 +22,10 @@ class Addresses {
   @Column()
   district: string;
 
-  @Column()
+  @Column({ nullable: true })
   city: string;
 
-  @Column()
+  @Column({ nullable: true })
   complement: string;
 
   @ManyToOne((type) => Client, (client) => client.adresses, {

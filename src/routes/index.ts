@@ -1,15 +1,19 @@
 import { Router } from "express";
 import { getManager } from "typeorm";
-import cardapioRoutes from "./cardapio.routes";
+
+import productsRoutes from "./products.routes";
 import clienteRoutes from "./clientes.routes";
 import pedidosRoutes from "./pedidos.routes";
+import comboRoutes from "./combo.routes";
 import Client from "../database/models/Client";
 import PhoneNumbers from "../database/models/PhoneNumbers";
 import Addresses from "../database/models/Addresses";
 
 const routes = Router();
 
-routes.use("/cardapio", cardapioRoutes);
+routes.use("/produto", productsRoutes);
+
+routes.use("/combo", comboRoutes);
 
 routes.use("/cliente", clienteRoutes);
 
