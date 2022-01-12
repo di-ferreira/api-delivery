@@ -1,4 +1,3 @@
-import Client from "./Client";
 import {
   Column,
   CreateDateColumn,
@@ -7,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import Client from "./Client";
 
 @Entity()
 class Addresses {
