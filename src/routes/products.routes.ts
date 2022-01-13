@@ -1,13 +1,16 @@
 import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
 import { Products } from "../database/models/Products";
+import typesproductRoutes from "./types.product.routes";
 
 const productsRoutes = Router();
+
+productsRoutes.use("/tipos", typesproductRoutes);
 
 productsRoutes.get("/", async (request, response) => {
   try {
     const res = await getRepository(Products).find();
-    return response.status(201).json(res);
+    return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
     return response.status(500).json(res);
@@ -23,11 +26,12 @@ productsRoutes.post("/", async (request, response) => {
     const product = manager.create(Products);
     product.name = req.name;
     product.price = req.price;
+    req.productType ? (product.productType = req.productType) : null;
     req.description ? (product.description = req.description) : null;
 
     const res = await manager.save(product);
 
-    return response.status(201).json(res);
+    return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
     return response.status(500).json(res);
@@ -42,7 +46,7 @@ productsRoutes.get("/:id", async (request, response) => {
         id: request.params.id,
       },
     });
-    return response.status(201).json(res);
+    return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
     return response.status(500).json(res);
@@ -64,10 +68,12 @@ productsRoutes.put("/:id", async (request, response) => {
     const res = await manager.update(Products, IdProd, {
       name: req.name ? req.name : Prod.name,
       price: req.price ? req.price : Prod.price,
+      productType: req.productType ? req.productType : Prod.productType,
       description: req.description ? req.description : Prod.description,
     });
 
-    return response.status(201).json(res);
+    console.error("Produto router Put =>", res);
+    return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
     return response.status(500).json(res);
@@ -89,11 +95,3 @@ productsRoutes.delete("/:id", async (request, response) => {
 });
 
 export default productsRoutes;
-/*
-  1 - Cadastrar um item(Post)
-    1.1 - Nome, valor, descrição;  
-  2 - Editar item(Put)
-    2.1 - Nome, valor, descrição;
-  3 - Listar UM item(Get/id|nome)
-  4 - Lista TODOS os itens(Get/)
-*/

@@ -27,34 +27,34 @@ clienteRoutes.post("/", async (request, response) => {
 
     const res = await manager.save([client, phones, addresses]);
 
-    return response.status(201).json(res);
+    return response.status(201).json({ result: res });
   } catch (err) {
     console.error("Cliente router error =>", err.message);
   }
 });
 
 clienteRoutes.get("/", async (request, response) => {
-  const res = await getRepository(Client).find();
-  response.json(res);
+  try {
+    const res = await getRepository(Client).find();
+    return response.status(201).json({ result: res });
+  } catch (err) {
+    const res = { result: err };
+    return response.status(500).json(res);
+  }
 });
 
 clienteRoutes.get("/:name", async (request, response) => {
-  const res = await getRepository(Client).find({
-    where: {
-      name: request.params.name,
-    },
-  });
-  response.json(res);
+  try {
+    const res = await getRepository(Client).find({
+      where: {
+        name: request.params.name,
+      },
+    });
+    return response.status(201).json({ result: res });
+  } catch (err) {
+    const res = { result: err };
+    return response.status(500).json(res);
+  }
 });
 
 export default clienteRoutes;
-/*
-  1 - Cadastrar um cliente(Post)
-    1.1 - Nome, contato,endereço;
-    1.2 - contato tabela separada pois cliente pode ter mais de um contato; 
-    1.3 - Endereço tabela separada pois cliente pode ter mais de um Endereço de entrega; 
-  2 - Editar cliente(Put)
-    2.1 - Nome, contato,endereço;
-  3 - Listar UM cliente(Get/id|nome)
-  4 - Lista TODOS os itens(Get/)
-*/

@@ -1,34 +1,26 @@
-import { ProductsType } from "./ProductsType";
 import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Products } from "./Products";
 
 @Entity()
-export class Products {
+export class ProductsType {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
   @Column()
   name: string;
 
-  @Column({ type: "decimal", precision: 10, scale: 2 })
-  price: number;
-
   @Column({ type: "mediumtext", nullable: true })
   description: string;
 
-  @ManyToOne((type) => ProductsType, (productType) => productType.products, {
-    cascade: ["insert", "remove"],
-    eager: true,
-    nullable: true,
-    onDelete: "CASCADE",
-  })
-  productType: ProductsType;
+  @OneToMany((type) => Products, (products) => products.productType)
+  products: Products[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
