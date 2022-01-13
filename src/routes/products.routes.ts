@@ -5,44 +5,87 @@ import { Products } from "../database/models/Products";
 const productsRoutes = Router();
 
 productsRoutes.get("/", async (request, response) => {
-  const res = await getRepository(Products).find();
-  response.json(res);
+  try {
+    const res = await getRepository(Products).find();
+    return response.status(201).json(res);
+  } catch (err) {
+    const res = { result: err };
+    return response.status(500).json(res);
+  }
 });
 
 productsRoutes.post("/", async (request, response) => {
   try {
     const manager = getManager();
 
+    const req = request.body;
+
     const product = manager.create(Products);
-    product.name = request.body.name;
-    product.price = request.body.price;
-    request.body.description
-      ? (product.description = request.body.description)
-      : null;
+    product.name = req.name;
+    product.price = req.price;
+    req.description ? (product.description = req.description) : null;
 
     const res = await manager.save(product);
 
     return response.status(201).json(res);
   } catch (err) {
+    const res = { result: err };
+    return response.status(500).json(res);
     console.error("Produto router error =>", err.message);
   }
 });
 
 productsRoutes.get("/:id", async (request, response) => {
-  const res = await getRepository(Products).find({
-    where: {
-      id: request.params.id,
-    },
-  });
-  response.json(res);
+  try {
+    const res = await getRepository(Products).find({
+      where: {
+        id: request.params.id,
+      },
+    });
+    return response.status(201).json(res);
+  } catch (err) {
+    const res = { result: err };
+    return response.status(500).json(res);
+  }
 });
 
 productsRoutes.put("/:id", async (request, response) => {
-  response.send("Rota de cardapio");
+  try {
+    const IdProd = request.params.id;
+    const manager = getManager();
+    const req = request.body;
+
+    const Prod = await getRepository(Products).findOne({
+      where: {
+        id: IdProd,
+      },
+    });
+
+    const res = await manager.update(Products, IdProd, {
+      name: req.name ? req.name : Prod.name,
+      price: req.price ? req.price : Prod.price,
+      description: req.description ? req.description : Prod.description,
+    });
+
+    return response.status(201).json(res);
+  } catch (err) {
+    const res = { result: err };
+    return response.status(500).json(res);
+    console.error("Produto router error =>", err.message);
+  }
 });
 
 productsRoutes.delete("/:id", async (request, response) => {
-  response.send("Rota de cardapio");
+  try {
+    const manager = getManager();
+    await manager.delete(Products, request.params.id);
+    const res = { result: "Product deleted!" };
+    return response.status(201).json(res);
+  } catch (err) {
+    const res = { result: err };
+    return response.status(500).json(res);
+    console.error("Produto router error =>", err.message);
+  }
 });
 
 export default productsRoutes;
