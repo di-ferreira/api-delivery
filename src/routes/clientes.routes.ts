@@ -35,7 +35,9 @@ clienteRoutes.post("/", async (request, response) => {
 
 clienteRoutes.get("/", async (request, response) => {
   try {
-    const res = await getRepository(Client).find();
+    const res = await getRepository(Client).find({
+      relations: ["phoneNumbers", "adresses"],
+    });
     return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
@@ -43,12 +45,13 @@ clienteRoutes.get("/", async (request, response) => {
   }
 });
 
-clienteRoutes.get("/:name", async (request, response) => {
+clienteRoutes.get("/:id", async (request, response) => {
   try {
     const res = await getRepository(Client).find({
       where: {
-        name: request.params.name,
+        id: request.params.id,
       },
+      relations: ["phoneNumbers", "adresses"],
     });
     return response.status(201).json({ result: res });
   } catch (err) {
