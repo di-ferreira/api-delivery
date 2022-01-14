@@ -72,12 +72,11 @@ productsRoutes.put("/:id", async (request, response) => {
       description: req.description ? req.description : Prod.description,
     });
 
-    console.error("Produto router Put =>", res);
     return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
-    return response.status(500).json(res);
     console.error("Produto router error =>", err.message);
+    return response.status(500).json(res);
   }
 });
 

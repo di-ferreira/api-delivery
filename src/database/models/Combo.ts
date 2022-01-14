@@ -23,7 +23,7 @@ export class Combo {
   @Column({ type: "mediumtext", nullable: true })
   description: string;
 
-  @ManyToMany((type) => Products)
+  @ManyToMany((type) => Products, { cascade: true })
   @JoinTable()
   producs: Products[];
 
