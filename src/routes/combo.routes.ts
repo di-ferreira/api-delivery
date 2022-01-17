@@ -31,8 +31,8 @@ comboRoutes.post("/", async (request, response) => {
     return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
-    return response.status(500).json(res);
     console.error("Combo router error =>", err.message);
+    return response.status(500).json(res);
   }
 });
 
@@ -52,46 +52,31 @@ comboRoutes.get("/:id", async (request, response) => {
   }
 });
 
-// comboRoutes.put("/:id", async (request, response) => {
-//   try {
-//     const { id } = request.params;
-//     const manager = getManager();
-//     // const { name, price, description, producs } = request.body;
-//     const req = request.body;
+comboRoutes.put("/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+    const manager = getManager();
+    const { name, price, description } = request.body;
 
-//     const Comb = await getRepository(Combo).findOne({
-//       where: {
-//         id: id,
-//       },
-//     });
+    const Comb = await getRepository(Combo).findOne({
+      where: {
+        id: id,
+      },
+    });
 
-//     const res = await manager.update(Combo, id, {
-//       name: req.name ? req.name : Comb.name,
-//       price: req.price ? req.price : Comb.price,
-//       description: req.description ? req.description : Comb.description,
-//       producs: req.producs ? req.producs : Comb.producs,
-//     });
+    const res = await manager.update(Combo, id, {
+      name: name ? name : Comb.name,
+      price: price ? price : Comb.price,
+      description: description ? description : Comb.description,
+    });
 
-//     return response.status(201).json({ result: res });
-//   } catch (err) {
-//     const res = { result: err };
-//     console.error("Combo router error =>", err.message);
-//     return response.status(500).json(res);
-//   }
-// });
-
-// comboRoutes.delete("/:id", async (request, response) => {
-//   try {
-//     const manager = getManager();
-//     await manager.delete(Combo, request.params.id);
-//     const res = { result: "Combo deleted!" };
-//     return response.status(201).json(res);
-//   } catch (err) {
-//     const res = { result: err };
-//     console.error("Combo router error =>", err.message);
-//     return response.status(500).json(res);
-//   }
-// });
+    return response.status(201).json({ result: res });
+  } catch (err) {
+    const res = { result: err };
+    console.error("Combo router error =>", err.message);
+    return response.status(500).json(res);
+  }
+});
 
 comboRoutes.delete(
   "/:idCombo/produto/:idProduto",
@@ -127,6 +112,34 @@ comboRoutes.delete("/:idCombo/produto/", async (request, response) => {
       .of(idCombo)
       .remove(products);
     const res = { result: "Combo updated!" };
+    return response.status(201).json(res);
+  } catch (err) {
+    const res = { result: err };
+    console.error("Combo router error =>", err.message);
+    return response.status(500).json(res);
+  }
+});
+
+comboRoutes.delete("/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+    const manager = getManager();
+    const prods = await getRepository(Combo).find({
+      where: {
+        id: request.params.id,
+      },
+      relations: ["producs"],
+    });
+
+    await manager
+      .createQueryBuilder()
+      .relation(Combo, "producs")
+      .of(id)
+      .remove(prods[0].producs);
+
+    await manager.delete(Combo, id);
+
+    const res = { result: "Combo deleted!" };
     return response.status(201).json(res);
   } catch (err) {
     const res = { result: err };
@@ -175,11 +188,3 @@ comboRoutes.patch("/:idCombo/produto", async (request, response) => {
 });
 
 export default comboRoutes;
-/*
-  1 - Cadastrar um item(Post)
-    1.1 - Nome, valor, descrição;  
-  2 - Editar item(Put)
-    2.1 - Nome, valor, descrição;
-  3 - Listar UM item(Get/id|nome)
-  4 - Lista TODOS os itens(Get/)
-*/
