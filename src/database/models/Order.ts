@@ -3,12 +3,17 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import Addresses from "./Addresses";
 import Client from "./Client";
+import { ProductListOrder } from "./ProductListOrder";
 
 export enum OrderStatus {
   FILA = "na fila",
@@ -45,12 +50,19 @@ export class Order {
   @JoinColumn({ name: "addressId" })
   deliveryAddress: Addresses;
 
-  @OneToOne((type) => Client, (client) => client.id, {
+  @ManyToOne((type) => Client, (client) => client.id, {
     eager: true,
     nullable: false,
   })
   @JoinColumn({ name: "clientId" })
   client: Client;
+
+  @OneToMany((type) => ProductListOrder, (productsList) => productsList.id, {
+    eager: true,
+    nullable: false,
+  })
+  @JoinColumn({ name: "product_list" })
+  productsList: ProductListOrder[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

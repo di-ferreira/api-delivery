@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import Addresses from "./Addresses";
+import { Order } from "./Order";
 import PhoneNumbers from "./PhoneNumbers";
 
 @Entity() //se o nome da tabela for diferente colocar dentro do parenteses
@@ -21,6 +22,9 @@ class Client {
 
   @OneToMany((type) => Addresses, (address) => address.client)
   adresses: Addresses[];
+
+  @OneToMany((type) => Order, (order) => order.client)
+  order: Order[];
 
   @OneToMany((type) => PhoneNumbers, (phoneNumber) => phoneNumber.client)
   phoneNumbers: PhoneNumbers[];
