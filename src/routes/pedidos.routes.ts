@@ -27,15 +27,8 @@ pedidosRoutes.post("/", async (request, response) => {
 
   try {
     const manager = getManager();
-    const {
-      code,
-      note,
-      status,
-      deliveryAddress,
-      client,
-      productsList,
-      comboList,
-    } = request.body;
+    const { client, code, deliveryAddress, note, productsList, status } =
+      request.body;
 
     // const sumTotal = (total: number, p: Products | Combo) => {
     //   total = Number(total) + Number(p.price);
@@ -48,13 +41,13 @@ pedidosRoutes.post("/", async (request, response) => {
     console.log(productsList);
 
     const pedido = manager.create(Order);
-    // pedido.code = code;
-    // pedido.note = note;
-    // pedido.deliveryAddress = deliveryAddress;
-    // pedido.client = client;
-    // pedido.productsList = productsList;
-    // pedido.total = Total;
-    // pedido.status = status;
+    // pedido.client;
+    // pedido.code;
+    // pedido.deliveryAddress;
+    // pedido.note;
+    // pedido.productsList;
+    // pedido.status;
+    // pedido.total;
 
     // const res = await manager.save(pedido);
 
