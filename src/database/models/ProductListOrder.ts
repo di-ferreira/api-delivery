@@ -4,9 +4,11 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Order } from "./Order";
 import { Products } from "./Products";
 
 @Entity()
@@ -22,6 +24,14 @@ export class ProductListOrder {
   @ManyToMany((type) => Products, { cascade: true })
   @JoinTable()
   producs: Products[];
+
+  @ManyToOne((type) => Order, (order) => order.productsList, {
+    cascade: ["insert", "remove"],
+    eager: true,
+    nullable: false,
+    onDelete: "CASCADE",
+  })
+  order: Order;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

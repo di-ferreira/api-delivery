@@ -1,19 +1,18 @@
 import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
-import { Combo } from "../database/models/Combo";
 import { Order } from "../database/models/Order";
-import { Products } from "../database/models/Products";
+import { ProductListOrder } from "../database/models/ProductListOrder";
 
 const pedidosRoutes = Router();
 
 pedidosRoutes.get("/", async (request, response) => {
   try {
-    const res = await getRepository(Order).find({
-      relations: ["productsList", "comboList", "client"],
-    });
+    const res = await getRepository(Order).find();
+    console.log(res);
     return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
+    console.log("Error Pedidos Get =>", err);
     return response.status(500).json(res);
   }
 });
@@ -30,29 +29,44 @@ pedidosRoutes.post("/", async (request, response) => {
     const { client, code, deliveryAddress, note, productsList, status } =
       request.body;
 
-    // const sumTotal = (total: number, p: Products | Combo) => {
-    //   total = Number(total) + Number(p.price);
-    //   return total;
-    // };
+    const sumTotal = (total: number, p: ProductListOrder) => {
+      total = Number(total) + Number(p.producs[0].price) * Number(p.quantity);
+      return total;
+    };
 
-    // let Total: number = 0;
-    // Total = comboList ? comboList.reduce(sumTotal, 0) + Total : 0 + Total;
-    // Total = comboList ? productsList.reduce(sumTotal, 0) + Total : 0 + Total;
-    console.log(productsList);
+    let Total: number = 0;
+    Total = productsList ? productsList.reduce(sumTotal, 0) + Total : 0 + Total;
+
+    productsList.forEach((p: ProductListOrder) => {
+      console.log(
+        `${p.producs[0].name}`,
+        Number(p.producs[0].price) * Number(p.quantity)
+      );
+    });
+
+    let listProd = [];
+
+    productsList.forEach((prod: ProductListOrder, index) => {
+      const prodList = manager.create(ProductListOrder);
+      prodList.quantity = prod.quantity;
+      prodList.producs = prod.producs;
+      listProd.push(prodList);
+    });
+
+    console.log("listProd =>", listProd);
 
     const pedido = manager.create(Order);
-    // pedido.client;
-    // pedido.code;
-    // pedido.deliveryAddress;
-    // pedido.note;
-    // pedido.productsList;
-    // pedido.status;
-    // pedido.total;
+    pedido.client = client;
+    pedido.code = code;
+    pedido.deliveryAddress = deliveryAddress;
+    pedido.note = note;
+    pedido.productsList = listProd;
+    pedido.status = status;
+    pedido.total = Total;
 
-    // const res = await manager.save(pedido);
+    const res = await manager.save(pedido);
 
-    // return response.status(201).json({ result: res });
-    return response.status(201).json({ result: "ok" });
+    return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err };
     console.error("Pedido router error =>", err.message);
