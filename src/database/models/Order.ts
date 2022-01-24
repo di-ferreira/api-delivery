@@ -57,11 +57,7 @@ export class Order {
   @JoinColumn({ name: "clientId" })
   client: Client;
 
-  @OneToMany((type) => ProductListOrder, (productsList) => productsList.id, {
-    eager: true,
-    nullable: false,
-  })
-  @JoinColumn({ name: "product_list" })
+  @OneToMany((type) => ProductListOrder, (productsList) => productsList.order)
   productsList: ProductListOrder[];
 
   @CreateDateColumn({ name: "created_at" })

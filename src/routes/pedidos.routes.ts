@@ -7,7 +7,9 @@ const pedidosRoutes = Router();
 
 pedidosRoutes.get("/", async (request, response) => {
   try {
-    const res = await getRepository(Order).find();
+    const res = await getRepository(ProductListOrder).find({
+      relations: ["producs", "order"],
+    });
     console.log(res);
     return response.status(201).json({ result: res });
   } catch (err) {
@@ -46,22 +48,22 @@ pedidosRoutes.post("/", async (request, response) => {
 
     let listProd = [];
 
-    productsList.forEach((prod: ProductListOrder, index) => {
+    productsList.forEach(async (prod: ProductListOrder, index) => {
       const prodList = manager.create(ProductListOrder);
       prodList.quantity = prod.quantity;
       prodList.producs = prod.producs;
+      // prodList.order = pedido;
+      await manager.save(prodList);
       listProd.push(prodList);
     });
-
-    console.log("listProd =>", listProd);
 
     const pedido = manager.create(Order);
     pedido.client = client;
     pedido.code = code;
     pedido.deliveryAddress = deliveryAddress;
     pedido.note = note;
-    pedido.productsList = listProd;
     pedido.status = status;
+    pedido.productsList = listProd;
     pedido.total = Total;
 
     const res = await manager.save(pedido);

@@ -26,10 +26,8 @@ export class ProductListOrder {
   producs: Products[];
 
   @ManyToOne((type) => Order, (order) => order.productsList, {
-    cascade: ["insert", "remove"],
     eager: true,
     nullable: false,
-    onDelete: "CASCADE",
   })
   order: Order;
 
