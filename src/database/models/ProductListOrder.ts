@@ -31,6 +31,9 @@ export class ProductListOrder {
   })
   order: Order;
 
+  @Column({ type: "boolean", default: false })
+  combo: boolean;
+
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 

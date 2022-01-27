@@ -2,16 +2,29 @@ import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
 import { Order } from "../database/models/Order";
 import { ProductListOrder } from "../database/models/ProductListOrder";
+import { Products } from "../database/models/Products";
 
 const pedidosRoutes = Router();
 
 pedidosRoutes.get("/", async (request, response) => {
   try {
-    const res = await getRepository(ProductListOrder).find({
-      relations: ["producs", "order"],
-    });
-    console.log(res);
-    return response.status(201).json({ result: res });
+    const manager = getManager();
+    // const order = await getRepository(Order).find({
+    //   relations: ["productsList"],
+    // });
+    const products = await manager
+      .createQueryBuilder(ProductListOrder, "prodlistorder")
+      .leftJoinAndSelect("prodlistorder.order", "order")
+      .leftJoinAndSelect("prodlistorder.producs", "producs")
+      .getMany();
+
+    const order = await manager
+      .createQueryBuilder(Order, "order")
+      .leftJoinAndSelect("order.productsList", "productsList")
+      .getMany();
+
+    // return response.status(201).json({ result: "ok" });
+    return response.status(201).json({ result: products });
   } catch (err) {
     const res = { result: err };
     console.log("Error Pedidos Get =>", err);
