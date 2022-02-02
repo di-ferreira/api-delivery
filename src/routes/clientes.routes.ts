@@ -1,8 +1,6 @@
 import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
-import Addresses from "../database/models/Addresses";
-import Client from "../database/models/Client";
-import PhoneNumbers from "../database/models/PhoneNumbers";
+import Client from "../database/models/Cliente";
 
 const clienteRoutes = Router();
 
@@ -13,19 +11,7 @@ clienteRoutes.post("/", async (request, response) => {
     const client = manager.create(Client);
     client.name = request.body.name;
 
-    const phones = manager.create(PhoneNumbers);
-    phones.client = client;
-    phones.phoneNumber = request.body.phone;
-
-    const addresses = manager.create(Addresses);
-    addresses.client = client;
-    addresses.street = request.body.street;
-    addresses.district = request.body.district;
-    addresses.number = request.body.number;
-    addresses.complement = request.body.complement;
-    addresses.city = request.body.city;
-
-    const res = await manager.save([client, phones, addresses]);
+    const res = await manager.save([client]);
 
     return response.status(201).json({ result: res });
   } catch (err) {

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
-import { Combo } from "../database/models/Combo";
+import { Combo } from "../database/models/Cardapio";
 
 const comboRoutes = Router();
 

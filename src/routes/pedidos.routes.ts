@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
-import { Order } from "../database/models/Order";
+import { Order } from "../database/models/Pedidos";
 import { ProductListOrder } from "../database/models/ProductListOrder";
 import { Products } from "../database/models/Products";
 

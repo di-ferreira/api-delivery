@@ -6,21 +6,21 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Products } from "./Products";
+import { Cardapio } from "./Cardapio";
 
 @Entity()
-export class ProductsType {
+export class TipoCardapio {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
   @Column()
-  name: string;
+  nome: string;
 
   @Column({ type: "mediumtext", nullable: true })
-  description: string;
+  descricao: string;
 
-  @OneToMany((type) => Products, (products) => products.productType)
-  products: Products[];
+  @OneToMany((type) => Cardapio, (cardapio) => cardapio.tipoCardapio)
+  cardapio: Cardapio[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

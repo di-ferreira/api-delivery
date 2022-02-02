@@ -5,9 +5,7 @@ import productsRoutes from "./products.routes";
 import clienteRoutes from "./clientes.routes";
 import pedidosRoutes from "./pedidos.routes";
 import comboRoutes from "./combo.routes";
-import Client from "../database/models/Client";
-import PhoneNumbers from "../database/models/PhoneNumbers";
-import Addresses from "../database/models/Addresses";
+import Client from "../database/models/Cliente";
 
 const routes = Router();
 
@@ -23,8 +21,6 @@ routes.post("/clear", async (request, response) => {
   try {
     const manager = getManager();
     await manager.query("SET FOREIGN_KEY_CHECKS=0");
-    await manager.clear(PhoneNumbers);
-    await manager.clear(Addresses);
     await manager.clear(Client);
     await manager.query("SET FOREIGN_KEY_CHECKS=1");
 
