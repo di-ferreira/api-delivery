@@ -18,6 +18,7 @@ clienteRoutes.post("/", async (request, response) => {
     cliente.cidade = cidade;
     cliente.uf = uf;
     cliente.complemento = complemento;
+    complemento ? (cliente.complemento = complemento) : null;
     cliente.telefone = telefone;
 
     const res = await manager.save(cliente);

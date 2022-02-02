@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { getManager } from "typeorm";
 
-import productsRoutes from "./products.routes";
+import productsRoutes from "./produtos.routes";
 import clienteRoutes from "./clientes.routes";
 import pedidosRoutes from "./pedidos.routes";
-import Client from "../database/models/Cliente";
+import { Cliente } from "../database/models/Cliente";
 
 const routes = Router();
 
@@ -18,7 +18,7 @@ routes.post("/clear", async (request, response) => {
   try {
     const manager = getManager();
     await manager.query("SET FOREIGN_KEY_CHECKS=0");
-    await manager.clear(Client);
+    await manager.clear(Cliente);
     await manager.query("SET FOREIGN_KEY_CHECKS=1");
 
     return response.status(201).json("tabelas limpas com sucesso");
