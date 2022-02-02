@@ -1,11 +1,8 @@
 import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
-import { Order } from "../database/models/Pedidos";
-import { ProductListOrder } from "../database/models/ProductListOrder";
-import { Products } from "../database/models/Products";
 
 const pedidosRoutes = Router();
-
+/*
 pedidosRoutes.get("/", async (request, response) => {
   try {
     const manager = getManager();
@@ -239,7 +236,7 @@ pedidosRoutes.post("/", async (request, response) => {
 //     return response.status(500).json(res);
 //   }
 // });
-
+*/
 export default pedidosRoutes;
 /*
   1 - Cadastrar um pedido(Post)

@@ -4,14 +4,11 @@ import { getManager } from "typeorm";
 import productsRoutes from "./products.routes";
 import clienteRoutes from "./clientes.routes";
 import pedidosRoutes from "./pedidos.routes";
-import comboRoutes from "./combo.routes";
 import Client from "../database/models/Cliente";
 
 const routes = Router();
 
 routes.use("/produto", productsRoutes);
-
-routes.use("/combo", comboRoutes);
 
 routes.use("/cliente", clienteRoutes);
 

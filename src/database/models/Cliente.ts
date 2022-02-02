@@ -2,14 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Pedidos } from "./Pedidos";
 
 @Entity()
-class Cliente {
+export class Cliente {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
@@ -39,14 +37,9 @@ class Cliente {
   @Column({ unique: true })
   telefone: string;
 
-  @OneToMany((type) => Pedidos, (pedidos) => pedidos.cliente)
-  pedidos: Pedidos[];
-
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
   @UpdateDateColumn({ name: "updated_at" })
   updateAt: Date;
 }
-
-export default Cliente;

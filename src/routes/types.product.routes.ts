@@ -1,9 +1,8 @@
 import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
-import { ProductsType } from "../database/models/ProductsType";
 
 const typesproductRoutes = Router();
-
+/*
 typesproductRoutes.get("/", async (request, response) => {
   try {
     const res = await getRepository(ProductsType).find();
@@ -85,5 +84,5 @@ typesproductRoutes.delete("/:id", async (request, response) => {
     return response.status(500).json(res);
   }
 });
-
+*/
 export default typesproductRoutes;

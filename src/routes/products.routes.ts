@@ -1,12 +1,11 @@
 import { Router } from "express";
 import { getManager, getRepository } from "typeorm";
-import { Products } from "../database/models/Products";
 import typesproductRoutes from "./types.product.routes";
 
 const productsRoutes = Router();
 
 productsRoutes.use("/tipos", typesproductRoutes);
-
+/*
 productsRoutes.get("/", async (request, response) => {
   try {
     const res = await getRepository(Products).find();
@@ -92,5 +91,5 @@ productsRoutes.delete("/:id", async (request, response) => {
     console.error("Produto router error =>", err.message);
   }
 });
-
+*/
 export default productsRoutes;

@@ -2,12 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import Cliente from "./Cliente";
+import { Cliente } from "./Cliente";
 import { PedidoCardapio } from "./PedidoCardapio";
 
 export enum PedidoStatus {
@@ -30,17 +31,17 @@ export class Pedidos {
   @Column({ name: "numero_pedido" })
   numeroPedido: string;
 
-  @ManyToOne((type) => Cliente, (cliente) => cliente.pedidos, {
+  @ManyToOne((type) => Cliente, (cliente) => cliente.id, {
     eager: true,
     nullable: false,
   })
+  @JoinColumn({ name: "cliente_id" })
   cliente: Cliente;
 
   @OneToOne(
     (type) => PedidoCardapio,
     (pedidoCardapio) => pedidoCardapio.pedido,
     {
-      eager: true,
       nullable: false,
     }
   )
