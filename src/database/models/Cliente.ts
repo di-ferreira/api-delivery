@@ -4,7 +4,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany
 } from "typeorm";
+import { Enderecos } from "./Enderecos";
 
 @Entity()
 export class Cliente {
@@ -16,26 +18,11 @@ export class Cliente {
   })
   nome: string;
 
-  @Column()
-  rua: string;
-
-  @Column()
-  numero: string;
-
-  @Column()
-  bairro: string;
-
-  @Column()
-  cidade: string;
-
-  @Column({ type: "char", length: 2 })
-  uf: string;
-
-  @Column({ nullable: true })
-  complemento: string;
-
   @Column({ unique: true })
   telefone: string;
+
+  @OneToMany(() => Enderecos, (endereco) => endereco.cliente)
+  endereco: Enderecos[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

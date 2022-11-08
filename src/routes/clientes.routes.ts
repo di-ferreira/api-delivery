@@ -12,13 +12,13 @@ clienteRoutes.post("/", async (request, response) => {
 
     const cliente = manager.create(Cliente);
     cliente.nome = nome;
-    cliente.rua = rua;
-    cliente.numero = numero;
-    cliente.bairro = bairro;
-    cliente.cidade = cidade;
-    cliente.uf = uf;
-    cliente.complemento = complemento;
-    complemento ? (cliente.complemento = complemento) : null;
+    // cliente.rua = rua;
+    // cliente.numero = numero;
+    // cliente.bairro = bairro;
+    // cliente.cidade = cidade;
+    // cliente.uf = uf;
+    // cliente.complemento = complemento;
+    // complemento ? (cliente.complemento = complemento) : null;
     cliente.telefone = telefone;
 
     const res = await manager.save(cliente);
