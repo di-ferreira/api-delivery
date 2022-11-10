@@ -1,3 +1,7 @@
 /node_modules
 /dist
 /ormconfig.js
+/*/db
+/bin
+*.log
+*.lock

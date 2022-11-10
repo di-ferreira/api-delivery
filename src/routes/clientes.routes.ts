@@ -1,16 +1,16 @@
-import { Router } from "express";
-import { getManager, getRepository } from "typeorm";
-import { Cliente } from "../database/models/Cliente";
+import { Router, Request, Response } from 'express';
+import { Cliente } from '../database/models/Cliente';
+import AppDataSource from '../DataSource';
 
 const clienteRoutes = Router();
 
-clienteRoutes.post("/", async (request, response) => {
-  try {
-    const { nome, rua, numero, bairro, cidade, uf, complemento, telefone } =
-      request.body;
-    const manager = getManager();
+const UserRepository = AppDataSource.getRepository(Cliente);
 
-    const cliente = manager.create(Cliente);
+const CreateUser = async (request: Request, response: Response) => {
+  try {
+    const { nome, telefone } = request.body;
+
+    const cliente = new Cliente();
     cliente.nome = nome;
     // cliente.rua = rua;
     // cliente.numero = numero;
@@ -21,33 +21,40 @@ clienteRoutes.post("/", async (request, response) => {
     // complemento ? (cliente.complemento = complemento) : null;
     cliente.telefone = telefone;
 
-    const res = await manager.save(cliente);
+    const res = await UserRepository.save(cliente);
 
     return response.status(201).json({ result: res });
   } catch (err) {
-    console.error("Cliente router error =>", err.message);
+    console.error('Cliente router error =>', err.message);
     return response.status(400).json({ error: err.message });
   }
-});
+};
 
-clienteRoutes.get("/", async (request, response) => {
+const GetUsers = async (response: Response) => {
   try {
-    const res = await getRepository(Cliente).find();
-    return response.status(201).json({ result: res });
+    const res = await UserRepository.find();
+    return response.status(200).json({ result: res });
   } catch (err) {
     const res = { result: err };
-    return response.status(500).json(res);
+    return response.status(400).json({ result: res });
   }
-});
+};
 
-clienteRoutes.get("/:id", async (request, response) => {
+const GetUserById = async (request: Request, response: Response) => {
+  const idCliente: number = parseInt(request.params.id);
   try {
-    const res = await getRepository(Cliente).findOne(request.params.id);
+    const res = await UserRepository.findOne({
+      where: { id: idCliente },
+    });
     return response.status(201).json({ result: res });
   } catch (err) {
     const res = { result: err.message };
     return response.status(400).json(res);
   }
-});
+};
+
+clienteRoutes.post('/', CreateUser);
+clienteRoutes.get('/', GetUsers);
+clienteRoutes.get('/:id', GetUserById);
 
 export default clienteRoutes;
