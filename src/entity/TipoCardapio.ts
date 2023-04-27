@@ -5,26 +5,26 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { Cardapio } from "./Cardapio";
+} from 'typeorm';
+import { Cardapio } from './Cardapio';
 
 @Entity()
 export class TipoCardapio {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
   nome: string;
 
-  @Column({ type: "mediumtext", nullable: true })
+  @Column({ type: 'text', nullable: true })
   descricao: string;
 
   @OneToMany((type) => Cardapio, (cardapio) => cardapio.tipoCardapio)
   cardapio: Cardapio[];
 
-  @CreateDateColumn({ name: "created_at" })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: "updated_at" })
+  @UpdateDateColumn({ name: 'updated_at' })
   updateAt: Date;
 }

@@ -7,23 +7,23 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { Produto } from "./Produto";
-import { PedidoCardapio } from "./PedidoCardapio";
-import { TipoCardapio } from "./TipoCardapio";
+} from 'typeorm';
+import { Produto } from './Produto';
+import { PedidoCardapio } from './PedidoCardapio';
+import { TipoCardapio } from './TipoCardapio';
 
 @Entity()
 export class Cardapio {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
   nome: string;
 
-  @Column({ type: "decimal", precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   preco: number;
 
-  @Column({ type: "mediumtext", nullable: true })
+  @Column({ type: 'text', nullable: true })
   descricao: string;
 
   @ManyToOne(
@@ -46,9 +46,9 @@ export class Cardapio {
   @JoinTable()
   produto: Produto[];
 
-  @CreateDateColumn({ name: "created_at" })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: "updated_at" })
+  @UpdateDateColumn({ name: 'updated_at' })
   updateAt: Date;
 }

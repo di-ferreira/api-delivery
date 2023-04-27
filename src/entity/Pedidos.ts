@@ -7,16 +7,16 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { Cliente } from "./Cliente";
-import { PedidoCardapio } from "./PedidoCardapio";
+} from 'typeorm';
+import { Cliente } from './Cliente';
+import { PedidoCardapio } from './PedidoCardapio';
 
 export enum PedidoStatus {
-  FILA = "na fila",
-  PRONTO = "pronto",
-  TRANSITO = "em transito",
-  ENTREGUE = "entregue",
-  CANCELADO = "cancelado",
+  FILA = 'na fila',
+  PRONTO = 'pronto',
+  TRANSITO = 'em transito',
+  ENTREGUE = 'entregue',
+  CANCELADO = 'cancelado',
 }
 @Entity()
 export class Pedidos {
@@ -25,17 +25,17 @@ export class Pedidos {
   // PrecoTotal DECIMAL(10,2) NOT NULL,
   // Data DATE NOT NULL,
   // Hora TIME NOT NULL
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ name: "numero_pedido" })
+  @Column({ name: 'numero_pedido' })
   numeroPedido: string;
 
   @ManyToOne((type) => Cliente, (cliente) => cliente.id, {
     eager: true,
     nullable: false,
   })
-  @JoinColumn({ name: "cliente_id" })
+  @JoinColumn({ name: 'cliente_id' })
   cliente: Cliente;
 
   @OneToOne(
@@ -47,22 +47,22 @@ export class Pedidos {
   )
   pedidoCardapio: PedidoCardapio;
 
-  @Column({ type: "decimal", precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
-  @Column({ type: "mediumtext", nullable: true })
+  @Column({ type: 'text', nullable: true })
   observacao: string;
 
   @Column({
-    type: "enum",
+    type: 'text',
     enum: PedidoStatus,
     default: PedidoStatus.FILA,
   })
   status: PedidoStatus;
 
-  @CreateDateColumn({ name: "created_at" })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: "updated_at" })
+  @UpdateDateColumn({ name: 'updated_at' })
   updateAt: Date;
 }

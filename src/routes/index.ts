@@ -3,7 +3,6 @@ import { Router } from 'express';
 import productsRoutes from './produtos.routes';
 import clienteRoutes from './clientes.routes';
 import pedidosRoutes from './pedidos.routes';
-import { Cliente } from '../database/models/Cliente';
 
 const routes = Router();
 

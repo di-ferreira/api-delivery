@@ -1,13 +1,18 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
     "target": "es2016",
     "module": "commonjs",
-    "rootDir": "./src",
     "outDir": "./dist",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "strict": false
+    "experimentalDecorators": true
+  },
+  "ts-node": {
+    "transpileOnly": true
   },
   "exclude": [
     "node_modules",
