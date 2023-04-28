@@ -6,7 +6,8 @@
     "start": "tsc && node ./dist/server.js",
     "server": "tsc && node ./dist/server.js",
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "package": "yarn build && node ./build.js"
   },
   "dependencies": {
     "better-sqlite3": "^7.6.2",

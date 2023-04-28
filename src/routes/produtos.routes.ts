@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import { getManager, getRepository } from 'typeorm';
-import { Produto } from '../database/models/Produto';
 import typesproductRoutes from './tipo.cardapio.routes';
 
 const productsRoutes = Router();
