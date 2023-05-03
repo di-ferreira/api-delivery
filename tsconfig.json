@@ -9,7 +9,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
   "ts-node": {
     "transpileOnly": true

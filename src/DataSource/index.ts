@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { Cardapio } from '../entity/Cardapio';
 import { Cliente } from '../entity/Cliente';
 import { Enderecos } from '../entity/Enderecos';
@@ -7,7 +7,7 @@ import { Pedidos } from '../entity/Pedidos';
 import { Produto } from '../entity/Produto';
 import { TipoCardapio } from '../entity/TipoCardapio';
 
-const AppDataSource = new DataSource({
+let DSConfig: DataSourceOptions = {
   type: 'better-sqlite3',
   database: './src/db/api_delivery.sqlite',
   entities: [
@@ -21,6 +21,8 @@ const AppDataSource = new DataSource({
   ],
   migrations: ['./src/database/migrations/*.ts'],
   synchronize: true,
-});
+};
+
+const AppDataSource = new DataSource(DSConfig);
 
 export default AppDataSource;
