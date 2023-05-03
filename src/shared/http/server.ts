@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import app from './app';
-import AppDataSource from './DataSource';
+import AppDataSource from '../../DataSource';
 import { writeFileSync, existsSync, readFileSync } from 'fs';
 
 let port = 3000;
