@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import app from './app';
-import AppDataSource from '../../DataSource';
 import { writeFileSync, existsSync, readFileSync } from 'fs';
+import AppDataSource from '@shared/infra/typeorm';
 
 let port = 3000;
 

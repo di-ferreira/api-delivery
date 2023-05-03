@@ -1,7 +1,7 @@
+import AppDataSource from '@shared/infra/typeorm';
 import { Router, Request, Response } from 'express';
-import AppDataSource from '../DataSource';
-import { Cliente } from '../entity/Cliente';
-import { Enderecos } from '../entity/Enderecos';
+import { Cliente } from 'src/entities/Cliente';
+import { Enderecos } from 'src/entities/Enderecos';
 
 const clienteRoutes = Router();
 

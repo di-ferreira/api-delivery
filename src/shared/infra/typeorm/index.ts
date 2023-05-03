@@ -1,11 +1,11 @@
+import { Cardapio } from 'src/entities/Cardapio';
+import { Cliente } from 'src/entities/Cliente';
+import { Enderecos } from 'src/entities/Enderecos';
+import { PedidoCardapio } from 'src/entities/PedidoCardapio';
+import { Pedidos } from 'src/entities/Pedidos';
+import { Produto } from 'src/entities/Produto';
+import { TipoCardapio } from 'src/entities/TipoCardapio';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { Cardapio } from '../entity/Cardapio';
-import { Cliente } from '../entity/Cliente';
-import { Enderecos } from '../entity/Enderecos';
-import { PedidoCardapio } from '../entity/PedidoCardapio';
-import { Pedidos } from '../entity/Pedidos';
-import { Produto } from '../entity/Produto';
-import { TipoCardapio } from '../entity/TipoCardapio';
 
 let DSConfig: DataSourceOptions = {
   type: 'better-sqlite3',
