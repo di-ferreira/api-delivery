@@ -20,8 +20,8 @@ export class Customer implements iCustomer {
   @Column({ unique: true })
   phone: string;
 
-  //   @OneToMany(() => Enderecos, (endereco) => endereco.cliente)
-  //   address: Enderecos[];
+  //   @OneToMany(() => Address, (address) => address.customer)
+  //   address: Address[];
 
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date;

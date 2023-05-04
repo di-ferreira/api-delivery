@@ -1,21 +1,24 @@
-import AppDataSource from '@shared/infra/typeorm';
-import { iCreateCustomer } from 'src/@types/Customer/iCustomerService';
-import { Repository } from 'typeorm';
+import AppError from '@shared/errors/AppError';
+import {
+  iCreateCustomer,
+  iCustomerRepository,
+} from 'src/@types/Customer/iCustomerService';
 import { Customer } from '../Entity';
+import CustomerRepository from '../Repository';
 
 class CreateCustomerService {
-  private customerRepository: Repository<Customer>;
+  private customerRepository: iCustomerRepository;
 
   constructor() {
-    this.customerRepository = AppDataSource.getRepository(Customer);
+    this.customerRepository = new CustomerRepository();
   }
 
   public async execute({ name, phone }: iCreateCustomer): Promise<Customer> {
+    const phoneExists = await this.customerRepository.findByPhone(phone);
+    if (phoneExists) {
+      throw new AppError('There is already one customer with this phone');
+    }
     const customer = this.customerRepository.create({ name, phone });
-
-    // const phoneExists = await customerRepository.find;
-
-    await this.customerRepository.save(customer);
 
     return customer;
   }
