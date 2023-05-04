@@ -1,15 +1,14 @@
+import { iCustomer } from 'src/@types/Customer/iCustomerService';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Enderecos } from './Enderecos';
 
 @Entity()
-export class Customer {
+export class Customer implements iCustomer {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -21,12 +20,12 @@ export class Customer {
   @Column({ unique: true })
   phone: string;
 
-  @OneToMany(() => Enderecos, (endereco) => endereco.cliente)
-  address: Enderecos[];
+  //   @OneToMany(() => Enderecos, (endereco) => endereco.cliente)
+  //   address: Enderecos[];
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updateAt: Date;
+  updated_at: Date;
 }

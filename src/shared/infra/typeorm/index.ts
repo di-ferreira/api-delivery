@@ -1,5 +1,5 @@
+import { Customer } from '@modules/Customer/Entity';
 import { Cardapio } from 'src/entities/Cardapio';
-import { Cliente } from 'src/entities/Cliente';
 import { Enderecos } from 'src/entities/Enderecos';
 import { PedidoCardapio } from 'src/entities/PedidoCardapio';
 import { Pedidos } from 'src/entities/Pedidos';
@@ -12,7 +12,7 @@ let DSConfig: DataSourceOptions = {
   database: './src/db/api_delivery.sqlite',
   entities: [
     Cardapio,
-    Cliente,
+    Customer,
     Enderecos,
     PedidoCardapio,
     Pedidos,
