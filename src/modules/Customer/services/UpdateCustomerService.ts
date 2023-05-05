@@ -22,7 +22,7 @@ class UpdateCustomerService {
 
     const customerByPhone = await this.customerRepository.findByPhone(phone);
 
-    if (customer) {
+    if (!customer) {
       throw new AppError('Customer not found');
     }
 

@@ -15,8 +15,7 @@ class ShowCustomerService {
 
   public async execute({ id }: iShowCustomer): Promise<Customer> {
     const customer = await this.customerRepository.findById(id);
-
-    if (customer) {
+    if (!customer) {
       throw new AppError('Customer not found');
     }
 

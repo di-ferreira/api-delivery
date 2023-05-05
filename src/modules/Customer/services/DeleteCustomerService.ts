@@ -16,7 +16,7 @@ class DeleteCustomerService {
   public async execute({ id }: iDeleteCustomer): Promise<Customer> {
     const customer = await this.customerRepository.findById(id);
 
-    if (customer) {
+    if (!customer) {
       throw new AppError('Customer not found');
     }
 
