@@ -5,6 +5,7 @@ import DeleteCustomerService from '../Services/DeleteCustomerService';
 import ListCustomerService from '../Services/ListCustomerService';
 import ShowCustomerService from '../Services/ShowCustomerService';
 import UpdateCustomerService from '../Services/UpdateCustomerService';
+
 export default class CustomerController implements iController {
   public async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
