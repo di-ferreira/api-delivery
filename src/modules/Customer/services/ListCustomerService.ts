@@ -12,15 +12,10 @@ class ListCustomerService {
     this.customerRepository = new CustomerRepository();
   }
 
-  public async execute({
-    page,
-    skip,
-    take,
-  }: SearchParams): Promise<iCustomerList> {
+  public async execute({ page, limit }: SearchParams): Promise<iCustomerList> {
     const customers = await this.customerRepository.findAll({
       page,
-      skip,
-      take,
+      limit,
     });
 
     return customers;

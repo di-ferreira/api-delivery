@@ -31,8 +31,7 @@ export interface iCustomer {
 
 export type SearchParams = {
   page: number;
-  skip: number;
-  take: number;
+  limit: number;
 };
 
 export interface iCustomerList {
@@ -43,7 +42,7 @@ export interface iCustomerList {
 }
 
 export interface iCustomerRepository {
-  findAll({ page, skip, take }: SearchParams): Promise<iCustomerList>;
+  findAll({ page, limit }: SearchParams): Promise<iCustomerList>;
   findByName(name: string): Promise<iCustomer[] | null>;
   findById(id: number): Promise<iCustomer | null>;
   findByPhone(phone: string): Promise<iCustomer | null>;

@@ -3,7 +3,7 @@ import {
   SearchParams,
   iCreateCustomer,
   iCustomer,
-  iCustomerPaginate,
+  iCustomerList,
   iCustomerRepository,
 } from 'src/@types/Customer/iCustomerService';
 import { Repository } from 'typeorm';
@@ -27,21 +27,17 @@ class CustomerRepository implements iCustomerRepository {
     return await this.CustomerRepository.save(customer);
   }
 
-  public async findAll({
-    page,
-    skip,
-    take,
-  }: SearchParams): Promise<iCustomerPaginate> {
+  public async findAll({ page, limit }: SearchParams): Promise<iCustomerList> {
     const [customers, count] =
       await this.CustomerRepository.createQueryBuilder()
-        .skip(skip)
-        .take(take)
+        .skip(limit * (page - 1))
+        .take(limit)
         .getManyAndCount();
 
-    const result: iCustomerPaginate = {
+    const result: iCustomerList = {
       current_page: page,
       data: customers,
-      per_page: take,
+      per_page: limit,
       total: count,
     };
 
