@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "better-sqlite3": "^7.6.2",
+    "celebrate": "^15.0.1",
     "cors": "^2.8.5",
     "debug": "~4.3.4",
     "eslint-config-prettier": "^8.8.0",
@@ -28,6 +29,7 @@
     "@angablue/exe": "^1.2.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
+    "@types/joi": "^17.2.3",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "eslint": "^8.39.0",
