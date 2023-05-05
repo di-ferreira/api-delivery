@@ -1,13 +1,15 @@
+import { Address } from '@modules/Address/Entity';
 import { iCustomer } from 'src/@types/Customer/iCustomerService';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity('customer')
 export class Customer implements iCustomer {
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -20,8 +22,8 @@ export class Customer implements iCustomer {
   @Column({ unique: true })
   phone: string;
 
-  //   @OneToMany(() => Address, (address) => address.customer)
-  //   address: Address[];
+  @OneToMany(() => Address, (address) => address.customer, { cascade: true })
+  address: Address[];
 
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date;

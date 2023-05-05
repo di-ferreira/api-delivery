@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
 
+export type SearchParams = {
+  page: number;
+  limit: number;
+};
+
 export interface iController {
   index(request: Request, response: Response): Promise<Response>;
   show(request: Request, response: Response): Promise<Response>;

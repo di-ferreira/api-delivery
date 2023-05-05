@@ -23,6 +23,9 @@
       "@shared/*": [
         "./src/shared/*"
       ],
+      "@ProjectTypes/*": [
+        "./src/ProjectTypes/*"
+      ],
     }
   },
   "ts-node": {

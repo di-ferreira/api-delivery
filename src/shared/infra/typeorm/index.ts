@@ -1,3 +1,4 @@
+import { Address } from '@modules/Address/Entity';
 import { Customer } from '@modules/Customer/Entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
@@ -7,7 +8,7 @@ let DSConfig: DataSourceOptions = {
   entities: [
     // Cardapio,
     Customer,
-    // Enderecos,
+    Address,
     // PedidoCardapio,
     // Pedidos,
     // Produto,

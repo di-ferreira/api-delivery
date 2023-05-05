@@ -12,7 +12,7 @@ export default class CustomerController implements iController {
     const limit = request.query.limit ? Number(request.query.limit) : 15;
     const listCustomer = new ListCustomerService();
     const customers = await listCustomer.execute({ page, limit });
-    
+
     return response.json(customers);
   }
 

@@ -1,3 +1,8 @@
 {
     "editor.formatOnSave": true,
+    "material-icon-theme.folders.associations": {
+        "ProjectTypes": "Typescript",
+        "CustomerController": "Controller",
+        "AddressController": "Controller"
+    },
 }

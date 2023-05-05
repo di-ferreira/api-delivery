@@ -1,3 +1,6 @@
+import { Address } from '@modules/Address/Entity';
+import { SearchParams } from '..';
+
 export interface iCreateCustomer {
   name: string;
   phone: string;
@@ -25,14 +28,10 @@ export interface iCustomer {
   id: number;
   name: string;
   phone: string;
+  address: Address[]; // TODO Change de class Address to interface Address
   created_at: Date;
   updated_at: Date;
 }
-
-export type SearchParams = {
-  page: number;
-  limit: number;
-};
 
 export interface iCustomerList {
   per_page: number;
