@@ -18,6 +18,11 @@ CustomerRoute.post(
 );
 CustomerRoute.get('/', Controller.index);
 CustomerRoute.get(
+  '/:phone',
+  celebrate({ [Segments.PARAMS]: { phone: Joi.string().required() } }),
+  Controller.showByPhone
+);
+CustomerRoute.get(
   '/:id',
   celebrate({ [Segments.PARAMS]: { id: Joi.string().id().required() } }),
   Controller.show
