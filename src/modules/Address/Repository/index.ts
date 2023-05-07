@@ -68,7 +68,7 @@ class AddressRepository implements iAddressRepository {
     return addressess;
   }
 
-  public async findExists(address: iAddress): Promise<iAddress> {
+  public async findExists(address: iCreateAddress): Promise<iAddress> {
     const addressExists = await this.CustomRepository.findOneBy({
       number: address.number,
       street: address.street,

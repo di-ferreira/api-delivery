@@ -37,7 +37,6 @@ export default class CreateAddressService {
     }
 
     const addressExists = await this.addressRepository.findExists({
-      id: 0,
       city,
       customer,
       district,
@@ -46,8 +45,6 @@ export default class CreateAddressService {
       street,
       complement,
     });
-
-    console.log('Address Exist', addressExists);
 
     if (addressExists) {
       throw new AppError('Address exists');

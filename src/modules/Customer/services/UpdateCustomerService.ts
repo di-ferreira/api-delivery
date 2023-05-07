@@ -1,8 +1,8 @@
-import AppError from '@shared/errors/AppError';
 import {
   iCustomerRepository,
   iUpdatedCustomer,
-} from 'src/@types/Customer/iCustomerService';
+} from '@ProjectTypes/Customer/iCustomerService';
+import AppError from '@shared/errors/AppError';
 import { Customer } from '../Entity';
 import CustomerRepository from '../Repository';
 
@@ -29,6 +29,8 @@ class UpdateCustomerService {
     if (customerByPhone && customerByPhone.id !== id) {
       throw new AppError('There is already one customer with this phone');
     }
+
+    customer.name = name;
 
     await this.customerRepository.save(customer);
 

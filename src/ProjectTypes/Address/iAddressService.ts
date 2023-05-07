@@ -56,7 +56,7 @@ export interface iAddressRepository {
   findAll({ page, limit }: SearchParams): Promise<iAddressList>;
   findById(id: number): Promise<iAddress | null>;
   findByCustomer(id: number): Promise<iAddress[] | null>;
-  findExists(address: iAddress): Promise<iAddress | null>;
+  findExists(address: iCreateAddress): Promise<iAddress | null>;
   create(data: iCreateAddress): Promise<iAddress>;
   save(address: iAddress): Promise<iAddress>;
   remove(address: iAddress): Promise<void>;
