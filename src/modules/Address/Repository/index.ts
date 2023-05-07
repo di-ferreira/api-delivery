@@ -68,6 +68,17 @@ class AddressRepository implements iAddressRepository {
     return addressess;
   }
 
+  public async findExists(address: iAddress): Promise<iAddress> {
+    const addressExists = await this.CustomRepository.findOneBy({
+      number: address.number,
+      street: address.street,
+      district: address.district,
+      city: address.city,
+      customer: address.customer,
+    });
+    return addressExists;
+  }
+
   public async findById(id: number): Promise<iAddress> {
     const address = await this.CustomRepository.findOneBy({ id });
     return address;

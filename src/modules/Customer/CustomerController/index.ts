@@ -1,5 +1,5 @@
+import { iController } from '@ProjectTypes/index';
 import { Request, Response } from 'express';
-import { iController } from '../../../@types/index';
 import CreateCustomerService from '../Services/CreateCustomerService';
 import DeleteCustomerService from '../Services/DeleteCustomerService';
 import ListCustomerService from '../Services/ListCustomerService';
