@@ -59,11 +59,14 @@ class AddressRepository implements iAddressRepository {
     return result;
   }
 
-  public async findByCustomer(id: number): Promise<iAddress[]> {
-    const addressess = await this.CustomRepository.findBy({
-      customer: {
-        id,
+  public async findByCustomer(id_customer: number): Promise<iAddress[]> {
+    const addressess = await this.CustomRepository.find({
+      where: {
+        customer: {
+          id: id_customer,
+        },
       },
+      relations: { customer: true },
     });
     return addressess;
   }
@@ -80,7 +83,10 @@ class AddressRepository implements iAddressRepository {
   }
 
   public async findById(id: number): Promise<iAddress> {
-    const address = await this.CustomRepository.findOneBy({ id });
+    const address = await this.CustomRepository.findOne({
+      where: { id },
+      relations: { customer: true },
+    });
     return address;
   }
 

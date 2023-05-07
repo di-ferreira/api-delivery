@@ -1,4 +1,6 @@
+import { Segments, celebrate } from 'celebrate';
 import { Router } from 'express';
+import Joi from 'joi';
 import AddressController from '../AddressController';
 
 const Controller = new AddressController();
@@ -7,13 +9,22 @@ const AddressRoute = Router();
 
 AddressRoute.post('/', Controller.create);
 
-// AddressRoute.get('/', Controller.index);
+AddressRoute.get('/', Controller.index);
 
-// AddressRoute.get(
-//   '/:id',
-//   celebrate({ [Segments.PARAMS]: { id: Joi.string().id().required() } }),
-//   Controller.show
-// );
+AddressRoute.get(
+  '/:id',
+  celebrate({ [Segments.PARAMS]: { id: Joi.string().id().required() } }),
+  Controller.show
+);
+
+AddressRoute.get(
+  '/customer/:id_customer',
+  celebrate({
+    [Segments.PARAMS]: { id_customer: Joi.string().required() },
+  }),
+  Controller.indexByCustomer
+);
+
 // AddressRoute.put(
 //   '/:id',
 //   celebrate({

@@ -1,8 +1,8 @@
 import {
-  SearchParams,
   iCustomerList,
   iCustomerRepository,
-} from 'src/@types/Customer/iCustomerService';
+} from '@ProjectTypes/Customer/iCustomerService';
+import { SearchParams } from '@ProjectTypes/index';
 import CustomerRepository from '../Repository';
 
 class ListCustomerService {

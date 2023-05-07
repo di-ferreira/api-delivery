@@ -1,24 +1,35 @@
-import { iController } from '@ProjectTypes/index';
+import { iAddressController } from '@ProjectTypes/Address/iAddressController';
 import { Request, Response } from 'express';
 import CreateAddressService from '../Services/CreateAddress';
+import ListAddressService from '../Services/ListAddressService';
+import ListByCustomerAddressService from '../Services/ListByCustomerAddressService';
+import ShowAddressService from '../Services/ShowAddressService';
 
-export default class AddressController implements iController {
+export default class AddressController implements iAddressController {
   public async index(request: Request, response: Response): Promise<Response> {
-    // const page = request.query.page ? Number(request.query.page) : 1;
-    // const limit = request.query.limit ? Number(request.query.limit) : 15;
-    // const listAddress = new ListAddressService();
-    // const addressess = await listAddress.execute({ page, limit });
+    const page = request.query.page ? Number(request.query.page) : 1;
+    const limit = request.query.limit ? Number(request.query.limit) : 15;
+    const listAddress = new ListAddressService();
+    const addressess = await listAddress.execute({ page, limit });
 
-    // return response.json(addressess);
-    return response.json('');
+    return response.json(addressess);
+  }
+
+  public async indexByCustomer(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { id_customer } = request.params;
+    const listByCustomer = new ListByCustomerAddressService();
+    const address = await listByCustomer.execute(Number(id_customer));
+    return response.json(address);
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
-    // const { id } = request.params;
-    // const showAddress = new ShowAddressService();
-    // const Address = await showAddress.execute({ id: Number(id) });
-    // return response.json(Address);
-    return response.json('');
+    const { id } = request.params;
+    const showAddress = new ShowAddressService();
+    const address = await showAddress.execute({ id: Number(id) });
+    return response.json(address);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
