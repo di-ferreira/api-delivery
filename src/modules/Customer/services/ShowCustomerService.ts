@@ -1,9 +1,9 @@
 import {
+  iCustomer,
   iCustomerRepository,
   iShowCustomer,
 } from '@ProjectTypes/Customer/iCustomerService';
 import AppError from '@shared/errors/AppError';
-import { Customer } from '../Entity';
 import CustomerRepository from '../Repository';
 
 class ShowCustomerService {
@@ -13,8 +13,15 @@ class ShowCustomerService {
     this.customerRepository = new CustomerRepository();
   }
 
-  public async execute({ id }: iShowCustomer): Promise<Customer> {
-    const customer = await this.customerRepository.findById(id);
+  public async execute({ phoneid }: iShowCustomer): Promise<iCustomer> {
+    let customer: iCustomer;
+    console.log('PhoneID->', phoneid);
+    if (String(phoneid).length < 10) {
+      customer = await this.customerRepository.findById(Number(phoneid));
+    } else {
+      customer = await this.customerRepository.findByPhone(String(phoneid));
+    }
+
     if (!customer) {
       throw new AppError('Customer not found');
     }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const exe = require('@angablue/exe');
 
 const build = exe({
@@ -12,8 +13,8 @@ const build = exe({
         FileDescription: 'ApiDelivery',
         ProductName: 'ApiDelivery',
         LegalCopyright: 'DiFerreira https://di-ferreira.github.io/',
-        OriginalFilename: 'ApiDelivery.exe'
-    }
+        OriginalFilename: 'ApiDelivery.exe',
+    },
 });
 
-build.then(() => console.log('Build Completed!'))
+build.then(() => console.log('Build Completed!'));

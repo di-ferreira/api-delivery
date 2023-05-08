@@ -5,4 +5,10 @@
         "CustomerController": "Controller",
         "AddressController": "Controller"
     },
+    "material-icon-theme.files.associations": {
+        "ormconfig.json": "database",
+        "tsconfig.json": "tune",
+        "AppConfig.json": "jsconfig",
+        "build.js": "../icons/Rocket_Icon",
+    },
 }

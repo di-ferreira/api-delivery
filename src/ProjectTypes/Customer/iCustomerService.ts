@@ -7,7 +7,7 @@ export interface iCreateCustomer {
 }
 
 export interface iShowCustomer {
-  id: number;
+  phoneid: number | string;
 }
 
 export interface iDeleteCustomer {

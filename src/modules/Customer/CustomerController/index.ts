@@ -28,9 +28,9 @@ export default class CustomerController implements iCustomerController {
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
+    const { phoneid } = request.params;
     const showCustomer = new ShowCustomerService();
-    const customer = await showCustomer.execute({ id: Number(id) });
+    const customer = await showCustomer.execute({ phoneid: phoneid });
     return response.json(customer);
   }
 
