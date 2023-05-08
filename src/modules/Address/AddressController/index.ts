@@ -4,6 +4,7 @@ import CreateAddressService from '../Services/CreateAddress';
 import ListAddressService from '../Services/ListAddressService';
 import ListByCustomerAddressService from '../Services/ListByCustomerAddressService';
 import ShowAddressService from '../Services/ShowAddressService';
+import UpdateAddressService from '../Services/UpdateAddressService';
 
 export default class AddressController implements iAddressController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -49,16 +50,23 @@ export default class AddressController implements iAddressController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    // const { id } = request.params;
-    // const { name, phone } = request.body;
-    // const updateAddress = new UpdateAddressService();
-    // const Address = await updateAddress.execute({
-    //   id: Number(id),
-    //   name,
-    //   phone,
-    // });
-    // return response.json(Address);
-    return response.json('');
+    const { id } = request.params;
+    const { street, number, district, city, state, complement, customer } =
+      request.body;
+
+    const updateAddress = new UpdateAddressService();
+
+    const Address = await updateAddress.execute({
+      id: Number(id),
+      city,
+      customer,
+      district,
+      number,
+      state,
+      street,
+      complement,
+    });
+    return response.json(Address);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

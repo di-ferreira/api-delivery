@@ -1,4 +1,4 @@
-import { Address } from '@modules/Address/Entity';
+import { iAddress } from '@ProjectTypes/Address/iAddressService';
 import { SearchParams } from '..';
 
 export interface iCreateCustomer {
@@ -28,7 +28,7 @@ export interface iCustomer {
   id: number;
   name: string;
   phone: string;
-  address: Address[]; // TODO Change de class Address to interface Address
+  address: iAddress[];
   created_at: Date;
   updated_at: Date;
 }

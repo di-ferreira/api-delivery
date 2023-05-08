@@ -31,7 +31,7 @@ export interface iUpdatedAddress {
   city: string;
   state: string;
   complement?: string;
-  customer: iCustomer;
+  customer: iCustomer | number;
 }
 
 export interface iAddress {
