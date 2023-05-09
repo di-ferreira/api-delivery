@@ -1,41 +1,42 @@
 import {
-  iCustomerRepository,
-  iUpdatedCustomer,
-} from '@ProjectTypes/Customer/iCustomerService';
+  iProduct,
+  iProductRepository,
+  iUpdatedProduct,
+} from '@ProjectTypes/Product/iProduct';
 import AppError from '@shared/errors/AppError';
-import { Customer } from '../Entity';
-import CustomerRepository from '../Repository';
+import ProductRepository from '../Repository';
 
-class UpdateCustomerService {
-  private customerRepository: iCustomerRepository;
+class UpdateProductService {
+  private productRepository: iProductRepository;
 
   constructor() {
-    this.customerRepository = new CustomerRepository();
+    this.productRepository = new ProductRepository();
   }
 
   public async execute({
     id,
+    costPrice,
+    describe,
+    minStock,
     name,
-    phone,
-  }: iUpdatedCustomer): Promise<Customer> {
-    const customer = await this.customerRepository.findById(id);
+    stock,
+  }: iUpdatedProduct): Promise<iProduct> {
+    const product = await this.productRepository.findById(id);
 
-    const customerByPhone = await this.customerRepository.findByPhone(phone);
-
-    if (!customer) {
-      throw new AppError('Customer not found');
+    if (!product) {
+      throw new AppError('Product not found');
     }
 
-    if (customerByPhone && customerByPhone.id !== id) {
-      throw new AppError('There is already one customer with this phone');
-    }
+    product.name = name;
+    product.costPrice = costPrice;
+    product.describe = describe;
+    product.stock = stock;
+    product.minStock = minStock;
 
-    customer.name = name;
+    await this.productRepository.save(product);
 
-    await this.customerRepository.save(customer);
-
-    return customer;
+    return product;
   }
 }
 
-export default UpdateCustomerService;
+export default UpdateProductService;

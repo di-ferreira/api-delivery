@@ -1,32 +1,27 @@
 import {
-  iCustomer,
-  iCustomerRepository,
-  iShowCustomer,
-} from '@ProjectTypes/Customer/iCustomerService';
+  iProduct,
+  iProductRepository,
+  iShowProduct,
+} from '@ProjectTypes/Product/iProduct';
 import AppError from '@shared/errors/AppError';
-import CustomerRepository from '../Repository';
+import ProductRepository from '../Repository';
 
-class ShowCustomerService {
-  private customerRepository: iCustomerRepository;
+class ShowProductService {
+  private productRepository: iProductRepository;
 
   constructor() {
-    this.customerRepository = new CustomerRepository();
+    this.productRepository = new ProductRepository();
   }
 
-  public async execute({ phoneid }: iShowCustomer): Promise<iCustomer> {
-    let customer: iCustomer;
-    if (String(phoneid).length < 10) {
-      customer = await this.customerRepository.findById(Number(phoneid));
-    } else {
-      customer = await this.customerRepository.findByPhone(String(phoneid));
+  public async execute({ id }: iShowProduct): Promise<iProduct> {
+    const product = await this.productRepository.findById(Number(id));
+
+    if (!product) {
+      throw new AppError('Product not found');
     }
 
-    if (!customer) {
-      throw new AppError('Customer not found');
-    }
-
-    return customer;
+    return product;
   }
 }
 
-export default ShowCustomerService;
+export default ShowProductService;

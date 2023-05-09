@@ -1,25 +1,25 @@
 import {
-  iCustomerList,
-  iCustomerRepository,
-} from '@ProjectTypes/Customer/iCustomerService';
+  iProductList,
+  iProductRepository,
+} from '@ProjectTypes/Product/iProduct';
 import { SearchParams } from '@ProjectTypes/index';
-import CustomerRepository from '../Repository';
+import ProductRepository from '../Repository';
 
-class ListCustomerService {
-  private customerRepository: iCustomerRepository;
+class ListProductService {
+  private productRepository: iProductRepository;
 
   constructor() {
-    this.customerRepository = new CustomerRepository();
+    this.productRepository = new ProductRepository();
   }
 
-  public async execute({ page, limit }: SearchParams): Promise<iCustomerList> {
-    const customers = await this.customerRepository.findAll({
+  public async execute({ page, limit }: SearchParams): Promise<iProductList> {
+    const products = await this.productRepository.findAll({
       page,
       limit,
     });
 
-    return customers;
+    return products;
   }
 }
 
-export default ListCustomerService;
+export default ListProductService;

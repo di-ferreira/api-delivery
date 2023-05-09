@@ -9,7 +9,7 @@ export interface iCreateProduct {
 }
 
 export interface iShowProduct {
-  phoneid: number | string;
+  id: number;
 }
 
 export interface iDeleteProduct {
