@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import { Customer } from '../Entity';
 
 class CustomerRepository implements iCustomerRepository {
-  private CustomRepository: Repository<Customer>;
+  private CustomRepository: Repository<iCustomer>;
 
   constructor() {
     this.CustomRepository = AppDataSource.getRepository(Customer);
@@ -51,7 +51,10 @@ class CustomerRepository implements iCustomerRepository {
   }
 
   public async findById(id: number): Promise<iCustomer> {
-    const costumer = await this.CustomRepository.findOneBy({ id });
+    const costumer = await this.CustomRepository.findOne({
+      where: { id },
+      relations: { address: true },
+    });
     return costumer;
   }
 

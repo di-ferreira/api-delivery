@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Cliente } from './Cliente';
+import { Customer } from './Cliente';
 import { PedidoCardapio } from './PedidoCardapio';
 
 export enum PedidoStatus {
@@ -31,12 +31,12 @@ export class Pedidos {
   @Column({ name: 'numero_pedido' })
   numeroPedido: string;
 
-  @ManyToOne((type) => Cliente, (cliente) => cliente.id, {
+  @ManyToOne((type) => Customer, (cliente) => cliente.id, {
     eager: true,
     nullable: false,
   })
   @JoinColumn({ name: 'cliente_id' })
-  cliente: Cliente;
+  cliente: Customer;
 
   @OneToOne(
     (type) => PedidoCardapio,

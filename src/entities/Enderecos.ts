@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Cliente } from './Cliente';
+import { Customer } from './Cliente';
 
 @Entity()
 export class Enderecos {
@@ -24,9 +24,9 @@ export class Enderecos {
   @Column({ nullable: true })
   complemento: string;
 
-  @ManyToOne(() => Cliente, (cliente) => cliente.endereco, {
+  @ManyToOne(() => Customer, (cliente) => cliente.address, {
     eager: true,
     nullable: false,
   })
-  cliente: Cliente;
+  cliente: Customer;
 }

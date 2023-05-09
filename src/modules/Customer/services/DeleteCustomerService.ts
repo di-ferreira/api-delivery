@@ -1,8 +1,8 @@
-import AppError from '@shared/errors/AppError';
 import {
   iCustomerRepository,
   iDeleteCustomer,
-} from 'src/@types/Customer/iCustomerService';
+} from '@ProjectTypes/Customer/iCustomerService';
+import AppError from '@shared/errors/AppError';
 import { Customer } from '../Entity';
 import CustomerRepository from '../Repository';
 

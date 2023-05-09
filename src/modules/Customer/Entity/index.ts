@@ -1,5 +1,5 @@
+import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import { Address } from '@modules/Address/Entity';
-import { iCustomer } from 'src/@types/Customer/iCustomerService';
 import {
   Column,
   CreateDateColumn,

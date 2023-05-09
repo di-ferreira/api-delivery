@@ -26,7 +26,7 @@ export default class CreateAddressService {
   }: iCreateAddress): Promise<iAddress> {
     const customerRepository = new CustomerRepository();
     let customerExists: iCustomer;
-    if (customer.id) {
+    if (typeof customer === 'object') {
       customerExists = await customerRepository.findById(customer.id);
     } else {
       customerExists = await customerRepository.findById(Number(customer));
@@ -38,7 +38,7 @@ export default class CreateAddressService {
 
     const addressExists = await this.addressRepository.findExists({
       city,
-      customer,
+      customer: customerExists,
       district,
       state,
       number,

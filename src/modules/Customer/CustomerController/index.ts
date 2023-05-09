@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import CreateCustomerService from '../Services/CreateCustomerService';
 import DeleteCustomerService from '../Services/DeleteCustomerService';
 import ListCustomerService from '../Services/ListCustomerService';
-import ShowCustomerByPhoneService from '../Services/ShowCustomerByPhone';
 import ShowCustomerService from '../Services/ShowCustomerService';
 import UpdateCustomerService from '../Services/UpdateCustomerService';
 
@@ -17,16 +16,6 @@ export default class CustomerController implements iCustomerController {
     return response.json(customers);
   }
 
-  public async showByPhone(
-    request: Request,
-    response: Response
-  ): Promise<Response> {
-    const { phone } = request.params;
-    const showCustomerByPhone = new ShowCustomerByPhoneService();
-    const customer = await showCustomerByPhone.execute({ phone });
-    return response.json(customer);
-  }
-
   public async show(request: Request, response: Response): Promise<Response> {
     const { phoneid } = request.params;
     const showCustomer = new ShowCustomerService();
@@ -35,9 +24,9 @@ export default class CustomerController implements iCustomerController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, phone } = request.body;
+    const { name, phone, address } = request.body;
     const createCustomer = new CreateCustomerService();
-    const customer = await createCustomer.execute({ name, phone });
+    const customer = await createCustomer.execute({ name, phone, address });
     return response.json(customer);
   }
 

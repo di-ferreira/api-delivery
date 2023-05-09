@@ -1,6 +1,6 @@
 import {
   iCustomerRepository,
-  iShowCustomerByPhone,
+  iShowCustomer,
 } from '@ProjectTypes/Customer/iCustomerService';
 import AppError from '@shared/errors/AppError';
 import { Customer } from '../Entity';
@@ -13,8 +13,8 @@ class ShowCustomerByPhoneService {
     this.customerRepository = new CustomerRepository();
   }
 
-  public async execute({ phone }: iShowCustomerByPhone): Promise<Customer> {
-    const customer = await this.customerRepository.findByPhone(phone);
+  public async execute({ phoneid }: iShowCustomer): Promise<Customer> {
+    const customer = await this.customerRepository.findByPhone(String(phoneid));
 
     if (!customer) {
       throw new AppError('Customer not found');

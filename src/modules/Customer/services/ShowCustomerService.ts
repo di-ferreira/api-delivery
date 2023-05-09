@@ -15,7 +15,6 @@ class ShowCustomerService {
 
   public async execute({ phoneid }: iShowCustomer): Promise<iCustomer> {
     let customer: iCustomer;
-    console.log('PhoneID->', phoneid);
     if (String(phoneid).length < 10) {
       customer = await this.customerRepository.findById(Number(phoneid));
     } else {

@@ -8,6 +8,15 @@ export interface iCreateAddress {
   city: string;
   state: string;
   complement?: string;
+  customer: iCustomer | number;
+}
+export interface iExistAddress {
+  street: string;
+  number: string;
+  district: string;
+  city: string;
+  state: string;
+  complement?: string;
   customer: iCustomer;
 }
 
@@ -31,7 +40,7 @@ export interface iUpdatedAddress {
   city: string;
   state: string;
   complement?: string;
-  customer: iCustomer | number;
+  customer: iCustomer;
 }
 
 export interface iAddress {

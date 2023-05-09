@@ -1,9 +1,13 @@
-import { iAddress } from '@ProjectTypes/Address/iAddressService';
+import {
+  iAddress,
+  iCreateAddress,
+} from '@ProjectTypes/Address/iAddressService';
 import { SearchParams } from '..';
 
 export interface iCreateCustomer {
   name: string;
   phone: string;
+  address?: iCreateAddress;
 }
 
 export interface iShowCustomer {
@@ -12,10 +16,6 @@ export interface iShowCustomer {
 
 export interface iDeleteCustomer {
   id: number;
-}
-
-export interface iShowCustomerByPhone {
-  phone: string;
 }
 
 export interface iUpdatedCustomer {

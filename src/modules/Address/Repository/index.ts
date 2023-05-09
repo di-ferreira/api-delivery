@@ -2,7 +2,7 @@ import {
   iAddress,
   iAddressList,
   iAddressRepository,
-  iCreateAddress,
+  iExistAddress,
 } from '@ProjectTypes/Address/iAddressService';
 import { SearchParams } from '@ProjectTypes/index';
 import AppDataSource from '@shared/infra/typeorm';
@@ -10,10 +10,10 @@ import { Repository } from 'typeorm';
 import { Address } from '../Entity';
 
 class AddressRepository implements iAddressRepository {
-  private CustomRepository: Repository<Address>;
+  private AddressRepository: Repository<iAddress>;
 
   constructor() {
-    this.CustomRepository = AppDataSource.getRepository(Address);
+    this.AddressRepository = AppDataSource.getRepository(Address);
   }
 
   public async create({
@@ -24,8 +24,8 @@ class AddressRepository implements iAddressRepository {
     state,
     street,
     complement,
-  }: iCreateAddress): Promise<iAddress> {
-    const address = this.CustomRepository.create({
+  }: iAddress): Promise<iAddress> {
+    const address = this.AddressRepository.create({
       city,
       complement,
       customer,
@@ -35,19 +35,20 @@ class AddressRepository implements iAddressRepository {
       street,
     });
 
-    await this.CustomRepository.save(address);
+    await this.AddressRepository.save(address);
     return address;
   }
 
   public async save(address: iAddress): Promise<iAddress> {
-    return await this.CustomRepository.save(address);
+    return await this.AddressRepository.save(address);
   }
 
   public async findAll({ page, limit }: SearchParams): Promise<iAddressList> {
-    const [addressess, count] = await this.CustomRepository.createQueryBuilder()
-      .skip(limit * (page - 1))
-      .take(limit)
-      .getManyAndCount();
+    const [addressess, count] =
+      await this.AddressRepository.createQueryBuilder()
+        .skip(limit * (page - 1))
+        .take(limit)
+        .getManyAndCount();
 
     const result: iAddressList = {
       current_page: page,
@@ -60,7 +61,7 @@ class AddressRepository implements iAddressRepository {
   }
 
   public async findByCustomer(id_customer: number): Promise<iAddress[]> {
-    const addressess = await this.CustomRepository.find({
+    const addressess = await this.AddressRepository.find({
       where: {
         customer: {
           id: id_customer,
@@ -71,8 +72,8 @@ class AddressRepository implements iAddressRepository {
     return addressess;
   }
 
-  public async findExists(address: iCreateAddress): Promise<iAddress> {
-    const addressExists = await this.CustomRepository.findOneBy({
+  public async findExists(address: iExistAddress): Promise<iAddress> {
+    const addressExists = await this.AddressRepository.findOneBy({
       number: address.number,
       street: address.street,
       district: address.district,
@@ -83,7 +84,7 @@ class AddressRepository implements iAddressRepository {
   }
 
   public async findById(id: number): Promise<iAddress> {
-    const address = await this.CustomRepository.findOne({
+    const address = await this.AddressRepository.findOne({
       where: { id },
       relations: { customer: true },
     });
@@ -91,7 +92,7 @@ class AddressRepository implements iAddressRepository {
   }
 
   public async remove(address: iAddress): Promise<void> {
-    await this.CustomRepository.remove(address);
+    await this.AddressRepository.remove(address);
   }
 }
 
