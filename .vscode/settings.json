@@ -3,7 +3,8 @@
     "material-icon-theme.folders.associations": {
         "ProjectTypes": "Typescript",
         "CustomerController": "Controller",
-        "AddressController": "Controller"
+        "AddressController": "Controller",
+        "ProductController": "Controller"
     },
     "material-icon-theme.files.associations": {
         "ormconfig.json": "database",
