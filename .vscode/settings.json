@@ -4,7 +4,8 @@
         "ProjectTypes": "Typescript",
         "CustomerController": "Controller",
         "AddressController": "Controller",
-        "ProductController": "Controller"
+        "ProductController": "Controller",
+        "TypeMenuController": "Controller"
     },
     "material-icon-theme.files.associations": {
         "ormconfig.json": "database",

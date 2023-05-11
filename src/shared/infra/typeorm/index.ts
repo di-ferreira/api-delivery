@@ -1,6 +1,7 @@
 import { Address } from '@modules/Address/Entity';
 import { Customer } from '@modules/Customer/Entity';
 import { Product } from '@modules/Product/Entity';
+import { TypeMenu } from '@modules/TypeMenu/Entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 let DSConfig: DataSourceOptions = {
@@ -13,7 +14,7 @@ let DSConfig: DataSourceOptions = {
     // PedidoCardapio,
     // Pedidos,
     Product,
-    // TipoCardapio,
+    TypeMenu,
   ],
   // migrations: ['./src/database/migrations/*.ts'],
   synchronize: true,

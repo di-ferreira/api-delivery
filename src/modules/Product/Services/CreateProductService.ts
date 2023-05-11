@@ -22,7 +22,7 @@ class CreateProductService {
   }: iCreateProduct): Promise<iProduct> {
     const productExists = await this.productRepository.findByName(name);
 
-    if (productExists.length > 1) {
+    if (productExists.length >= 1) {
       throw new AppError('There is already one product with this name');
     }
 

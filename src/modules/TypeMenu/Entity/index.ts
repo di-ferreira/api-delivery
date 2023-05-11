@@ -1,9 +1,7 @@
-import { Menu } from '@modules/Menu/Entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,8 +17,8 @@ export class TypeMenu {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @OneToMany((type) => Menu, (menu) => menu.typeMenu)
-  menu: Menu[];
+  // @OneToMany((type) => Menu, (menu) => menu.typeMenu)
+  // menu: Menu[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
