@@ -1,13 +1,16 @@
+import { iTypeMenu } from '@ProjectTypes/TypeMenu/iTypeMenu';
+import { Menu } from '@modules/Menu/Entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
-export class TypeMenu {
+@Entity('types_menu')
+export class TypeMenu implements iTypeMenu {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -17,8 +20,8 @@ export class TypeMenu {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  // @OneToMany((type) => Menu, (menu) => menu.typeMenu)
-  // menu: Menu[];
+  @OneToMany((type) => Menu, (menu) => menu.type)
+  menu: Menu[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

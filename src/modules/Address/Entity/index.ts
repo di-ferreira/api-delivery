@@ -1,3 +1,5 @@
+import { iAddress } from '@ProjectTypes/Address/iAddressService';
+import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import { Customer } from '@modules/Customer/Entity';
 import {
   Column,
@@ -7,8 +9,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity('address')
-export class Address {
+@Entity('addressess')
+export class Address implements iAddress {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -34,5 +36,5 @@ export class Address {
     nullable: false,
   })
   @JoinColumn([{ name: 'customer_id', referencedColumnName: 'id' }])
-  customer: Customer;
+  customer: iCustomer;
 }

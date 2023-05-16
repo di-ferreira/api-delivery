@@ -29,7 +29,7 @@ export interface iProduct {
   id: number;
   name: string;
   costPrice: number;
-  describe: string;
+  description: string;
   minStock: number;
   stock: number;
   createdAt: Date;

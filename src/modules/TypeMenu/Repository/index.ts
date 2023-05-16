@@ -49,9 +49,9 @@ export default class TypeMenuRepository implements iTypeMenuRepository {
     return result;
   }
 
-  public async findByType(typName: string): Promise<iTypeMenu[]> {
+  public async findByType(typeName: string): Promise<iTypeMenu[]> {
     const types = await this.CustomRepository.findBy({
-      name: typName,
+      name: typeName,
     });
     return types;
   }

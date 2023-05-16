@@ -5,7 +5,8 @@
         "CustomerController": "Controller",
         "AddressController": "Controller",
         "ProductController": "Controller",
-        "TypeMenuController": "Controller"
+        "TypeMenuController": "Controller",
+        "MenuController": "Controller"
     },
     "material-icon-theme.files.associations": {
         "ormconfig.json": "database",

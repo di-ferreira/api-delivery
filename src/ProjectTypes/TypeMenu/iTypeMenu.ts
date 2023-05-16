@@ -23,6 +23,8 @@ export interface iTypeMenu {
   id: number;
   name: string;
   description?: string;
+  createdAt?: Date;
+  updateAt?: Date;
 }
 
 export interface iTypeMenuList {
@@ -33,7 +35,7 @@ export interface iTypeMenuList {
 }
 export interface iTypeMenuRepository {
   findAll({ page, limit }: SearchParams): Promise<iTypeMenuList>;
-  findByType(typName: string): Promise<iTypeMenu[] | null>;
+  findByType(typeName: string): Promise<iTypeMenu[] | null>;
   findById(id: number): Promise<iTypeMenu | null>;
   create(data: iCreateTypeMenu): Promise<iTypeMenu>;
   save(customer: iTypeMenu): Promise<iTypeMenu>;

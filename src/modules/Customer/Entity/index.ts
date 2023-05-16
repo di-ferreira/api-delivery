@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('customer')
+@Entity('customers')
 export class Customer implements iCustomer {
   @PrimaryGeneratedColumn('increment')
   id: number;

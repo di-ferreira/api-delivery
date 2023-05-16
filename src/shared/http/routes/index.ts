@@ -1,5 +1,6 @@
 import AddressRoute from '@modules/Address/Routes';
 import CustomerRoute from '@modules/Customer/Routes';
+import MenuRoute from '@modules/Menu/Routes';
 import ProductRoute from '@modules/Product/Routes';
 import TypeMenuRoute from '@modules/TypeMenu/Routes';
 import { Router } from 'express';
@@ -10,5 +11,5 @@ routes.use('/customer', CustomerRoute);
 routes.use('/address', AddressRoute);
 routes.use('/product', ProductRoute);
 routes.use('/type-menu', TypeMenuRoute);
-
+routes.use('/menu', MenuRoute);
 export default routes;

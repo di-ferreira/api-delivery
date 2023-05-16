@@ -1,49 +1,32 @@
+import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
+import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
+import { iOrder, iStatusOrder } from '@ProjectTypes/Order/iOrder';
 import { Customer } from '@modules/Customer/Entity';
-import { OrderMenu } from '@modules/OrderMenu/Entity';
+import { ItemOrder } from '@modules/OrderItem/Entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-export enum OrderStatus {
-  FILA = 'na fila',
-  PRONTO = 'pronto',
-  TRANSITO = 'em transito',
-  ENTREGUE = 'entregue',
-  CANCELADO = 'cancelado',
-}
-@Entity('order')
-export class Order {
-  // ID INT PRIMARY KEY,
-  // ID_funcionario INT NOT NULL,
-  // PrecoTotal DECIMAL(10,2) NOT NULL,
-  // Data DATE NOT NULL,
-  // Hora TIME NOT NULL
+@Entity('orders')
+export class Order implements iOrder {
   @PrimaryGeneratedColumn('increment')
   id: number;
-
-  @Column({ name: 'order_id' })
-  orderId: string;
 
   @ManyToOne((type) => Customer, (customer) => customer.id, {
     eager: true,
     nullable: false,
   })
   @JoinColumn({ name: 'cliente_id' })
-  customer: Customer;
+  customer: iCustomer;
 
-  @OneToOne((type) => OrderMenu, (orderMenu) => orderMenu.order, {
-    nullable: false,
-  })
-  orderMenu: OrderMenu;
-
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0.0 })
   total: number;
 
   @Column({ type: 'text', nullable: true })
@@ -51,10 +34,16 @@ export class Order {
 
   @Column({
     type: 'text',
-    enum: OrderStatus,
-    default: OrderStatus.FILA,
+    enum: iStatusOrder,
+    default: iStatusOrder.FILA,
   })
-  status: OrderStatus;
+  status: iStatusOrder;
+
+  @OneToMany((type) => ItemOrder, (ItemOrder) => ItemOrder.order, {
+    eager: true,
+    cascade: true,
+  })
+  items: iItemOrder[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

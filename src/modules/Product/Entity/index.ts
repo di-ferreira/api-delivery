@@ -1,3 +1,4 @@
+import { iProduct } from '@ProjectTypes/Product/iProduct';
 import {
   Column,
   CreateDateColumn,
@@ -6,8 +7,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
-export class Product {
+@Entity('products')
+export class Product implements iProduct {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -24,7 +25,7 @@ export class Product {
   costPrice: number;
 
   @Column({ type: 'text', nullable: true })
-  describe: string;
+  description: string;
 
   @Column({ type: 'int', nullable: true, name: 'minimum_stock' })
   minStock: number;
