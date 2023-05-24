@@ -34,6 +34,7 @@ export class Address implements iAddress {
 
   @ManyToOne(() => Customer, (customer) => customer.address, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   @JoinColumn([{ name: 'customer_id', referencedColumnName: 'id' }])
   customer: iCustomer;

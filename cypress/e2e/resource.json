@@ -1,0 +1,38 @@
+{
+    "BASE_URL": "http://localhost:3000",
+    "customers": {
+        "AQUILES": {
+            "name": "Aquiles V. Ferreira",
+            "phone": "21 9 9999-0003"
+        },
+        "DIEGO": {
+            "name": "Diego S. Ferreira",
+            "phone": "21 9 9999-0002"
+        },
+        "PRISCILA": {
+            "name": "Priscila G. Vieira",
+            "phone": "21 9 9999-0001"
+        }
+    },
+    "customerWithAddress": {
+        "CUSTOMER-01": {
+            "name": "Customer 01",
+            "phone": "21 9 9999-0010",
+            "street": "one",
+            "number": "25",
+            "district": "Joker",
+            "city": "Gotham",
+            "state": "RJ",
+            "complement": "Wayne Mansion"
+        },
+        "CUSTOMER-02": {
+            "name": "Customer 02",
+            "phone": "21 9 9999-0011",
+            "street": "Av Central",
+            "number": "1000",
+            "district": "13",
+            "city": "Central",
+            "state": "SP"
+        }
+    }
+}

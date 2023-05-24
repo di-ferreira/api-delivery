@@ -1,3 +1,4 @@
+import { iCreateAddress } from '@ProjectTypes/Address/iAddressService';
 import { iCustomerController } from '@ProjectTypes/Customer/iCustomerController';
 import { Request, Response } from 'express';
 import CreateCustomerService from '../Services/CreateCustomerService';
@@ -20,14 +21,24 @@ export default class CustomerController implements iCustomerController {
     const { phoneid } = request.params;
     const showCustomer = new ShowCustomerService();
     const customer = await showCustomer.execute({ phoneid: phoneid });
-    return response.json(customer);
+    return response.status(200).json(customer);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, phone, address } = request.body;
+    const { name, phone, city, district, number, state, street, complement } =
+      request.body;
     const createCustomer = new CreateCustomerService();
+    const address: iCreateAddress = {
+      city,
+      district,
+      number,
+      state,
+      street,
+      complement,
+      customer: 0,
+    };
     const customer = await createCustomer.execute({ name, phone, address });
-    return response.json(customer);
+    return response.status(201).json(customer);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -46,6 +57,6 @@ export default class CustomerController implements iCustomerController {
     const { id } = request.params;
     const deleteCustomer = new DeleteCustomerService();
     await deleteCustomer.execute({ id: Number(id) });
-    return response.json([]);
+    return response.status(204).json([]);
   }
 }
