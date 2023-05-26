@@ -67,5 +67,47 @@
             "city": "Central",
             "state": "SP"
         }
+    },
+    "products": {
+        "HAMBURGUER": {
+            "id": 0,
+            "name": "hamburguer",
+            "costPrice": 5.00,
+            "description": "bread, meat, tomato",
+            "minStock": 0,
+            "stock": 100
+        },
+        "HOT-DOG": {
+            "id": 0,
+            "name": "hot-dog",
+            "costPrice": 2.50,
+            "description": "bread, salsage",
+            "minStock": 10,
+            "stock": 200
+        },
+        "PIZZA": {
+            "id": 0,
+            "name": "pizza calabresa",
+            "costPrice": 20.50,
+            "description": "pizza with cheese border",
+            "minStock": 10,
+            "stock": 100
+        },
+        "SODA": {
+            "id": 0,
+            "name": "orange soda",
+            "costPrice": 1.50,
+            "description": "cold orange soda",
+            "minStock": 50,
+            "stock": 500
+        },
+        "juice": {
+            "id": 0,
+            "name": "grape juice",
+            "costPrice": 0.50,
+            "description": "cold grape juice",
+            "minStock": 10,
+            "stock": 100
+        }
     }
 }

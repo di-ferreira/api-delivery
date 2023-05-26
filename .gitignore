@@ -7,3 +7,5 @@
 *.log
 *.lock
 /*/AppConfig.json
+/cypress/videos
+/cypress/screenshots
