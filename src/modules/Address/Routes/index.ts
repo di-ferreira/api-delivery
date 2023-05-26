@@ -13,13 +13,8 @@ AddressRoute.get('/:id', Controller.show);
 
 AddressRoute.get('/customer/:id_customer', Controller.indexByCustomer);
 
-//TODO Update Address
 AddressRoute.put('/:id', Controller.update);
-//TODO Delete Address
-// AddressRoute.delete(
-//   '/:id',
-//   celebrate({ [Segments.PARAMS]: { id: Joi.string().id().required() } }),
-//   Controller.delete
-// );
+
+AddressRoute.delete('/:id', Controller.delete);
 
 export default AddressRoute;

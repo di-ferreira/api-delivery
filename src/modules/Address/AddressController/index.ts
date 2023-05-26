@@ -1,6 +1,7 @@
 import { iAddressController } from '@ProjectTypes/Address/iAddressController';
 import { Request, Response } from 'express';
 import CreateAddressService from '../Services/CreateAddress';
+import DeleteAddressService from '../Services/DeleteAddressService';
 import ListAddressService from '../Services/ListAddressService';
 import ListByCustomerAddressService from '../Services/ListByCustomerAddressService';
 import ShowAddressService from '../Services/ShowAddressService';
@@ -37,7 +38,7 @@ export default class AddressController implements iAddressController {
     const { street, number, district, city, state, complement, customer } =
       request.body;
     const createAddress = new CreateAddressService();
-    const Address = await createAddress.execute({
+    const address = await createAddress.execute({
       city,
       customer,
       district,
@@ -46,7 +47,7 @@ export default class AddressController implements iAddressController {
       street,
       complement,
     });
-    return response.json(Address);
+    return response.status(201).json(address);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -70,9 +71,9 @@ export default class AddressController implements iAddressController {
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    // const { id } = request.params;
-    // const deleteAddress = new DeleteAddressService();
-    // await deleteAddress.execute({ id: Number(id) });
-    return response.json([]);
+    const { id } = request.params;
+    const deleteAddress = new DeleteAddressService();
+    await deleteAddress.execute({ id: Number(id) });
+    return response.status(204).json([]);
   }
 }

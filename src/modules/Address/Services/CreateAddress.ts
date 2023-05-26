@@ -24,14 +24,18 @@ export default class CreateAddressService {
     street,
     complement,
   }: iCreateAddress): Promise<iAddress> {
+    if (!customer) {
+      throw new AppError('Not have a customer');
+    }
+
     const customerRepository = new CustomerRepository();
+
     let customerExists: iCustomer;
     if (typeof customer === 'object') {
       customerExists = await customerRepository.findById(customer.id);
     } else {
       customerExists = await customerRepository.findById(Number(customer));
     }
-
     if (!customerExists) {
       throw new AppError('Customer not exists');
     }
@@ -50,7 +54,7 @@ export default class CreateAddressService {
       throw new AppError('Address exists');
     }
 
-    const address = this.addressRepository.create({
+    const address = await this.addressRepository.create({
       city,
       customer: customerExists,
       district,

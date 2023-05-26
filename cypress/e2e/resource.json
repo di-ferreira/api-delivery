@@ -34,5 +34,38 @@
             "city": "Central",
             "state": "SP"
         }
+    },
+    "addressess": {
+        "addss01": {
+            "street": "two",
+            "number": "5",
+            "district": "Country Club",
+            "city": "Araruama",
+            "state": "RJ",
+            "complement": "house 120"
+        },
+        "addss02": {
+            "street": "one",
+            "number": "15",
+            "district": "Japao",
+            "city": "Araruama",
+            "state": "RJ",
+            "complement": "house 100"
+        },
+        "addss03": {
+            "street": "four",
+            "number": "25",
+            "district": "Joker",
+            "city": "Gotham",
+            "state": "RJ",
+            "complement": "Wayne Mansion"
+        },
+        "addss04": {
+            "street": "Av Central",
+            "number": "1000",
+            "district": "13",
+            "city": "Central",
+            "state": "SP"
+        }
     }
 }

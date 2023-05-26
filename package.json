@@ -8,7 +8,8 @@
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
     "build": "tsc",
     "package": "yarn build && node ./build.js",
-    "test": "jest"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "better-sqlite3": "^7.6.2",
