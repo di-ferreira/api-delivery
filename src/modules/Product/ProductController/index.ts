@@ -33,7 +33,7 @@ export default class ProductController implements iProductController {
       stock,
       describe,
     });
-    return response.json(product);
+    return response.status(201).json(product);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -55,6 +55,6 @@ export default class ProductController implements iProductController {
     const { id } = request.params;
     const deleteProduct = new DeleteProductService();
     await deleteProduct.execute({ id: Number(id) });
-    return response.json([]);
+    return response.status(204).json([]);
   }
 }

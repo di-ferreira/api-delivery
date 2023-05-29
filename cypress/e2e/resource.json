@@ -109,5 +109,27 @@
             "minStock": 10,
             "stock": 100
         }
+    },
+    "type_menu": {
+        "SANDUICHES": {
+            "id": 0,
+            "name": "Sanduiches",
+            "description": "hambuguers, hot-dogs"
+        },
+        "BEBIDAS": {
+            "id": 0,
+            "name": "Bebidas",
+            "description": "sucos, refrigerantes"
+        },
+        "MASSAS": {
+            "id": 0,
+            "name": "Massas",
+            "description": "Macarrões, Pizzas..."
+        },
+        "SOBREMESAS": {
+            "id": 0,
+            "name": "Sobremesas",
+            "description": "Açaí, Sorvetes"
+        }
     }
 }
