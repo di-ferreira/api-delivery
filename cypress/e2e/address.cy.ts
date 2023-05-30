@@ -1,4 +1,4 @@
-import res from './resource.json';
+import res from './mocks.json';
 
 describe('Address Spec', () => {
   let customer = { id: 0, ...res.customers.DIEGO };

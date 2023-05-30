@@ -26,30 +26,10 @@ export default class MenuRepository implements iMenuRepository {
     price,
     type,
   }: iCreateMenu): Promise<iMenu> {
-    let sumPrice: number = 0;
-
-    if (profit) {
-      const SumTotalProducts = (
-        productsArray: iProduct[],
-        propertyObject: string
-      ) => {
-        return productsArray.reduce((total: number, product: iProduct) => {
-          return total + product[propertyObject];
-        }, 0);
-      };
-      const SumTotal = SumTotalProducts(products, 'costPrice');
-
-      sumPrice = SumTotal + (SumTotal * profit) / 100;
-    }
-
-    if (price) {
-      sumPrice = price;
-    }
-
     const menu = this.CustomRepository.create({
       description,
       name,
-      price: sumPrice,
+      price,
       products,
       type,
     });

@@ -101,7 +101,7 @@
             "minStock": 50,
             "stock": 500
         },
-        "juice": {
+        "JUICE": {
             "id": 0,
             "name": "grape juice",
             "costPrice": 0.50,
@@ -130,6 +130,45 @@
             "id": 0,
             "name": "Sobremesas",
             "description": "Açaí, Sorvetes"
+        },
+        "COMBO": {
+            "id": 0,
+            "name": "Combo",
+            "description": "Hamburguer, bebida"
+        }
+    },
+    "menu": {
+        "COMBO_HAMBURGUER": {
+            "id": 0,
+            "name": "Combo hamburguer",
+            "description": ""
+        },
+        "BIG_Pizza": {
+            "id": 0,
+            "name": "Big Pizza Calabreza",
+            "description": "Pizza with cheese border",
+            "products": [],
+            "profit": 0.00,
+            "price": 0.00,
+            "type": {}
+        },
+        "JUICE": {
+            "id": 0,
+            "name": "orange juice",
+            "description": "Natural orange juice",
+            "products": [],
+            "profit": 100,
+            "price": 0.00,
+            "type": {}
+        },
+        "SODA": {
+            "id": 0,
+            "name": "Soda coke",
+            "description": "Soda Coke",
+            "products": [],
+            "profit": 0.00,
+            "price": 3.00,
+            "type": {}
         }
     }
 }

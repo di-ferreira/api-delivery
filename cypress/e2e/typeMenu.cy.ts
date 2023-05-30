@@ -1,8 +1,8 @@
-import res from './resource.json';
+import res from './mocks.json';
 
 describe('Type Menu spec', () => {
   let typemenu = res.type_menu.BEBIDAS;
-  let product2 = res.type_menu.SANDUICHES;
+  let typemenu2 = res.type_menu.SANDUICHES;
 
   it('shoud Create Type Menu 1', () => {
     cy.request({
@@ -20,15 +20,15 @@ describe('Type Menu spec', () => {
     cy.request({
       method: 'POST',
       url: `${res.BASE_URL}/type-menu`,
-      body: product2,
+      body: typemenu2,
     }).then((response) => {
       expect(201).equal(response.status);
       cy.log(JSON.stringify(response.body));
-      product2.id = response.body.id;
+      typemenu2.id = response.body.id;
     });
   });
 
-  it('should return all Products', () => {
+  it('should return all Type Menus', () => {
     cy.request({
       method: 'GET',
       url: `${res.BASE_URL}/type-menu`,
@@ -36,8 +36,8 @@ describe('Type Menu spec', () => {
     })
       .its('body.data')
       .should('have.length', 2)
-      .then((products) => {
-        cy.log(JSON.stringify(products));
+      .then((typeMenus) => {
+        cy.log(JSON.stringify(typeMenus));
       });
   });
 
@@ -48,10 +48,10 @@ describe('Type Menu spec', () => {
       failOnStatusCode: false,
     })
       .its('body')
-      .then((pdt) => {
-        expect(pdt.id).equal(typemenu.id);
-        expect(pdt.name).equal(typemenu.name);
-        cy.log(JSON.stringify(pdt));
+      .then((tpMenu) => {
+        expect(tpMenu.id).equal(typemenu.id);
+        expect(tpMenu.name).equal(typemenu.name);
+        cy.log(JSON.stringify(tpMenu));
       });
   });
 
@@ -59,11 +59,11 @@ describe('Type Menu spec', () => {
     cy.request({
       method: 'PUT',
       url: `${res.BASE_URL}/type-menu/${typemenu.id}`,
-      body: res.products['HOT-DOG'],
+      body: res.type_menu.SOBREMESAS,
     })
       .its('body')
       .then((body) => {
-        expect(res.products['HOT-DOG'].name).to.eq(body.name);
+        expect(res.type_menu.SOBREMESAS.name).to.eq(body.name);
         cy.log(JSON.stringify(body));
       });
   });
@@ -83,7 +83,7 @@ describe('Type Menu spec', () => {
   it('should Delete Type Menu 2', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/type-menu/${product2.id}`,
+      url: `${res.BASE_URL}/type-menu/${typemenu2.id}`,
     })
       .its('body')
       .then((body) => {

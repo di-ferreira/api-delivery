@@ -39,7 +39,7 @@ export default class MenuController implements iMenuController {
 
     const menu = await createMenu.execute(newMenu);
 
-    return response.json(menu);
+    return response.status(201).json(menu);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -67,6 +67,6 @@ export default class MenuController implements iMenuController {
     const { id } = request.params;
     const deleteMenu = new DeleteMenuService();
     await deleteMenu.execute({ id: Number(id) });
-    return response.json([]);
+    return response.status(204).json([]);
   }
 }

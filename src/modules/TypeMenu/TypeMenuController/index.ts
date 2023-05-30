@@ -30,7 +30,7 @@ export default class TypeMenuController implements iTypeMenuController {
       name,
       description,
     });
-    return response.json(typeMenu);
+    return response.status(201).json(typeMenu);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -49,6 +49,6 @@ export default class TypeMenuController implements iTypeMenuController {
     const { id } = request.params;
     const deleteTypeMenu = new DeleteTypeMenuService();
     await deleteTypeMenu.execute({ id: Number(id) });
-    return response.json([]);
+    return response.status(204).json([]);
   }
 }
