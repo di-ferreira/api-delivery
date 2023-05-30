@@ -42,6 +42,20 @@ class CreateMenuService {
       sumPrice = price;
     }
 
+    if (!price && !profit) {
+      const SumTotalProducts = (
+        productsArray: iProduct[],
+        propertyObject: string
+      ) => {
+        return productsArray.reduce((total: number, product: iProduct) => {
+          return total + product[propertyObject];
+        }, 0);
+      };
+      const SumTotal = SumTotalProducts(products, 'costPrice');
+
+      sumPrice = SumTotal;
+    }
+
     if (!typeExists) {
       throw new AppError('Menu not have a type');
     }

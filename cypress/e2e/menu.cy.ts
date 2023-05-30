@@ -1,5 +1,6 @@
 import res from './mocks.json';
 //TODO update product and menu auto
+//TODO create Menu with empty array
 describe('Menu spec', () => {
   let typeCombo = res.type_menu.COMBO;
   let typeMassas = res.type_menu.MASSAS;
@@ -76,6 +77,9 @@ describe('Menu spec', () => {
       body: menuWithProd,
     }).then((response) => {
       expect(201).equal(response.status);
+      expect(response.body.price).equal(
+        prodHamburguer.costPrice + prodSoda.costPrice
+      );
       cy.log(JSON.stringify(response.body));
       menuWithProd.id = response.body.id;
     });
@@ -88,6 +92,9 @@ describe('Menu spec', () => {
       body: menuWithoutProd,
     }).then((response) => {
       expect(201).equal(response.status);
+      expect(response.body.price).equal(res.products.PIZZA.costPrice);
+      expect(response.body.products[0].name).equal(res.products.PIZZA.name);
+      expect(response.body.products[0].id).greaterThan(0);
       cy.log(JSON.stringify(response.body));
       menuWithoutProd.id = response.body.id;
     });
