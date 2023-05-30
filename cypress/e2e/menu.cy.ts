@@ -2,14 +2,9 @@ import res from './mocks.json';
 //TODO update product and menu auto
 describe('Menu spec', () => {
   let typeCombo = res.type_menu.COMBO;
+  let typeMassas = res.type_menu.MASSAS;
   let prodHamburguer = res.products.HAMBURGUER;
   let prodSoda = res.products.SODA;
-
-  let menu = {
-    ...res.menu.SODA,
-    products: [res.products.SODA],
-    type: res.type_menu.BEBIDAS,
-  };
 
   let menuWithProd = {
     ...res.menu.COMBO_HAMBURGUER,
@@ -20,7 +15,7 @@ describe('Menu spec', () => {
   let menuWithoutProd = {
     ...res.menu.BIG_Pizza,
     products: [res.products.PIZZA],
-    type: res.type_menu.MASSAS,
+    type: typeMassas,
   };
 
   let menuWithPrice = {
@@ -46,6 +41,15 @@ describe('Menu spec', () => {
       failOnStatusCode: false,
     }).then((response) => {
       typeCombo.id = response.body.id;
+    });
+
+    cy.request({
+      method: 'POST',
+      url: `${res.BASE_URL}/type-menu`,
+      body: typeMassas,
+      failOnStatusCode: false,
+    }).then((response) => {
+      typeMassas.id = response.body.id;
     });
 
     cy.request({
@@ -77,10 +81,28 @@ describe('Menu spec', () => {
     });
   });
 
+  it('shoud Create Menu without products', () => {
+    cy.request({
+      method: 'POST',
+      url: `${res.BASE_URL}/menu`,
+      body: menuWithoutProd,
+    }).then((response) => {
+      expect(201).equal(response.status);
+      cy.log(JSON.stringify(response.body));
+      menuWithoutProd.id = response.body.id;
+    });
+  });
+
   after(() => {
     cy.request({
       method: 'DELETE',
       url: `${res.BASE_URL}/type-menu/${typeCombo.id}`,
+      failOnStatusCode: false,
+    });
+
+    cy.request({
+      method: 'DELETE',
+      url: `${res.BASE_URL}/type-menu/${typeMassas.id}`,
       failOnStatusCode: false,
     });
 
@@ -96,18 +118,6 @@ describe('Menu spec', () => {
       failOnStatusCode: false,
     });
   });
-
-  //   it('shoud Create Menu without products', () => {
-  //     cy.request({
-  //       method: 'POST',
-  //       url: `${res.BASE_URL}/menu`,
-  //       body: menu,
-  //     }).then((response) => {
-  //       expect(400).equal(response.status);
-  //       cy.log(JSON.stringify(response.body));
-  //       menu.id = response.body.id;
-  //     });
-  //   });
 
   //   it('shoud Create Menu and product', () => {
   //     cy.request({
@@ -185,10 +195,22 @@ describe('Menu spec', () => {
   //       });
   //   });
 
-  it('should Delete Menu', () => {
+  it('should Delete Menu with product', () => {
     cy.request({
       method: 'DELETE',
       url: `${res.BASE_URL}/menu/${menuWithProd.id}`,
+    })
+      .its('body')
+      .then((body) => {
+        cy.wrap(body).should('be.empty');
+        cy.log(JSON.stringify(body));
+      });
+  });
+
+  it('should Delete Menu without product', () => {
+    cy.request({
+      method: 'DELETE',
+      url: `${res.BASE_URL}/menu/${menuWithoutProd.id}`,
     })
       .its('body')
       .then((body) => {

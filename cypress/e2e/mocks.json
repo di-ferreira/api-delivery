@@ -148,8 +148,6 @@
             "name": "Big Pizza Calabreza",
             "description": "Pizza with cheese border",
             "products": [],
-            "profit": 0.00,
-            "price": 0.00,
             "type": {}
         },
         "JUICE": {
