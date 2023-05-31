@@ -23,6 +23,13 @@ class CreateMenuService {
     const typeRepository = new TypeMenuRepository();
     const productRepository = new ProductRepository();
     const typeExists = await typeRepository.findById(type.id);
+    if (products.length < 1) {
+      throw new AppError('Menu not have a product');
+    }
+
+    if (!typeExists) {
+      throw new AppError('Menu not have a type');
+    }
 
     const SumTotalProducts = (
       productsArray: iProduct[],
@@ -58,10 +65,6 @@ class CreateMenuService {
     if (!price && !profit) {
       const SumTotal = SumTotalProducts(newProducts, 'costPrice');
       sumPrice = SumTotal;
-    }
-
-    if (!typeExists) {
-      throw new AppError('Menu not have a type');
     }
 
     const menu = await this.menuRepository.create({
