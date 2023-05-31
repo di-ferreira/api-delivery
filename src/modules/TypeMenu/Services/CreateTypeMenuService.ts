@@ -18,7 +18,6 @@ class CreateTypeMenuService {
     description,
   }: iCreateTypeMenu): Promise<iTypeMenu> {
     const typeMenuExists = await this.typeMenuRepository.findByType(name);
-    console.log(typeMenuExists);
     if (typeMenuExists.length >= 1) {
       throw new AppError('There is already one Type with this name');
     }

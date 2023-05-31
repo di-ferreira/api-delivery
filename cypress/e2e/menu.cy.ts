@@ -6,6 +6,7 @@ describe('Menu spec', () => {
   let typeMassas = res.type_menu.MASSAS;
   let prodHamburguer = res.products.HAMBURGUER;
   let prodSoda = res.products.SODA;
+  let prodPizza = res.products.PIZZA;
 
   let menuWithProd = {
     ...res.menu.COMBO_HAMBURGUER,
@@ -13,9 +14,9 @@ describe('Menu spec', () => {
     type: typeCombo,
   };
 
-  let menuWithoutProd = {
+  let menuAndProd = {
     ...res.menu.BIG_Pizza,
-    products: [res.products.PIZZA],
+    products: [prodPizza],
     type: typeMassas,
   };
 
@@ -85,18 +86,19 @@ describe('Menu spec', () => {
     });
   });
 
-  it('shoud Create Menu without products', () => {
+  it('shoud Create Menu and products', () => {
     cy.request({
       method: 'POST',
       url: `${res.BASE_URL}/menu`,
-      body: menuWithoutProd,
+      body: menuAndProd,
     }).then((response) => {
       expect(201).equal(response.status);
       expect(response.body.price).equal(res.products.PIZZA.costPrice);
       expect(response.body.products[0].name).equal(res.products.PIZZA.name);
-      expect(response.body.products[0].id).greaterThan(0);
       cy.log(JSON.stringify(response.body));
-      menuWithoutProd.id = response.body.id;
+      expect(response.body.products[0].id).gte(0);
+      prodPizza.id = response.body.products[0].id;
+      menuAndProd.id = response.body.id;
     });
   });
 
@@ -122,6 +124,11 @@ describe('Menu spec', () => {
     cy.request({
       method: 'DELETE',
       url: `${res.BASE_URL}/product/${prodSoda.id}`,
+      failOnStatusCode: false,
+    });
+    cy.request({
+      method: 'DELETE',
+      url: `${res.BASE_URL}/product/${prodPizza.id}`,
       failOnStatusCode: false,
     });
   });
@@ -217,7 +224,7 @@ describe('Menu spec', () => {
   it('should Delete Menu without product', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/menu/${menuWithoutProd.id}`,
+      url: `${res.BASE_URL}/menu/${menuAndProd.id}`,
     })
       .its('body')
       .then((body) => {

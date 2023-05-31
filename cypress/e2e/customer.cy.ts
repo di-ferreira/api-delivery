@@ -82,7 +82,6 @@ describe('Customer spec', () => {
   });
 
   it('should Delete Customer with Address', () => {
-    console.log(customer2);
     cy.request({
       method: 'DELETE',
       url: `${res.BASE_URL}/customer/${customer2.id}`,
