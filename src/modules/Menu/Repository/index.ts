@@ -47,7 +47,7 @@ export default class MenuRepository implements iMenuRepository {
     type,
   }: iUpdatedMenu): Promise<iMenu> {
     let sumPrice: number = 0;
-
+    //TODO remover regra
     if (profit) {
       const SumTotalProducts = (
         productsArray: iProduct[],
@@ -98,6 +98,13 @@ export default class MenuRepository implements iMenuRepository {
       type: {
         id: typeID,
       },
+    });
+    return menus;
+  }
+
+  public async findByActive(active: boolean): Promise<iMenu[]> {
+    const menus = await this.CustomRepository.findBy({
+      active,
     });
     return menus;
   }

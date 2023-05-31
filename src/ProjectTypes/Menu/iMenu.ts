@@ -25,6 +25,7 @@ export interface iUpdatedMenu {
   profit?: number;
   price?: number;
   description?: string;
+  active?: boolean;
   type?: iTypeMenu;
   products?: iProduct[];
 }
@@ -34,6 +35,7 @@ export interface iMenu {
   name: string;
   price: number;
   description?: string;
+  active: boolean;
   type: iTypeMenu;
   products: iProduct[];
   createdAt: Date;
@@ -49,6 +51,7 @@ export interface iMenuList {
 export interface iMenuRepository {
   findAll({ page, limit }: SearchParams): Promise<iMenuList>;
   findByType(typeID: number): Promise<iMenu[] | null>;
+  findByActive(active: boolean): Promise<iMenu[] | null>;
   findByProduct(productID: number): Promise<iMenu[] | null>;
   findById(id: number): Promise<iMenu | null>;
   create(data: iCreateMenu): Promise<iMenu>;

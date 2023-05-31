@@ -81,6 +81,7 @@ describe('Menu spec', () => {
       expect(response.body.price).equal(
         prodHamburguer.costPrice + prodSoda.costPrice
       );
+      expect(response.body.active).to.equal(true);
       cy.log(JSON.stringify(response.body));
       menuWithProd.id = response.body.id;
     });

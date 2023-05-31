@@ -32,6 +32,9 @@ export class Menu implements iMenu {
   @Column({ type: 'text', nullable: true })
   description: string;
 
+  @Column({ type: 'boolean', default: true })
+  active: boolean;
+
   @OneToMany((type) => ItemOrder, (orderMenu) => orderMenu.menu, {
     nullable: false,
   })
