@@ -29,7 +29,7 @@ describe('Menu spec', () => {
   let menuWithPrice = {
     ...res.menu.COMBO_HAMBURGUER,
     products: [res.products.JUICE, res.products['HOT-DOG']],
-    type: res.type_menu.COMBO,
+    type: typeCombo,
     price: 25.0,
   };
 
@@ -142,17 +142,18 @@ describe('Menu spec', () => {
     });
   });
 
-  //   it('shoud Create Menu with price', () => {
-  //     cy.request({
-  //       method: 'POST',
-  //       url: `${res.BASE_URL}/menu`,
-  //       body: menu2,
-  //     }).then((response) => {
-  //       expect(201).equal(response.status);
-  //       cy.log(JSON.stringify(response.body));
-  //       menu2.id = response.body.id;
-  //     });
-  //   });
+  it('shoud Create Menu with price', () => {
+    cy.request({
+      method: 'POST',
+      url: `${res.BASE_URL}/menu`,
+      body: menuWithPrice,
+    }).then((response) => {
+      expect(201).equal(response.status);
+      expect(menuWithPrice.price).equal(response.body.price);
+      cy.log(JSON.stringify(response.body));
+      menuWithPrice.id = response.body.id;
+    });
+  });
 
   //   it('should return all Menus', () => {
   //     cy.request({
@@ -222,6 +223,18 @@ describe('Menu spec', () => {
     cy.request({
       method: 'DELETE',
       url: `${res.BASE_URL}/menu/${menuWithProfit.id}`,
+    })
+      .its('body')
+      .then((body) => {
+        cy.wrap(body).should('be.empty');
+        cy.log(JSON.stringify(body));
+      });
+  });
+
+  it('should Delete Menu with Price', () => {
+    cy.request({
+      method: 'DELETE',
+      url: `${res.BASE_URL}/menu/${menuWithPrice.id}`,
     })
       .its('body')
       .then((body) => {
