@@ -49,6 +49,7 @@ export interface iOrderList {
 }
 export interface iOrderRepository {
   findAll({ page, limit }: SearchParams): Promise<iOrderList>;
+  findById(orderID: number): Promise<iOrder[] | null>;
   findByCustomer(customerID: number): Promise<iOrder[] | null>;
   findByStatus(status: iStatusOrder): Promise<iOrder | null>;
   create(data: iCreateOrder): Promise<iOrder>;
