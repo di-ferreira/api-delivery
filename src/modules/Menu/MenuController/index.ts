@@ -25,11 +25,13 @@ export default class MenuController implements iMenuController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, description, products, profit, price, type } = request.body;
+    const { name, description, products, profit, price, type, active } =
+      request.body;
     const createMenu = new CreateMenuService();
 
     let newMenu: iCreateMenu = {
       name,
+      active,
       products,
       type,
       description: description && description,
@@ -45,7 +47,8 @@ export default class MenuController implements iMenuController {
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const { name, description, products, profit, price, type } = request.body;
+    const { name, description, products, profit, price, type, active } =
+      request.body;
 
     const createMenu = new UpdateMenuService();
 
@@ -54,6 +57,7 @@ export default class MenuController implements iMenuController {
       name: name && name,
       products: products && products,
       type: type && type,
+      active: active && active,
       description: description && description,
       price: price && price,
       profit: profit && profit,

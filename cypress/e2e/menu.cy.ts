@@ -1,5 +1,4 @@
 import res from './mocks.json';
-//TODO update product and menu auto
 describe('Menu spec', () => {
   let typeCombo = res.type_menu.COMBO;
   let typeMassas = res.type_menu.MASSAS;
@@ -155,45 +154,78 @@ describe('Menu spec', () => {
     });
   });
 
-  //   it('should return all Menus', () => {
-  //     cy.request({
-  //       method: 'GET',
-  //       url: `${res.BASE_URL}/menu`,
-  //       failOnStatusCode: false,
-  //     })
-  //       .its('body.data')
-  //       .should('have.length', 4)
-  //       .then((menus) => {
-  //         cy.log(JSON.stringify(menus));
-  //       });
-  //   });
+  it('should return all Menus', () => {
+    cy.request({
+      method: 'GET',
+      url: `${res.BASE_URL}/menu`,
+    })
+      .its('body.data')
+      .should('have.length', 4)
+      .then((menus) => {
+        cy.log(JSON.stringify(menus));
+      });
+  });
 
-  //   it('should return Menu by ID', () => {
-  //     cy.request({
-  //       method: 'GET',
-  //       url: `${res.BASE_URL}/menu/${menu.id}`,
-  //       failOnStatusCode: false,
-  //     })
-  //       .its('body')
-  //       .then((pdt) => {
-  //         expect(pdt.id).equal(menu.id);
-  //         expect(pdt.name).equal(menu.name);
-  //         cy.log(JSON.stringify(pdt));
-  //       });
-  //   });
+  it('should return Menu by ID', () => {
+    cy.request({
+      method: 'GET',
+      url: `${res.BASE_URL}/menu/${menuWithProd.id}`,
+      failOnStatusCode: false,
+    })
+      .its('body')
+      .then((pdt) => {
+        expect(pdt.id).equal(menuWithProd.id);
+        expect(pdt.name).equal(menuWithProd.name);
+        cy.log(JSON.stringify(pdt));
+      });
+  });
 
-  //   it('should Edit Menu', () => {
-  //     cy.request({
-  //       method: 'PUT',
-  //       url: `${res.BASE_URL}/menu/${menu.id}`,
-  //       body: res.type_menu.SOBREMESAS,
-  //     })
-  //       .its('body')
-  //       .then((body) => {
-  //         expect(res.type_menu.SOBREMESAS.name).to.eq(body.name);
-  //         cy.log(JSON.stringify(body));
-  //       });
-  //   });
+  it('should Edit Menu', () => {
+    menuWithProfit = {
+      ...menuWithProfit,
+      name: 'grape juice',
+      description: 'Natural grape juice',
+      active: false,
+      profit: 100.0,
+    };
+    cy.request({
+      method: 'PUT',
+      url: `${res.BASE_URL}/menu/${menuWithProfit.id}`,
+      body: menuWithProfit,
+    })
+      .its('body')
+      .then((body) => {
+        cy.log(JSON.stringify(body));
+        expect(menuWithProfit.name).to.eq(body.name);
+        expect(menuWithProfit.description).to.eq(body.description);
+        expect(menuWithProfit.active).to.eq(body.active);
+        expect(body.price).to.eq(1.0);
+      });
+  });
+
+  it('should return all Menus actives', () => {
+    cy.request({
+      method: 'GET',
+      url: `${res.BASE_URL}/menu?active`,
+    })
+      .its('body.data')
+      .should('have.length', 3)
+      .then((menus) => {
+        cy.log(JSON.stringify(menus));
+      });
+  });
+
+  it('should return all Menus inactives', () => {
+    cy.request({
+      method: 'GET',
+      url: `${res.BASE_URL}/menu?active=false`,
+    })
+      .its('body.data')
+      .should('have.length', 1)
+      .then((menus) => {
+        cy.log(JSON.stringify(menus));
+      });
+  });
 
   it('should Delete Menu with product', () => {
     cy.request({
@@ -242,18 +274,6 @@ describe('Menu spec', () => {
         cy.log(JSON.stringify(body));
       });
   });
-
-  //   it('should Delete Menu 2', () => {
-  //     cy.request({
-  //       method: 'DELETE',
-  //       url: `${res.BASE_URL}/menu/${menu2.id}`,
-  //     })
-  //       .its('body')
-  //       .then((body) => {
-  //         cy.wrap(body).should('be.empty');
-  //         cy.log(JSON.stringify(body));
-  //       });
-  //   });
 
   after(() => {
     cy.request({

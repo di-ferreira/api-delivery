@@ -17,6 +17,7 @@ class CreateMenuService {
     description,
     products,
     profit,
+    active,
     price,
     type,
   }: iCreateMenu): Promise<iMenu> {
@@ -73,9 +74,9 @@ class CreateMenuService {
       products: newProducts,
       price: sumPrice,
       profit,
+      active: active ? active : true,
       type,
     });
-
     return menu;
   }
 }

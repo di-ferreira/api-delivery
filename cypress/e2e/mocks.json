@@ -155,6 +155,7 @@
             "name": "orange juice",
             "description": "Natural orange juice",
             "products": [],
+            "active": true,
             "profit": 100,
             "price": 0.00,
             "type": {}

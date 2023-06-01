@@ -7,6 +7,7 @@ export interface iCreateMenu {
   profit?: number;
   price?: number;
   description?: string;
+  active: boolean;
   type: iTypeMenu;
   products: iProduct[];
 }
