@@ -5,7 +5,6 @@ import {
   iMenuRepository,
   iUpdatedMenu,
 } from '@ProjectTypes/Menu/iMenu';
-import { iProduct } from '@ProjectTypes/Product/iProduct';
 import { SearchParams } from '@ProjectTypes/index';
 import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
@@ -22,9 +21,9 @@ export default class MenuRepository implements iMenuRepository {
     name,
     description,
     products,
-    profit,
     price,
     type,
+    active,
   }: iCreateMenu): Promise<iMenu> {
     const menu = this.CustomRepository.create({
       description,
@@ -32,6 +31,7 @@ export default class MenuRepository implements iMenuRepository {
       price,
       products,
       type,
+      active,
     });
 
     return await this.CustomRepository.save(menu);
@@ -43,45 +43,26 @@ export default class MenuRepository implements iMenuRepository {
     name,
     price,
     products,
-    profit,
     type,
+    active,
   }: iUpdatedMenu): Promise<iMenu> {
-    let sumPrice: number = 0;
-    //TODO remover regra
-    if (profit) {
-      const SumTotalProducts = (
-        productsArray: iProduct[],
-        propertyObject: string
-      ) => {
-        return productsArray.reduce((total: number, product: iProduct) => {
-          return total + product[propertyObject];
-        }, 0);
-      };
-      const SumTotal = SumTotalProducts(products, 'costPrice');
-
-      sumPrice = SumTotal + (SumTotal * profit) / 100;
-    }
-
-    if (price) {
-      sumPrice = price;
-    }
-
     const menu = this.CustomRepository.create({
       id,
       description,
       name,
-      price: sumPrice,
+      price,
       products,
       type,
+      active,
     });
     return await this.CustomRepository.save(menu);
   }
 
   public async findAll({ page, limit }: SearchParams): Promise<iMenuList> {
-    const [menus, count] = await this.CustomRepository.createQueryBuilder()
-      .skip(limit * (page - 1))
-      .take(limit)
-      .getManyAndCount();
+    const [menus, count] = await this.CustomRepository.findAndCount({
+      skip: limit * (page - 1),
+      take: limit,
+    });
 
     const result: iMenuList = {
       current_page: page,
@@ -103,9 +84,13 @@ export default class MenuRepository implements iMenuRepository {
   }
 
   public async findByActive({ active, page, limit }): Promise<iMenuList> {
-    const [menus, count] = await this.CustomRepository.createQueryBuilder()
-      .where({ active })
-      .getManyAndCount();
+    const [menus, count] = await this.CustomRepository.findAndCount({
+      skip: limit * (page - 1),
+      take: limit,
+      where: {
+        active,
+      },
+    });
 
     const result: iMenuList = {
       current_page: page,

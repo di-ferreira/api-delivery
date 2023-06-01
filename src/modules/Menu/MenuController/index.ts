@@ -13,7 +13,6 @@ export default class MenuController implements iMenuController {
     const limit = Number(request.query.limit);
     const active = request.query.active;
     const listMenu = new ListMenuService();
-    console.log('active controller->', active);
     const menus = await listMenu.execute({ page, limit, active });
 
     return response.json(menus);

@@ -13,24 +13,30 @@ class ListMenuService {
   }
 
   public async execute({
-    page = 1,
-    limit = 15,
+    page,
+    limit,
     active,
   }: SearchParamsMenu): Promise<iMenuList> {
     let menu: iMenuList = {
-      current_page: page,
+      current_page: page ? page : 1,
       data: [],
-      per_page: limit,
+      per_page: limit ? limit : 15,
       total: 0,
     };
-    console.log(active);
-    if (active) {
-      menu = await this.menuRepository.findByActive({ active, limit, page });
-    } else {
-      menu = await this.menuRepository.findAll({
-        page,
-        limit,
+    if (active === undefined) {
+      const newMenu = await this.menuRepository.findAll({
+        page: menu.current_page,
+        limit: menu.per_page,
       });
+      menu = { ...newMenu };
+    } else {
+      const activeFind: boolean = JSON.parse(active);
+      const newMenu = await this.menuRepository.findByActive({
+        active: activeFind,
+        page: menu.current_page,
+        limit: menu.per_page,
+      });
+      menu = { ...newMenu };
     }
     return menu;
   }

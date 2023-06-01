@@ -53,12 +53,12 @@ export interface iMenuList {
 export type SearchParamsMenu = {
   page: number;
   limit: number;
-  active: boolean;
+  active: any;
 };
 export interface iMenuRepository {
   findAll({ page, limit }: SearchParams): Promise<iMenuList>;
-  findByType(typeID: number): Promise<iMenu[] | null>;
   findByActive(filter: SearchParamsMenu): Promise<iMenuList>;
+  findByType(typeID: number): Promise<iMenu[] | null>;
   findByProduct(productID: number): Promise<iMenu[] | null>;
   findById(id: number): Promise<iMenu | null>;
   create(data: iCreateMenu): Promise<iMenu>;
