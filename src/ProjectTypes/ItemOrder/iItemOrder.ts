@@ -21,7 +21,7 @@ export interface iUpdatedItemOrder {
   id: number;
   total?: number;
   quantity?: number;
-  menu: iMenu;
+  menu?: iMenu;
 }
 
 export interface iItemOrder {

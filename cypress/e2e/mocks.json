@@ -77,10 +77,10 @@
             "minStock": 0,
             "stock": 100
         },
-        "HOT-DOG": {
+        "HOT_DOG": {
             "id": 0,
             "name": "hot-dog",
-            "costPrice": 2.50,
+            "costPrice": 5.00,
             "description": "bread, salsage",
             "minStock": 10,
             "stock": 200
