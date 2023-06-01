@@ -102,11 +102,19 @@ export default class MenuRepository implements iMenuRepository {
     return menus;
   }
 
-  public async findByActive(active: boolean): Promise<iMenu[]> {
-    const menus = await this.CustomRepository.findBy({
-      active,
-    });
-    return menus;
+  public async findByActive({ active, page, limit }): Promise<iMenuList> {
+    const [menus, count] = await this.CustomRepository.createQueryBuilder()
+      .where({ active })
+      .getManyAndCount();
+
+    const result: iMenuList = {
+      current_page: page,
+      data: menus,
+      per_page: limit,
+      total: count,
+    };
+
+    return result;
   }
 
   public async findByProduct(productID: number): Promise<iMenu[]> {

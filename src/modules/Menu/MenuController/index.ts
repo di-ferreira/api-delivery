@@ -9,10 +9,12 @@ import UpdateMenuService from '../Services/UpdateMenuService';
 
 export default class MenuController implements iMenuController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const page = request.query.page ? Number(request.query.page) : 1;
-    const limit = request.query.limit ? Number(request.query.limit) : 15;
+    const page = Number(request.query.page);
+    const limit = Number(request.query.limit);
+    const active = request.query.active;
     const listMenu = new ListMenuService();
-    const menus = await listMenu.execute({ page, limit });
+    console.log('active controller->', active);
+    const menus = await listMenu.execute({ page, limit, active });
 
     return response.json(menus);
   }

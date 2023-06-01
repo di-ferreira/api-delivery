@@ -206,7 +206,7 @@ describe('Menu spec', () => {
   it('should return all Menus actives', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/menu?active`,
+      url: `${res.BASE_URL}/menu?active=true`,
     })
       .its('body.data')
       .should('have.length', 3)

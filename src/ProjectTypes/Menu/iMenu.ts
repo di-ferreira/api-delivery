@@ -49,10 +49,16 @@ export interface iMenuList {
   current_page: number;
   data: iMenu[];
 }
+
+export type SearchParamsMenu = {
+  page: number;
+  limit: number;
+  active: boolean;
+};
 export interface iMenuRepository {
   findAll({ page, limit }: SearchParams): Promise<iMenuList>;
   findByType(typeID: number): Promise<iMenu[] | null>;
-  findByActive(active: boolean): Promise<iMenu[] | null>;
+  findByActive(filter: SearchParamsMenu): Promise<iMenuList>;
   findByProduct(productID: number): Promise<iMenu[] | null>;
   findById(id: number): Promise<iMenu | null>;
   create(data: iCreateMenu): Promise<iMenu>;
