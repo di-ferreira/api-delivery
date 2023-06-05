@@ -3,7 +3,7 @@ import { SearchParams } from '..';
 export interface iCreateProduct {
   name: string;
   costPrice: number;
-  describe?: string;
+  description?: string;
   minStock: number;
   stock: number;
 }
@@ -20,7 +20,7 @@ export interface iUpdatedProduct {
   id: number;
   name?: string;
   costPrice?: number;
-  describe?: string;
+  description?: string;
   minStock?: number;
   stock?: number;
 }

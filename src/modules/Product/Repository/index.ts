@@ -21,14 +21,14 @@ export default class ProductRepository implements iProductRepository {
     minStock,
     name,
     stock,
-    describe,
+    description,
   }: iCreateProduct): Promise<iProduct> {
     const product = this.CustomRepository.create({
       costPrice,
-      minStock,
+      description,
       name,
+      minStock,
       stock,
-      describe,
     });
 
     await this.CustomRepository.save(product);

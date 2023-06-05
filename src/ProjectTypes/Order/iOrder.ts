@@ -41,6 +41,12 @@ export interface iOrder {
   updateAt?: Date;
 }
 
+export type SearchParamsOrder = {
+  page: number;
+  limit: number;
+  param: any;
+};
+
 export interface iOrderList {
   per_page: number;
   total: number;
@@ -49,9 +55,17 @@ export interface iOrderList {
 }
 export interface iOrderRepository {
   findAll({ page, limit }: SearchParams): Promise<iOrderList>;
-  findById(orderID: number): Promise<iOrder[] | null>;
-  findByCustomer(customerID: number): Promise<iOrder[] | null>;
-  findByStatus(status: iStatusOrder): Promise<iOrder | null>;
+  findById(orderID: number): Promise<iOrder | null>;
+  findByCustomer({
+    limit,
+    page,
+    param,
+  }: SearchParamsOrder): Promise<iOrderList | null>;
+  findByStatus({
+    limit,
+    page,
+    param,
+  }: SearchParamsOrder): Promise<iOrderList | null>;
   create(data: iCreateOrder): Promise<iOrder>;
   save(customer: iOrder): Promise<iOrder>;
   remove(customer: iOrder): Promise<void>;
