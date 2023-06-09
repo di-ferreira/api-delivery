@@ -4,6 +4,7 @@ import res from './mocks.json';
 describe('Order spec', () => {
   let customer = { id: 0, ...res.customers.DIEGO };
   let customer2 = { id: 0, ...res.customers.PRISCILA };
+  let customer3 = { id: 0, ...res.customers.AQUILES };
   let typeCombo = res.type_menu.COMBO;
   let typeMassas = res.type_menu.MASSAS;
   let typeBebidas = res.type_menu.BEBIDAS;
@@ -17,13 +18,14 @@ describe('Order spec', () => {
     ...res.menu.COMBO_HAMBURGUER,
     products: [prodHamburguer, prodSoda],
     type: typeCombo,
+    active: true,
   };
 
   let menuPizza = {
     ...res.menu.BIG_Pizza,
     products: [prodPizza],
     type: typeMassas,
-    active: true,
+    active: false,
   };
 
   let menuCombo = {
@@ -31,6 +33,7 @@ describe('Order spec', () => {
     products: [prodJuice, prodHotdog],
     type: typeCombo,
     price: 25.0,
+    active: true,
   };
 
   let menuJuice = {
@@ -39,6 +42,7 @@ describe('Order spec', () => {
     type: typeBebidas,
     profit: 50.0,
     price: 0.0,
+    active: true,
   };
 
   let orderAndItems = {
@@ -65,7 +69,7 @@ describe('Order spec', () => {
   let orderWithoutItems = {
     id: 0,
     status: iStatusOrder.FILA,
-    customer: customer2,
+    customer: customer3,
     obs: 'obs test',
     items: [],
   };
@@ -73,7 +77,7 @@ describe('Order spec', () => {
   let orderWithInactiveItem = {
     id: 0,
     status: iStatusOrder.FILA,
-    customer: customer,
+    customer: customer2,
     obs: 'obs test',
     items: [
       {
@@ -122,6 +126,16 @@ describe('Order spec', () => {
 
     cy.request({
       method: 'POST',
+      url: `${res.BASE_URL}/customer`,
+      failOnStatusCode: false,
+      body: customer3,
+    }).then((response) => {
+      customer3.id = response.body.id;
+      cy.log(JSON.stringify(customer3));
+    });
+
+    cy.request({
+      method: 'POST',
       url: `${res.BASE_URL}/type-menu`,
       body: typeCombo,
       failOnStatusCode: false,
@@ -135,8 +149,7 @@ describe('Order spec', () => {
       body: typeMassas,
       failOnStatusCode: false,
     }).then((response) => {
-      console.log(response.body.id);
-      typeMassas = { ...typeMassas, id: response.body.id };
+      typeMassas.id = response.body.id;
     });
 
     cy.request({
@@ -193,18 +206,7 @@ describe('Order spec', () => {
       url: `${res.BASE_URL}/menu`,
       body: menuPizza,
     }).then((response) => {
-      menuPizza.id = response.body.id;
-    });
-
-    menuPizza = { ...menuPizza, active: false };
-
-    cy.request({
-      method: 'PUT',
-      url: `${res.BASE_URL}/menu`,
-      body: menuPizza,
-      failOnStatusCode: false,
-    }).then((response) => {
-      menuPizza.id = response.body.id;
+      menuPizza = response.body;
     });
 
     cy.request({
@@ -212,7 +214,7 @@ describe('Order spec', () => {
       url: `${res.BASE_URL}/menu`,
       body: menuHamburguer,
     }).then((response) => {
-      menuHamburguer.id = response.body.id;
+      menuHamburguer = response.body;
     });
 
     cy.request({
@@ -220,7 +222,7 @@ describe('Order spec', () => {
       url: `${res.BASE_URL}/menu`,
       body: menuJuice,
     }).then((response) => {
-      menuJuice.id = response.body.id;
+      menuJuice = response.body;
     });
 
     cy.request({
@@ -228,7 +230,7 @@ describe('Order spec', () => {
       url: `${res.BASE_URL}/menu`,
       body: menuCombo,
     }).then((response) => {
-      menuCombo.id = response.body.id;
+      menuCombo = response.body;
     });
   });
 
@@ -240,19 +242,35 @@ describe('Order spec', () => {
     }).then((response) => {
       expect(201).equal(response.status);
       cy.log(JSON.stringify(response.body));
-      orderAndItems.id = response.body.id;
+      orderAndItems = response.body;
     });
   });
 
   it('shoud Create Order and items with menu inactive', () => {
     cy.request({
-      method: 'POST',
-      url: `${res.BASE_URL}/order`,
-      body: orderWithInactiveItem,
+      method: 'PUT',
+      url: `${res.BASE_URL}/menu/${menuPizza.id}`,
+      body: { ...menuPizza, active: false },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(400).equal(response.status);
-      cy.log(JSON.stringify(response.body));
+      console.log('🚀 ~ file: order.cy.ts:256 ~ it ~ response:', response);
+      menuPizza = response.body;
+      cy.request({
+        method: 'POST',
+        url: `${res.BASE_URL}/order`,
+        body: {
+          ...orderWithInactiveItem,
+          items: { ...orderWithInactiveItem.items, menu: response.body },
+        },
+        failOnStatusCode: false,
+      }).then((response) => {
+        console.log('🚀 ~ file: order.cy.ts:268 ~ it ~ response:', response);
+        expect(400).equal(response.status);
+        expect('Order cannot have an inactive item').equal(
+          response.body.message
+        );
+        cy.log(JSON.stringify(response.body));
+      });
     });
   });
 
@@ -400,6 +418,12 @@ describe('Order spec', () => {
     cy.request({
       method: 'DELETE',
       url: `${res.BASE_URL}/customer/${customer2.id}`,
+      failOnStatusCode: false,
+    });
+
+    cy.request({
+      method: 'DELETE',
+      url: `${res.BASE_URL}/customer/${customer3.id}`,
       failOnStatusCode: false,
     });
 

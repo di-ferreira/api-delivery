@@ -1,9 +1,10 @@
+import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import {
   SearchParamsOrder,
-  iCreateOrder,
   iOrder,
   iOrderList,
   iOrderRepository,
+  iSaveOrder,
   iStatusOrder,
 } from '@ProjectTypes/Order/iOrder';
 import { SearchParams } from '@ProjectTypes/index';
@@ -23,7 +24,7 @@ export default class OrderRepository implements iOrderRepository {
     status,
     total,
     obs,
-  }: iCreateOrder): Promise<iOrder> {
+  }: iSaveOrder): Promise<iOrder> {
     const order = this.CustomRepository.create({
       customer,
       status,
@@ -37,6 +38,16 @@ export default class OrderRepository implements iOrderRepository {
 
   public async save(order: iOrder): Promise<iOrder> {
     return await this.CustomRepository.save(order);
+  }
+
+  public async findOrderOpenByCustomer(customer: iCustomer): Promise<iOrder> {
+    const type = await this.CustomRepository.findOne({
+      where: [
+        { customer, status: iStatusOrder.FILA },
+        { customer, status: iStatusOrder.TRANSITO },
+      ],
+    });
+    return type;
   }
 
   public async findAll({ page, limit }: SearchParams): Promise<iOrderList> {
@@ -67,12 +78,12 @@ export default class OrderRepository implements iOrderRepository {
     page,
     param,
   }: SearchParamsOrder): Promise<iOrderList> {
-    iStatusOrder;
+    const status: iStatusOrder = param;
     const [menus, count] = await this.CustomRepository.findAndCount({
       skip: limit * (page - 1),
       take: limit,
       where: {
-        active,
+        status,
       },
     });
 
@@ -91,11 +102,12 @@ export default class OrderRepository implements iOrderRepository {
     page,
     param,
   }: SearchParamsOrder): Promise<iOrderList> {
+    const customer: iCustomer = param;
     const [menus, count] = await this.CustomRepository.findAndCount({
       skip: limit * (page - 1),
       take: limit,
       where: {
-        active,
+        customer,
       },
     });
 

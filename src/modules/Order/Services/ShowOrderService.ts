@@ -1,27 +1,24 @@
-import {
-  iProduct,
-  iProductRepository,
-  iShowProduct,
-} from '@ProjectTypes/Product/iProduct';
+import { iOrder, iOrderRepository } from '@ProjectTypes/Order/iOrder';
+import { iShowProduct } from '@ProjectTypes/Product/iProduct';
 import AppError from '@shared/errors/AppError';
-import ProductRepository from '../Repository';
+import OrderRepository from '../Repository';
 
-class ShowProductService {
-  private productRepository: iProductRepository;
+class ShowOrderService {
+  private orderRepository: iOrderRepository;
 
   constructor() {
-    this.productRepository = new ProductRepository();
+    this.orderRepository = new OrderRepository();
   }
 
-  public async execute({ id }: iShowProduct): Promise<iProduct> {
-    const product = await this.productRepository.findById(Number(id));
+  public async execute({ id }: iShowProduct): Promise<iOrder> {
+    const order = await this.orderRepository.findById(Number(id));
 
-    if (!product) {
-      throw new AppError('Product not found');
+    if (!order) {
+      throw new AppError('Order not found');
     }
 
-    return product;
+    return order;
   }
 }
 
-export default ShowProductService;
+export default ShowOrderService;

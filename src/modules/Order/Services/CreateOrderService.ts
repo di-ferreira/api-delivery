@@ -1,39 +1,67 @@
+import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import {
   iCreateOrder,
   iOrder,
   iOrderRepository,
 } from '@ProjectTypes/Order/iOrder';
 import AppError from '@shared/errors/AppError';
+import OrderRepository from '../Repository';
 
 class CreateOrderService {
-  private productRepository: iOrderRepository;
+  private orderRepository: iOrderRepository;
 
   constructor() {
-    this.productRepository = new OrderRepository();
+    this.orderRepository = new OrderRepository();
   }
 
   public async execute({
-    costPrice,
-    minStock,
-    name,
-    stock,
-    describe,
+    customer,
+    status,
+    items,
+    obs,
   }: iCreateOrder): Promise<iOrder> {
-    const productExists = await this.productRepository.findByName(name);
+    const orderExists = await this.orderRepository.findOrderOpenByCustomer(
+      customer
+    );
 
-    if (productExists.length >= 1) {
-      throw new AppError('There is already one product with this name');
+    if (orderExists) {
+      throw new AppError('There is already one order open this customer');
     }
 
-    const product = await this.productRepository.create({
-      costPrice,
-      minStock,
-      name,
-      stock,
-      describe,
+    if (items.length < 1) {
+      throw new AppError('Order not have a Items');
+    }
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+
+      if (!item.menu.active) {
+        throw new AppError('Order cannot have an inactive item');
+      }
+    }
+    console.log('hi');
+    const SumTotalTotal = (
+      orderArray: iItemOrder[],
+      propertyObject: string
+    ) => {
+      return orderArray.reduce((total: number, order: iItemOrder) => {
+        return total + order[propertyObject];
+      }, 0);
+    };
+
+    let totalOrder: number = 0;
+
+    totalOrder = SumTotalTotal(items, 'total');
+
+    const order = await this.orderRepository.create({
+      customer,
+      status,
+      items,
+      total: totalOrder,
+      obs: obs && obs,
     });
 
-    return product;
+    return order;
   }
 }
 

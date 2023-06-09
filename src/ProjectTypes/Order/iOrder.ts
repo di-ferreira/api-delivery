@@ -1,4 +1,5 @@
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
+import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import { SearchParams } from '..';
 
 export enum iStatusOrder {
@@ -10,9 +11,16 @@ export enum iStatusOrder {
 }
 
 export interface iCreateOrder {
+  status: iStatusOrder;
+  customer: iCustomer;
+  items: iItemOrder[];
+  obs?: string;
+}
+export interface iSaveOrder {
   total: number;
   status: iStatusOrder;
   customer: iCustomer;
+  items: iItemOrder[];
   obs?: string;
 }
 
@@ -26,8 +34,8 @@ export interface iDeleteOrder {
 
 export interface iUpdatedOrder {
   id: number;
-  total?: number;
   status?: iStatusOrder;
+  items?: iItemOrder[];
   obs?: string;
 }
 
@@ -36,6 +44,7 @@ export interface iOrder {
   total: number;
   customer: iCustomer;
   status: iStatusOrder;
+  items: iItemOrder[];
   obs?: string;
   createdAt?: Date;
   updateAt?: Date;
@@ -56,6 +65,7 @@ export interface iOrderList {
 export interface iOrderRepository {
   findAll({ page, limit }: SearchParams): Promise<iOrderList>;
   findById(orderID: number): Promise<iOrder | null>;
+  findOrderOpenByCustomer(customer: iCustomer): Promise<iOrder | null>;
   findByCustomer({
     limit,
     page,
@@ -66,7 +76,7 @@ export interface iOrderRepository {
     page,
     param,
   }: SearchParamsOrder): Promise<iOrderList | null>;
-  create(data: iCreateOrder): Promise<iOrder>;
+  create(data: iSaveOrder): Promise<iOrder>;
   save(customer: iOrder): Promise<iOrder>;
   remove(customer: iOrder): Promise<void>;
 }

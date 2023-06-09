@@ -1,29 +1,29 @@
 import {
-  iDeleteProduct,
-  iProduct,
-  iProductRepository,
-} from '@ProjectTypes/Product/iProduct';
+  iDeleteOrder,
+  iOrder,
+  iOrderRepository,
+} from '@ProjectTypes/Order/iOrder';
 import AppError from '@shared/errors/AppError';
-import ProductRepository from '../Repository';
+import OrderRepository from '../Repository';
 
-class DeleteProductService {
-  private productRepository: iProductRepository;
+class DeleteOrderService {
+  private orderRepository: iOrderRepository;
 
   constructor() {
-    this.productRepository = new ProductRepository();
+    this.orderRepository = new OrderRepository();
   }
 
-  public async execute({ id }: iDeleteProduct): Promise<iProduct> {
-    const product = await this.productRepository.findById(id);
+  public async execute({ id }: iDeleteOrder): Promise<iOrder> {
+    const order = await this.orderRepository.findById(id);
 
-    if (!product) {
-      throw new AppError('Product not found');
+    if (!order) {
+      throw new AppError('Order not found');
     }
 
-    await this.productRepository.remove(product);
+    await this.orderRepository.remove(order);
 
-    return product;
+    return order;
   }
 }
 
-export default DeleteProductService;
+export default DeleteOrderService;

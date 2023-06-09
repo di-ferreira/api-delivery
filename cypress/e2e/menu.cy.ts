@@ -27,7 +27,7 @@ describe('Menu spec', () => {
 
   let menuWithPrice = {
     ...res.menu.COMBO_HAMBURGUER,
-    products: [res.products.JUICE, res.products['HOT-DOG']],
+    products: [res.products.JUICE, res.products.HOT_DOG],
     type: typeCombo,
     price: 25.0,
   };

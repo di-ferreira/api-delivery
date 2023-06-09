@@ -59,11 +59,11 @@ describe('Product spec', () => {
     cy.request({
       method: 'PUT',
       url: `${res.BASE_URL}/product/${product.id}`,
-      body: res.products['HOT-DOG'],
+      body: res.products.HOT_DOG,
     })
       .its('body')
       .then((body) => {
-        expect(res.products['HOT-DOG'].name).to.eq(body.name);
+        expect(res.products.HOT_DOG.name).to.eq(body.name);
         cy.log(JSON.stringify(body));
       });
   });

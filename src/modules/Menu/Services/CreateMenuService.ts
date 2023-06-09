@@ -53,9 +53,10 @@ class CreateMenuService {
     }
 
     let sumPrice: number = 0;
+    let totalProducts: number = SumTotalProducts(newProducts, 'costPrice');
 
     if (profit) {
-      const SumTotal = SumTotalProducts(newProducts, 'costPrice');
+      const SumTotal = totalProducts;
       sumPrice = SumTotal + (SumTotal * profit) / 100;
     }
 
@@ -64,7 +65,7 @@ class CreateMenuService {
     }
 
     if (!price && !profit) {
-      const SumTotal = SumTotalProducts(newProducts, 'costPrice');
+      const SumTotal = totalProducts;
       sumPrice = SumTotal;
     }
 
