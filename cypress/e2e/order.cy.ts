@@ -253,18 +253,17 @@ describe('Order spec', () => {
       body: { ...menuPizza, active: false },
       failOnStatusCode: false,
     }).then((response) => {
-      console.log('🚀 ~ file: order.cy.ts:256 ~ it ~ response:', response);
       menuPizza = response.body;
+
       cy.request({
         method: 'POST',
         url: `${res.BASE_URL}/order`,
         body: {
           ...orderWithInactiveItem,
-          items: { ...orderWithInactiveItem.items, menu: response.body },
+          items: [{ menu: response.body }],
         },
         failOnStatusCode: false,
       }).then((response) => {
-        console.log('🚀 ~ file: order.cy.ts:268 ~ it ~ response:', response);
         expect(400).equal(response.status);
         expect('Order cannot have an inactive item').equal(
           response.body.message
@@ -282,6 +281,7 @@ describe('Order spec', () => {
       body: orderWithoutItems,
     }).then((response) => {
       expect(400).equal(response.status);
+      expect('Order not have a Items').equal(response.body.message);
     });
   });
 
