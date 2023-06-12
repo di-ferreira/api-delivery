@@ -1,10 +1,11 @@
-import { iCreateOrder } from '@ProjectTypes/Order/iOrder';
+import { iCreateOrder, iUpdatedOrder } from '@ProjectTypes/Order/iOrder';
 import { iOrderController } from '@ProjectTypes/Order/iOrderController';
 import { Request, Response } from 'express';
 import CreateOrderService from '../Services/CreateOrderService';
 import DeleteOrderService from '../Services/DeleteOrderService';
 import ListOrderService from '../Services/ListOrderService';
 import ShowOrderService from '../Services/ShowOrderService';
+import UpdateOrderService from '../Services/UpdateOrderService';
 
 export default class OrderController implements iOrderController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -40,27 +41,21 @@ export default class OrderController implements iOrderController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    // const { id } = request.params;
+    const { id } = request.params;
 
-    // const { name, description, products, profit, price, type, active } =
-    //   request.body;
+    const { items, obs, status } = request.body;
 
-    // const createMenu = new UpdateMenuService();
+    const updateOrder = new UpdateOrderService();
 
-    // let updatedMenu: iUpdatedMenu = {
-    //   id: Number(id),
-    //   name: name && name,
-    //   products: products && products,
-    //   type: type && type,
-    //   active: active && active,
-    //   description: description && description,
-    //   price: price && price,
-    //   profit: profit && profit,
-    // };
+    let updatedOrder: iUpdatedOrder = {
+      id: Number(id),
+      items: items && items,
+      obs: obs && obs,
+      status: status && status,
+    };
 
-    // const menu = await createMenu.execute(updatedMenu);
-    // return response.json(menu);
-    return response.json({});
+    const order = await updateOrder.execute(updatedOrder);
+    return response.json(order);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

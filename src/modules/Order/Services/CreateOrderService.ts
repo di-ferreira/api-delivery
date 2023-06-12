@@ -43,7 +43,6 @@ class CreateOrderService {
         throw new AppError('Order cannot have an inactive item');
       }
     }
-    console.log('hi');
     const SumTotalTotal = (
       orderArray: iItemOrder[],
       propertyObject: string
