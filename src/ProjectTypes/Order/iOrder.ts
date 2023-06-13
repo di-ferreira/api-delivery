@@ -77,6 +77,6 @@ export interface iOrderRepository {
     param,
   }: SearchParamsOrder): Promise<iOrderList | null>;
   create(data: iSaveOrder): Promise<iOrder>;
-  save(customer: iOrder): Promise<iOrder>;
-  remove(customer: iOrder): Promise<void>;
+  save(order: iOrder): Promise<iOrder>;
+  remove(order: iOrder): Promise<void>;
 }

@@ -50,11 +50,11 @@ export interface iMenuList {
   data: iMenu[];
 }
 
-export type SearchParamsMenu = {
+export interface SearchParamsMenu {
   page: number;
   limit: number;
   active: any;
-};
+}
 export interface iMenuRepository {
   findAll({ page, limit }: SearchParams): Promise<iMenuList>;
   findByActive(filter: SearchParamsMenu): Promise<iMenuList>;

@@ -1,6 +1,5 @@
 import { iMenu } from '@ProjectTypes/Menu/iMenu';
 import { iOrder } from '@ProjectTypes/Order/iOrder';
-import { SearchParams } from '..';
 
 export interface iCreateItemOrder {
   total: number;
@@ -40,11 +39,22 @@ export interface iItemOrderList {
   current_page: number;
   data: iItemOrder[];
 }
+
+export interface SearchParamsItemOrder {
+  page: number;
+  limit: number;
+  order_id: number;
+}
+
 export interface iItemOrderRepository {
-  findAll({ page, limit }: SearchParams): Promise<iItemOrderList>;
-  findByOrder(order_id: number): Promise<iItemOrder[] | null>;
-  findById(id: number): Promise<iItemOrder | null>;
+  findAll({
+    page,
+    limit,
+    order_id,
+  }: SearchParamsItemOrder): Promise<iItemOrderList>;
+  findByOrder(order_id: number): Promise<iItemOrder[]>;
+  findById(id: number): Promise<iItemOrder>;
   create(data: iCreateItemOrder): Promise<iItemOrder>;
-  save(customer: iItemOrder): Promise<iItemOrder>;
-  remove(customer: iItemOrder): Promise<void>;
+  save(itemOrder: iItemOrder): Promise<iItemOrder>;
+  remove(itemOrder: iItemOrder): Promise<void>;
 }

@@ -38,6 +38,6 @@ export interface iTypeMenuRepository {
   findByType(typeName: string): Promise<iTypeMenu[] | null>;
   findById(id: number): Promise<iTypeMenu | null>;
   create(data: iCreateTypeMenu): Promise<iTypeMenu>;
-  save(customer: iTypeMenu): Promise<iTypeMenu>;
-  remove(customer: iTypeMenu): Promise<void>;
+  save(typeMenu: iTypeMenu): Promise<iTypeMenu>;
+  remove(typeMenu: iTypeMenu): Promise<void>;
 }

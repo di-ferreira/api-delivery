@@ -47,6 +47,6 @@ export interface iProductRepository {
   findByName(name: string): Promise<iProduct[] | null>;
   findById(id: number): Promise<iProduct | null>;
   create(data: iCreateProduct): Promise<iProduct>;
-  save(customer: iProduct): Promise<iProduct>;
-  remove(customer: iProduct): Promise<void>;
+  save(product: iProduct): Promise<iProduct>;
+  remove(product: iProduct): Promise<void>;
 }
