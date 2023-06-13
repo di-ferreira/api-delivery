@@ -12,6 +12,7 @@ export default class OrderController implements iOrderController {
     const page = Number(request.query.page);
     const limit = Number(request.query.limit);
     const listOrder = new ListOrderService();
+
     const orders = await listOrder.execute({ page, limit });
 
     return response.json(orders);

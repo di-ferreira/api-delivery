@@ -10,10 +10,18 @@ class ListOrderService {
   }
 
   public async execute({ page, limit }: SearchParams): Promise<iOrderList> {
-    const orders = await this.orderRepository.findAll({
-      page,
-      limit,
+    let orders: iOrderList = {
+      current_page: page ? page : 1,
+      data: [],
+      per_page: limit ? limit : 15,
+      total: 0,
+    };
+
+    const newOrders = await this.orderRepository.findAll({
+      page: orders.current_page,
+      limit: orders.per_page,
     });
+    orders = { ...newOrders };
 
     return orders;
   }

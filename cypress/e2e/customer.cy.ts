@@ -7,7 +7,7 @@ describe('Customer spec', () => {
   it('shoud Create Customer', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/customer`,
+      url: `${res.BASE_URL}/customers`,
       failOnStatusCode: false,
       body: customer,
     }).then((response) => {
@@ -20,7 +20,7 @@ describe('Customer spec', () => {
   it('shoud Create Customer with Address', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/customer`,
+      url: `${res.BASE_URL}/customers`,
       failOnStatusCode: false,
       body: customer2,
     }).then((response) => {
@@ -33,7 +33,7 @@ describe('Customer spec', () => {
   it('should return all Customers', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/customer`,
+      url: `${res.BASE_URL}/customers`,
       failOnStatusCode: false,
     })
       .its('body.data')
@@ -46,7 +46,7 @@ describe('Customer spec', () => {
   it('should return Customer by Phone', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/customer/${customer.phone}`,
+      url: `${res.BASE_URL}/customers/${customer.phone}`,
       failOnStatusCode: false,
     })
       .its('body.phone')
@@ -59,7 +59,7 @@ describe('Customer spec', () => {
   it('should Edit Customer', () => {
     cy.request({
       method: 'PUT',
-      url: `${res.BASE_URL}/customer/${customer.id}`,
+      url: `${res.BASE_URL}/customers/${customer.id}`,
       body: { id: customer.id, name: 'Diego Ferreira' },
     })
       .its('body')
@@ -72,7 +72,7 @@ describe('Customer spec', () => {
   it('should Delete Customer', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/customer/${customer.id}`,
+      url: `${res.BASE_URL}/customers/${customer.id}`,
     })
       .its('body')
       .then((body) => {
@@ -84,7 +84,7 @@ describe('Customer spec', () => {
   it('should Delete Customer with Address', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/customer/${customer2.id}`,
+      url: `${res.BASE_URL}/customers/${customer2.id}`,
     })
       .its('body')
       .then((body) => {

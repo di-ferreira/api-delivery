@@ -7,7 +7,7 @@ describe('Type Menu spec', () => {
   it('shoud Create Type Menu 1', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/type-menu`,
+      url: `${res.BASE_URL}/types-menu`,
       body: typemenu,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -19,7 +19,7 @@ describe('Type Menu spec', () => {
   it('shoud Create Type Menu 2', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/type-menu`,
+      url: `${res.BASE_URL}/types-menu`,
       body: typemenu2,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -31,7 +31,7 @@ describe('Type Menu spec', () => {
   it('should return all Type Menus', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/type-menu`,
+      url: `${res.BASE_URL}/types-menu`,
       failOnStatusCode: false,
     })
       .its('body.data')
@@ -44,7 +44,7 @@ describe('Type Menu spec', () => {
   it('should return Type Menu by ID', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/type-menu/${typemenu.id}`,
+      url: `${res.BASE_URL}/types-menu/${typemenu.id}`,
       failOnStatusCode: false,
     })
       .its('body')
@@ -58,7 +58,7 @@ describe('Type Menu spec', () => {
   it('should Edit Type Menu', () => {
     cy.request({
       method: 'PUT',
-      url: `${res.BASE_URL}/type-menu/${typemenu.id}`,
+      url: `${res.BASE_URL}/types-menu/${typemenu.id}`,
       body: res.type_menu.SOBREMESAS,
     })
       .its('body')
@@ -71,7 +71,7 @@ describe('Type Menu spec', () => {
   it('should Delete Type Menu 1', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/type-menu/${typemenu.id}`,
+      url: `${res.BASE_URL}/types-menu/${typemenu.id}`,
     })
       .its('body')
       .then((body) => {
@@ -83,7 +83,7 @@ describe('Type Menu spec', () => {
   it('should Delete Type Menu 2', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/type-menu/${typemenu2.id}`,
+      url: `${res.BASE_URL}/types-menu/${typemenu2.id}`,
     })
       .its('body')
       .then((body) => {

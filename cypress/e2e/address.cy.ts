@@ -10,7 +10,7 @@ describe('Address Spec', () => {
   before(() => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/customer`,
+      url: `${res.BASE_URL}/customers`,
       failOnStatusCode: false,
       body: customer,
     }).then((response) => {
@@ -20,7 +20,7 @@ describe('Address Spec', () => {
 
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/customer`,
+      url: `${res.BASE_URL}/customers`,
       failOnStatusCode: false,
       body: customer2,
     }).then((response) => {
@@ -32,7 +32,7 @@ describe('Address Spec', () => {
   it('should create address', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/address`,
+      url: `${res.BASE_URL}/addressess`,
       body: address,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -44,7 +44,7 @@ describe('Address Spec', () => {
   it('should create address2', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/address`,
+      url: `${res.BASE_URL}/addressess`,
       body: address2,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -56,7 +56,7 @@ describe('Address Spec', () => {
   it('should return all addressess', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/address`,
+      url: `${res.BASE_URL}/addressess`,
     })
       .its('body.data')
       .should('have.length', 2)
@@ -68,7 +68,7 @@ describe('Address Spec', () => {
   it('should return address by id', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/address/${address2.id}`,
+      url: `${res.BASE_URL}/addressess/${address2.id}`,
     })
       .its('body')
       .then((adrs) => {
@@ -80,7 +80,7 @@ describe('Address Spec', () => {
   it('should update address by id', () => {
     cy.request({
       method: 'PUT',
-      url: `${res.BASE_URL}/address/${address.id}`,
+      url: `${res.BASE_URL}/addressess/${address.id}`,
       body: res.addressess.addss02,
     })
       .its('body')
@@ -95,7 +95,7 @@ describe('Address Spec', () => {
   it('should delete address 1', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/address/${address.id}`,
+      url: `${res.BASE_URL}/addressess/${address.id}`,
     })
       .its('body')
       .then((body) => {
@@ -107,7 +107,7 @@ describe('Address Spec', () => {
   it('should delete address 2', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/address/${address2.id}`,
+      url: `${res.BASE_URL}/addressess/${address2.id}`,
     })
       .its('body')
       .then((body) => {
@@ -119,11 +119,11 @@ describe('Address Spec', () => {
   after(() => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/customer/${customer.id}`,
+      url: `${res.BASE_URL}/customers/${customer.id}`,
     });
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/customer/${customer2.id}`,
+      url: `${res.BASE_URL}/customers/${customer2.id}`,
     });
   });
 });

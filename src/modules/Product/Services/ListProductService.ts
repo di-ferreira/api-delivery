@@ -13,11 +13,17 @@ class ListProductService {
   }
 
   public async execute({ page, limit }: SearchParams): Promise<iProductList> {
-    const products = await this.productRepository.findAll({
-      page,
-      limit,
+    let products: iProductList = {
+      current_page: page ? page : 1,
+      data: [],
+      per_page: limit ? limit : 15,
+      total: 0,
+    };
+    const newProducts = await this.productRepository.findAll({
+      page: products.current_page,
+      limit: products.per_page,
     });
-
+    products = { ...newProducts };
     return products;
   }
 }

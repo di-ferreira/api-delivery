@@ -8,8 +8,8 @@ import UpdateProductService from '../Services/UpdateProductService';
 
 export default class ProductController implements iProductController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const page = request.query.page ? Number(request.query.page) : 1;
-    const limit = request.query.limit ? Number(request.query.limit) : 15;
+    const page = Number(request.query.page);
+    const limit = Number(request.query.limit);
     const listProduct = new ListProductService();
     const products = await listProduct.execute({ page, limit });
 
@@ -24,21 +24,21 @@ export default class ProductController implements iProductController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { costPrice, minStock, name, stock, describe } = request.body;
+    const { costPrice, minStock, name, stock, description } = request.body;
     const createProduct = new CreateProductService();
     const product = await createProduct.execute({
       costPrice,
       minStock,
       name,
       stock,
-      describe,
+      description,
     });
     return response.status(201).json(product);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { costPrice, minStock, name, stock, describe } = request.body;
+    const { costPrice, minStock, name, stock, description } = request.body;
     const createProduct = new UpdateProductService();
     const product = await createProduct.execute({
       id: Number(id),
@@ -46,7 +46,7 @@ export default class ProductController implements iProductController {
       minStock,
       name,
       stock,
-      describe,
+      description,
     });
     return response.json(product);
   }

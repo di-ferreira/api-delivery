@@ -43,7 +43,7 @@ describe('Menu spec', () => {
   before(() => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/type-menu`,
+      url: `${res.BASE_URL}/types-menu`,
       body: typeCombo,
       failOnStatusCode: false,
     }).then((response) => {
@@ -52,7 +52,7 @@ describe('Menu spec', () => {
 
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/type-menu`,
+      url: `${res.BASE_URL}/types-menu`,
       body: typeMassas,
       failOnStatusCode: false,
     }).then((response) => {
@@ -61,7 +61,7 @@ describe('Menu spec', () => {
 
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/type-menu`,
+      url: `${res.BASE_URL}/types-menu`,
       body: typeBebidas,
       failOnStatusCode: false,
     }).then((response) => {
@@ -70,7 +70,7 @@ describe('Menu spec', () => {
 
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/product`,
+      url: `${res.BASE_URL}/products`,
       body: prodHamburguer,
     }).then((response) => {
       prodHamburguer.id = response.body.id;
@@ -78,7 +78,7 @@ describe('Menu spec', () => {
 
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/product`,
+      url: `${res.BASE_URL}/products`,
       body: prodSoda,
     }).then((response) => {
       prodSoda.id = response.body.id;
@@ -88,7 +88,7 @@ describe('Menu spec', () => {
   it('shoud Create Menu with exists products', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/menu`,
+      url: `${res.BASE_URL}/menus`,
       body: menuWithProd,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -104,7 +104,7 @@ describe('Menu spec', () => {
   it('shoud Create Menu and products', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/menu`,
+      url: `${res.BASE_URL}/menus`,
       body: menuAndProd,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -120,7 +120,7 @@ describe('Menu spec', () => {
   it('shoud Create Menu with products array empty', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/menu`,
+      url: `${res.BASE_URL}/menus`,
       body: menuEptProd,
       failOnStatusCode: false,
     })
@@ -131,7 +131,7 @@ describe('Menu spec', () => {
   it('shoud Create Menu with profit', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/menu`,
+      url: `${res.BASE_URL}/menus`,
       body: menuWithProfit,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -144,7 +144,7 @@ describe('Menu spec', () => {
   it('shoud Create Menu with price', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/menu`,
+      url: `${res.BASE_URL}/menus`,
       body: menuWithPrice,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -157,7 +157,7 @@ describe('Menu spec', () => {
   it('should return all Menus', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/menu`,
+      url: `${res.BASE_URL}/menus`,
     })
       .its('body.data')
       .should('have.length', 4)
@@ -169,7 +169,7 @@ describe('Menu spec', () => {
   it('should return Menu by ID', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/menu/${menuWithProd.id}`,
+      url: `${res.BASE_URL}/menus/${menuWithProd.id}`,
       failOnStatusCode: false,
     })
       .its('body')
@@ -190,7 +190,7 @@ describe('Menu spec', () => {
     };
     cy.request({
       method: 'PUT',
-      url: `${res.BASE_URL}/menu/${menuWithProfit.id}`,
+      url: `${res.BASE_URL}/menus/${menuWithProfit.id}`,
       body: menuWithProfit,
     })
       .its('body')
@@ -206,7 +206,7 @@ describe('Menu spec', () => {
   it('should return all Menus actives', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/menu?active=true`,
+      url: `${res.BASE_URL}/menus?active=true`,
     })
       .its('body.data')
       .should('have.length', 3)
@@ -218,7 +218,7 @@ describe('Menu spec', () => {
   it('should return all Menus inactives', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/menu?active=false`,
+      url: `${res.BASE_URL}/menus?active=false`,
     })
       .its('body.data')
       .should('have.length', 1)
@@ -230,7 +230,7 @@ describe('Menu spec', () => {
   it('should Delete Menu with product', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/menu/${menuWithProd.id}`,
+      url: `${res.BASE_URL}/menus/${menuWithProd.id}`,
     })
       .its('body')
       .then((body) => {
@@ -242,7 +242,7 @@ describe('Menu spec', () => {
   it('should Delete Menu without product', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/menu/${menuAndProd.id}`,
+      url: `${res.BASE_URL}/menus/${menuAndProd.id}`,
     })
       .its('body')
       .then((body) => {
@@ -254,7 +254,7 @@ describe('Menu spec', () => {
   it('should Delete Menu with Profit', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/menu/${menuWithProfit.id}`,
+      url: `${res.BASE_URL}/menus/${menuWithProfit.id}`,
     })
       .its('body')
       .then((body) => {
@@ -266,7 +266,7 @@ describe('Menu spec', () => {
   it('should Delete Menu with Price', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/menu/${menuWithPrice.id}`,
+      url: `${res.BASE_URL}/menus/${menuWithPrice.id}`,
     })
       .its('body')
       .then((body) => {
@@ -278,36 +278,36 @@ describe('Menu spec', () => {
   after(() => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/type-menu/${typeCombo.id}`,
+      url: `${res.BASE_URL}/types-menu/${typeCombo.id}`,
       failOnStatusCode: false,
     });
 
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/type-menu/${typeMassas.id}`,
+      url: `${res.BASE_URL}/types-menu/${typeMassas.id}`,
       failOnStatusCode: false,
     });
 
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/type-menu/${typeBebidas.id}`,
+      url: `${res.BASE_URL}/types-menu/${typeBebidas.id}`,
       failOnStatusCode: false,
     });
 
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/product/${prodHamburguer.id}`,
+      url: `${res.BASE_URL}/products/${prodHamburguer.id}`,
       failOnStatusCode: false,
     });
 
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/product/${prodSoda.id}`,
+      url: `${res.BASE_URL}/products/${prodSoda.id}`,
       failOnStatusCode: false,
     });
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/product/${prodPizza.id}`,
+      url: `${res.BASE_URL}/products/${prodPizza.id}`,
       failOnStatusCode: false,
     });
   });

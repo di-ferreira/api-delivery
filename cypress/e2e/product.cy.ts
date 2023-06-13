@@ -7,7 +7,7 @@ describe('Product spec', () => {
   it('shoud Create Product 1', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/product`,
+      url: `${res.BASE_URL}/products`,
       body: product,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -19,7 +19,7 @@ describe('Product spec', () => {
   it('shoud Create Product 2', () => {
     cy.request({
       method: 'POST',
-      url: `${res.BASE_URL}/product`,
+      url: `${res.BASE_URL}/products`,
       body: product2,
     }).then((response) => {
       expect(201).equal(response.status);
@@ -31,7 +31,7 @@ describe('Product spec', () => {
   it('should return all Products', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/product`,
+      url: `${res.BASE_URL}/products`,
       failOnStatusCode: false,
     })
       .its('body.data')
@@ -44,7 +44,7 @@ describe('Product spec', () => {
   it('should return Product by ID', () => {
     cy.request({
       method: 'GET',
-      url: `${res.BASE_URL}/product/${product.id}`,
+      url: `${res.BASE_URL}/products/${product.id}`,
       failOnStatusCode: false,
     })
       .its('body')
@@ -58,7 +58,7 @@ describe('Product spec', () => {
   it('should Edit Product', () => {
     cy.request({
       method: 'PUT',
-      url: `${res.BASE_URL}/product/${product.id}`,
+      url: `${res.BASE_URL}/products/${product.id}`,
       body: res.products.HOT_DOG,
     })
       .its('body')
@@ -71,7 +71,7 @@ describe('Product spec', () => {
   it('should Delete Product 1', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/product/${product.id}`,
+      url: `${res.BASE_URL}/products/${product.id}`,
     })
       .its('body')
       .then((body) => {
@@ -83,7 +83,7 @@ describe('Product spec', () => {
   it('should Delete Product 2', () => {
     cy.request({
       method: 'DELETE',
-      url: `${res.BASE_URL}/product/${product2.id}`,
+      url: `${res.BASE_URL}/products/${product2.id}`,
     })
       .its('body')
       .then((body) => {

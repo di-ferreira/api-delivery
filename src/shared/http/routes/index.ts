@@ -8,10 +8,10 @@ import { Router } from 'express';
 
 const routes = Router();
 
-routes.use('/customer', CustomerRoute);
-routes.use('/address', AddressRoute);
-routes.use('/product', ProductRoute);
-routes.use('/type-menu', TypeMenuRoute);
-routes.use('/menu', MenuRoute);
-routes.use('/order', OrderRoute);
+routes.use('/customers', CustomerRoute);
+routes.use('/addressess', AddressRoute);
+routes.use('/products', ProductRoute);
+routes.use('/types-menu', TypeMenuRoute);
+routes.use('/menus', MenuRoute);
+routes.use('/orders', OrderRoute);
 export default routes;

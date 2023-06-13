@@ -34,10 +34,6 @@ class CreateOrderService {
 
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
-      console.log(
-        '🚀 ~ file: CreateOrderService.ts:37 ~ CreateOrderService ~ item:',
-        item
-      );
 
       if (!item.menu.active) {
         throw new AppError('Order cannot have an inactive item');
