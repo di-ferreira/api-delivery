@@ -94,6 +94,7 @@ describe('Order spec', () => {
     total: 0.0,
     quantity: 1,
     menu: menuCombo,
+    order: {},
   };
 
   let orderItemInactive = {
@@ -231,6 +232,7 @@ describe('Order spec', () => {
       body: menuCombo,
     }).then((response) => {
       menuCombo = response.body;
+      menuCombo.id = response.body.id;
     });
   });
 
@@ -242,6 +244,7 @@ describe('Order spec', () => {
     }).then((response) => {
       expect(201).equal(response.status);
       cy.log(JSON.stringify(response.body));
+      console.log(JSON.stringify(response.body));
       orderAndItems = response.body;
     });
   });
@@ -336,53 +339,53 @@ describe('Order spec', () => {
       });
   });
 
-  // it('shoud Add item to order', () => {
-  //   cy.request({
-  //     method: 'POST',
-  //     url: `${res.BASE_URL}/orders/${orderAndItems.id}/item`,
-  //     body: orderItem,
-  //   }).then((response) => {
-  //     expect(201).equal(response.status);
-  //     cy.log(JSON.stringify(response.body));
-  //     orderItem.id = response.body.id;
-  //   });
-  // });
+  it('shoud Add item to order', () => {
+    cy.request({
+      method: 'POST',
+      url: `${res.BASE_URL}/orders/${orderAndItems.id}/item`,
+      body: (orderItem = { ...orderItem, order: orderAndItems }),
+    }).then((response) => {
+      // expect(201).equal(item.status);
+      // cy.log(JSON.stringify(response.body));
+      // orderItem.id = response.body.id;
+    });
+  });
 
-  // it('shoud Not Add item with menu inactive to order', () => {
-  //   cy.request({
-  //     method: 'POST',
-  //     url: `${res.BASE_URL}/orders/${orderItemInactive.id}/item`,
-  //     body: orderItemInactive,
-  //     failOnStatusCode: false,
-  //   }).then((response) => {
-  //     expect(400).equal(response.status);
-  //     cy.log(JSON.stringify(response.body));
-  //   });
-  // });
+  it('shoud Not Add item with menu inactive to order', () => {
+    cy.request({
+      method: 'POST',
+      url: `${res.BASE_URL}/orders/${orderItemInactive.id}/item`,
+      body: orderItemInactive,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(400).equal(response.status);
+      cy.log(JSON.stringify(response.body));
+    });
+  });
 
-  // it('shoud edit item to order', () => {
-  //   cy.request({
-  //     method: 'POST',
-  //     url: `${res.BASE_URL}/orders/${orderAndItems.id}/item`,
-  //     body: orderItem,
-  //   }).then((response) => {
-  //     expect(201).equal(response.status);
-  //     cy.log(JSON.stringify(response.body));
-  //     orderItem.id = response.body.id;
-  //   });
-  // });
+  it('shoud edit item to order', () => {
+    cy.request({
+      method: 'POST',
+      url: `${res.BASE_URL}/orders/${orderAndItems.id}/item`,
+      body: orderItem,
+    }).then((response) => {
+      expect(201).equal(response.status);
+      cy.log(JSON.stringify(response.body));
+      orderItem.id = response.body.id;
+    });
+  });
 
-  // it('should remove item from order', () => {
-  //   cy.request({
-  //     method: 'DELETE',
-  //     url: `${res.BASE_URL}/orders/${orderAndItems.id}/item/${orderItem.id}`,
-  //   })
-  //     .its('body')
-  //     .then((order) => {
-  //       expect(order.id).equal(orderAndItems.id);
-  //       cy.log(JSON.stringify(order));
-  //     });
-  // });
+  it('should remove item from order', () => {
+    cy.request({
+      method: 'DELETE',
+      url: `${res.BASE_URL}/orders/${orderAndItems.id}/item/${orderItem.id}`,
+    })
+      .its('body')
+      .then((order) => {
+        expect(order.id).equal(orderAndItems.id);
+        cy.log(JSON.stringify(order));
+      });
+  });
 
   it('should delete order and items', () => {
     cy.request({
@@ -396,95 +399,95 @@ describe('Order spec', () => {
       });
   });
 
-  after(() => {
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/menus/${menuPizza.id}`,
-      failOnStatusCode: false,
-    });
+  // after(() => {
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/menus/${menuPizza.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/menus/${menuHamburguer.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/menus/${menuHamburguer.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/menus/${menuJuice.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/menus/${menuJuice.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/menus/${menuCombo.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/menus/${menuCombo.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/customers/${customer.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/customers/${customer.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/customers/${customer2.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/customers/${customer2.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/customers/${customer3.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/customers/${customer3.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/types-menu/${typeCombo.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/types-menu/${typeCombo.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/types-menu/${typeMassas.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/types-menu/${typeMassas.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/types-menu/${typeBebidas.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/types-menu/${typeBebidas.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/products/${prodHamburguer.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/products/${prodHamburguer.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/products/${prodHotdog.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/products/${prodHotdog.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/products/${prodSoda.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/products/${prodSoda.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/products/${prodJuice.id}`,
-      failOnStatusCode: false,
-    });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/products/${prodJuice.id}`,
+  //     failOnStatusCode: false,
+  //   });
 
-    cy.request({
-      method: 'DELETE',
-      url: `${res.BASE_URL}/products/${prodPizza.id}`,
-      failOnStatusCode: false,
-    });
-  });
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${res.BASE_URL}/products/${prodPizza.id}`,
+  //     failOnStatusCode: false,
+  //   });
+  // });
 });

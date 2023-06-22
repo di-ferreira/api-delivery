@@ -2,7 +2,7 @@ import { iMenu } from '@ProjectTypes/Menu/iMenu';
 import { iOrder } from '@ProjectTypes/Order/iOrder';
 
 export interface iCreateItemOrder {
-  total: number;
+  total?: number;
   quantity?: number;
   menu: iMenu;
   order: iOrder;
@@ -43,16 +43,16 @@ export interface iItemOrderList {
 export interface SearchParamsItemOrder {
   page: number;
   limit: number;
-  order_id: number;
+  order: iOrder;
 }
 
 export interface iItemOrderRepository {
   findAll({
     page,
     limit,
-    order_id,
+    order,
   }: SearchParamsItemOrder): Promise<iItemOrderList>;
-  findByOrder(order_id: number): Promise<iItemOrder[]>;
+  findByOrder(order: iOrder): Promise<iItemOrder[]>;
   findById(id: number): Promise<iItemOrder>;
   create(data: iCreateItemOrder): Promise<iItemOrder>;
   save(itemOrder: iItemOrder): Promise<iItemOrder>;

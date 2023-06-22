@@ -1,8 +1,11 @@
 import {
+  SearchParamsItemOrder,
   iCreateItemOrder,
   iItemOrder,
+  iItemOrderList,
   iItemOrderRepository,
 } from '@ProjectTypes/ItemOrder/iItemOrder';
+import { iOrder } from '@ProjectTypes/Order/iOrder';
 import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 import { ItemOrder } from '../Entity';
@@ -26,28 +29,46 @@ export default class ItemOrderRepository implements iItemOrderRepository {
       total,
       quantity,
     });
+    console.log(
+      '🚀 ~ file: index.ts:32 ~ ItemOrderRepository ~ itemOrder:',
+      itemOrder
+    );
 
-    await this.CustomRepository.save(itemOrder);
-    return itemOrder;
+    let newItem: iItemOrder;
+    this.CustomRepository.save(itemOrder)
+      .then((item) => {
+        console.log('item order Repositore success', item);
+        newItem = item;
+      })
+      .catch((err) => {
+        console.log('item order Repositore error', err);
+      });
+
+    return newItem;
   }
 
   public async save(itemOrder: iItemOrder): Promise<iItemOrder> {
     return await this.CustomRepository.save(itemOrder);
   }
 
-  public async findByOrder(order_id: number): Promise<iItemOrder[]> {
-    return await this.CustomRepository.save(itemOrder);
+  public async findByOrder(order: iOrder): Promise<iItemOrder[]> {
+    return await this.CustomRepository.find({ where: { order } });
   }
 
-  public async findAll({ page, limit }: SearchParams): Promise<iItemOrderList> {
-    const [orders, count] = await this.CustomRepository.createQueryBuilder()
-      .skip(limit * (page - 1))
-      .take(limit)
-      .getManyAndCount();
+  public async findAll({
+    page,
+    limit,
+    order,
+  }: SearchParamsItemOrder): Promise<iItemOrderList> {
+    const [items, count] = await this.CustomRepository.findAndCount({
+      skip: limit * (page - 1),
+      take: limit,
+      where: { order },
+    });
 
     const result: iItemOrderList = {
       current_page: page,
-      data: orders,
+      data: items,
       per_page: limit,
       total: count,
     };
@@ -55,62 +76,14 @@ export default class ItemOrderRepository implements iItemOrderRepository {
     return result;
   }
 
-  public async findById(orderID: number): Promise<iItemOrder> {
+  public async findById(itemOrderID: number): Promise<iItemOrder> {
     const type = await this.CustomRepository.findOne({
-      where: { id: orderID },
+      where: { id: itemOrderID },
     });
     return type;
   }
 
-  public async findByStatus({
-    limit,
-    page,
-    param,
-  }: SearchParamsOrder): Promise<iItemOrderList> {
-    const status: iStatusOrder = param;
-    const [menus, count] = await this.CustomRepository.findAndCount({
-      skip: limit * (page - 1),
-      take: limit,
-      where: {
-        status,
-      },
-    });
-
-    const result: iItemOrderList = {
-      current_page: page,
-      data: menus,
-      per_page: limit,
-      total: count,
-    };
-
-    return result;
-  }
-
-  public async findByCustomer({
-    limit,
-    page,
-    param,
-  }: SearchParamsOrder): Promise<iItemOrderList> {
-    const customer: iCustomer = param;
-    const [menus, count] = await this.CustomRepository.findAndCount({
-      skip: limit * (page - 1),
-      take: limit,
-      where: {
-        customer,
-      },
-    });
-
-    const result: iItemOrderList = {
-      current_page: page,
-      data: menus,
-      per_page: limit,
-      total: count,
-    };
-
-    return result;
-  }
-
-  public async remove(order: iItemOrder): Promise<void> {
-    await this.CustomRepository.remove(order);
+  public async remove(item: iItemOrder): Promise<void> {
+    await this.CustomRepository.remove(item);
   }
 }

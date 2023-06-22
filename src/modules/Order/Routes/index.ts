@@ -6,11 +6,11 @@ const Controller = new OrderController();
 
 const OrderRoute = Router();
 
-OrderRoute.post('/', Controller.create);
-OrderRoute.get('/', Controller.index);
 OrderRoute.get('/:id', Controller.show);
-OrderRoute.use('/:id', ItemOrderRoute);
+OrderRoute.use('/:id/item', ItemOrderRoute);
 OrderRoute.put('/:id', Controller.update);
 OrderRoute.delete('/:id', Controller.delete);
+OrderRoute.post('/', Controller.create);
+OrderRoute.get('/', Controller.index);
 
 export default OrderRoute;

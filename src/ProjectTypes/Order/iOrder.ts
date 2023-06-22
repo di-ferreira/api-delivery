@@ -1,3 +1,4 @@
+import { iAddress } from '@ProjectTypes/Address/iAddressService';
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import { SearchParams } from '..';
@@ -14,6 +15,7 @@ export interface iCreateOrder {
   status: iStatusOrder;
   customer: iCustomer;
   items: iItemOrder[];
+  deliveryAddress?: iAddress;
   obs?: string;
 }
 export interface iSaveOrder {
@@ -21,6 +23,7 @@ export interface iSaveOrder {
   status: iStatusOrder;
   customer: iCustomer;
   items: iItemOrder[];
+  deliveryAddress?: iAddress;
   obs?: string;
 }
 
@@ -36,6 +39,7 @@ export interface iUpdatedOrder {
   id: number;
   status?: iStatusOrder;
   items?: iItemOrder[];
+  deliveryAddress?: iAddress;
   obs?: string;
 }
 
@@ -45,6 +49,7 @@ export interface iOrder {
   customer: iCustomer;
   status: iStatusOrder;
   items: iItemOrder[];
+  deliveryAddress?: iAddress;
   obs?: string;
   createdAt?: Date;
   updateAt?: Date;

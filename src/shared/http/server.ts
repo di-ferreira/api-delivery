@@ -1,7 +1,7 @@
+import AppDataSource from '@shared/infra/typeorm';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import 'reflect-metadata';
 import app from './app';
-import { writeFileSync, existsSync, readFileSync } from 'fs';
-import AppDataSource from '@shared/infra/typeorm';
 
 let port = 3000;
 
@@ -10,7 +10,6 @@ const FILE = './src/AppConfig.json';
 
 AppDataSource.initialize()
   .then(() => {
-    console.log('Data Source initilize');
     if (
       existsSync(FILE) &&
       JSON.parse(readFileSync(FILE, { encoding: 'utf-8' })).PORTA

@@ -1,4 +1,5 @@
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
+import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import {
   SearchParamsOrder,
   iOrder,
@@ -8,15 +9,18 @@ import {
   iStatusOrder,
 } from '@ProjectTypes/Order/iOrder';
 import { SearchParams } from '@ProjectTypes/index';
+import { ItemOrder } from '@modules/OrderItem/Entity';
 import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from '../Entity';
 
 export default class OrderRepository implements iOrderRepository {
   private CustomRepository: Repository<iOrder>;
+  private CustomItemRepository: Repository<iItemOrder>;
 
   constructor() {
     this.CustomRepository = AppDataSource.getRepository(Order);
+    this.CustomItemRepository = AppDataSource.getRepository(ItemOrder);
   }
 
   public async create({
@@ -24,12 +28,14 @@ export default class OrderRepository implements iOrderRepository {
     status,
     total,
     obs,
+    items,
   }: iSaveOrder): Promise<iOrder> {
     const order = this.CustomRepository.create({
       customer,
       status,
       total,
       obs,
+      items,
     });
 
     await this.CustomRepository.save(order);
@@ -67,10 +73,13 @@ export default class OrderRepository implements iOrderRepository {
   }
 
   public async findById(orderID: number): Promise<iOrder> {
-    const type = await this.CustomRepository.findOne({
+    let order = await this.CustomRepository.findOne({
       where: { id: orderID },
     });
-    return type;
+
+    order.items = await this.CustomItemRepository.find({ where: { order } });
+
+    return order;
   }
 
   public async findByStatus({

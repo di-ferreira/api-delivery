@@ -16,7 +16,7 @@ class UpdateProductService {
   public async execute({
     id,
     costPrice,
-    describe,
+    description,
     minStock,
     name,
     stock,
@@ -29,7 +29,7 @@ class UpdateProductService {
 
     product.name = name;
     product.costPrice = costPrice;
-    product.describe = describe;
+    product.description = description;
     product.stock = stock;
     product.minStock = minStock;
 

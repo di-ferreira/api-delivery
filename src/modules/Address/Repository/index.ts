@@ -67,7 +67,6 @@ class AddressRepository implements iAddressRepository {
           id: id_customer,
         },
       },
-      relations: { customer: true },
     });
     return addressess;
   }

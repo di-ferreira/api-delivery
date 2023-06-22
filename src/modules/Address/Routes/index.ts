@@ -5,16 +5,14 @@ const Controller = new AddressController();
 
 const AddressRoute = Router();
 
-AddressRoute.post('/', Controller.create);
+AddressRoute.post('/:id_customer/addresses/', Controller.create);
 
-AddressRoute.get('/', Controller.index);
+AddressRoute.get('/:id_customer/addresses/:id', Controller.show);
 
-AddressRoute.get('/:id', Controller.show);
+AddressRoute.get('/:id_customer/addresses', Controller.indexByCustomer);
 
-AddressRoute.get('/customer/:id_customer', Controller.indexByCustomer);
+AddressRoute.put('/:id_customer/addresses/:id', Controller.update);
 
-AddressRoute.put('/:id', Controller.update);
-
-AddressRoute.delete('/:id', Controller.delete);
+AddressRoute.delete('/:id_customer/addresses/:id', Controller.delete);
 
 export default AddressRoute;

@@ -35,12 +35,12 @@ export default class AddressController implements iAddressController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { street, number, district, city, state, complement, customer } =
-      request.body;
+    const { street, number, district, city, state, complement } = request.body;
+    const { id_customer } = request.params;
     const createAddress = new CreateAddressService();
     const address = await createAddress.execute({
       city,
-      customer,
+      customer: Number(id_customer),
       district,
       number,
       state,

@@ -19,6 +19,7 @@ class CreateOrderService {
     status,
     items,
     obs,
+    deliveryAddress,
   }: iCreateOrder): Promise<iOrder> {
     const orderExists = await this.orderRepository.findOrderOpenByCustomer(
       customer
@@ -32,13 +33,33 @@ class CreateOrderService {
       throw new AppError('Order not have a Items');
     }
 
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
+    const CalcTotalItem = (item: iItemOrder): iItemOrder => {
+      let result: iItemOrder = {
+        ...item,
+        total: item.menu.price * item.quantity,
+      };
+      return result;
+    };
 
+    // for (let i = 0; i < items.length; i++) {
+    //   const item = items[i];
+
+    //   if (!item.menu.active) {
+    //     throw new AppError('Order cannot have an inactive item');
+    //   }
+    // }
+
+    const newItems: iItemOrder[] = items.map((item) => {
       if (!item.menu.active) {
         throw new AppError('Order cannot have an inactive item');
       }
-    }
+      return CalcTotalItem(item);
+    });
+    console.log(
+      '🚀 ~ file: CreateOrderService.ts:58 ~ CreateOrderService ~ constnewItems:iItemOrder[]=items.map ~ newItems:',
+      newItems
+    );
+
     const SumTotalTotal = (
       orderArray: iItemOrder[],
       propertyObject: string
@@ -50,14 +71,19 @@ class CreateOrderService {
 
     let totalOrder: number = 0;
 
-    totalOrder = SumTotalTotal(items, 'total');
+    totalOrder = SumTotalTotal(newItems, 'total');
+    console.log(
+      '🚀 ~ file: CreateOrderService.ts:55 ~ CreateOrderService ~ totalOrder:',
+      totalOrder
+    );
 
     const order = await this.orderRepository.create({
       customer,
       status,
-      items,
+      items: newItems,
       total: totalOrder,
       obs: obs && obs,
+      deliveryAddress,
     });
 
     return order;

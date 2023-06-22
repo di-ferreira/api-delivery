@@ -1,28 +1,27 @@
-import { iOrder, iOrderRepository } from '@ProjectTypes/Order/iOrder';
-import { iShowProduct } from '@ProjectTypes/Product/iProduct';
+import {
+  iItemOrder,
+  iItemOrderRepository,
+  iShowItemOrder,
+} from '@ProjectTypes/ItemOrder/iItemOrder';
 import AppError from '@shared/errors/AppError';
-import OrderRepository from '../Repository';
+import ItemOrderRepository from '../Repository';
 
-class ShowOrderService {
-  private orderRepository: iOrderRepository;
+class ShowItemOrderService {
+  private itemOrderRepository: iItemOrderRepository;
 
   constructor() {
-    this.orderRepository = new OrderRepository();
+    this.itemOrderRepository = new ItemOrderRepository();
   }
 
-  public async execute({ id }: iShowProduct): Promise<iOrder> {
-    const order = await this.orderRepository.findById(Number(id));
-    console.log(
-      '🚀 ~ file: ShowOrderService.ts:15 ~ ShowOrderService ~ execute ~ order:',
-      order
-    );
+  public async execute({ id }: iShowItemOrder): Promise<iItemOrder> {
+    const itemOrder = await this.itemOrderRepository.findById(Number(id));
 
-    if (!order) {
-      throw new AppError('Order not found');
+    if (!itemOrder) {
+      throw new AppError('Item not found');
     }
 
-    return order;
+    return itemOrder;
   }
 }
 
-export default ShowOrderService;
+export default ShowItemOrderService;

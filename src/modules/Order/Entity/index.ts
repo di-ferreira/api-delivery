@@ -1,6 +1,8 @@
+import { iAddress } from '@ProjectTypes/Address/iAddressService';
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import { iOrder, iStatusOrder } from '@ProjectTypes/Order/iOrder';
+import { Address } from '@modules/Address/Entity';
 import { Customer } from '@modules/Customer/Entity';
 import { ItemOrder } from '@modules/OrderItem/Entity';
 import {
@@ -44,6 +46,13 @@ export class Order implements iOrder {
     cascade: true,
   })
   items: iItemOrder[];
+
+  @ManyToOne(() => Address, (address) => address.order, {
+    eager: true,
+    nullable: true,
+  })
+  @JoinColumn([{ name: 'address_id', referencedColumnName: 'id' }])
+  deliveryAddress: iAddress;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

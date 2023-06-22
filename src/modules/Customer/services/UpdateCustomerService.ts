@@ -1,4 +1,5 @@
 import {
+  iCustomer,
   iCustomerRepository,
   iUpdatedCustomer,
 } from '@ProjectTypes/Customer/iCustomerService';
@@ -32,9 +33,18 @@ class UpdateCustomerService {
 
     customer.name = name;
 
-    await this.customerRepository.save(customer);
+    const newCustomer: iCustomer = {
+      id,
+      name,
+      phone,
+      address: customer.address,
+      created_at: customer.created_at,
+      updated_at: customer.updated_at,
+    };
 
-    return customer;
+    const savedCustomer = await this.customerRepository.save(newCustomer);
+
+    return savedCustomer;
   }
 }
 

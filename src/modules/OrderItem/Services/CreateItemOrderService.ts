@@ -1,60 +1,60 @@
-import { iItemOrderRepository } from '@ProjectTypes/ItemOrder/iItemOrder';
+import {
+  iCreateItemOrder,
+  iItemOrder,
+  iItemOrderRepository,
+} from '@ProjectTypes/ItemOrder/iItemOrder';
 import AppError from '@shared/errors/AppError';
+import ItemOrderRepository from '../Repository';
 
 class CreateItemOrderService {
-  private orderRepository: iItemOrderRepository;
+  private itemOrderRepository: iItemOrderRepository;
 
   constructor() {
-    this.orderRepository = new ItemOrderRepository();
+    this.itemOrderRepository = new ItemOrderRepository();
   }
 
   public async execute({
-    customer,
-    status,
-    items,
-    obs,
-  }: iCreateOrder): Promise<iOrder> {
-    const orderExists = await this.orderRepository.findOrderOpenByCustomer(
-      customer
-    );
+    menu,
+    order,
+    total,
+    quantity,
+  }: iCreateItemOrder): Promise<iItemOrder> {
+    const itemOrderExists = await this.itemOrderRepository.findByOrder(order);
+    let totalItemOrder: number = 0.0;
+    let quantityItemOrder: number = 1;
 
-    if (orderExists) {
+    if (itemOrderExists.length > 0) {
       throw new AppError('There is already one order open this customer');
     }
 
-    if (items.length < 1) {
-      throw new AppError('Order not have a Items');
+    if (!menu.active) {
+      throw new AppError('Order cannot have an inactive item');
     }
 
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-
-      if (!item.menu.active) {
-        throw new AppError('Order cannot have an inactive item');
-      }
+    if (quantity) {
+      quantityItemOrder = quantity;
     }
-    const SumTotalTotal = (
-      orderArray: iItemOrder[],
-      propertyObject: string
-    ) => {
-      return orderArray.reduce((total: number, order: iItemOrder) => {
-        return total + order[propertyObject];
-      }, 0);
+
+    totalItemOrder = menu.price * quantityItemOrder;
+
+    if (total) {
+      totalItemOrder = total;
+    }
+
+    const newItem: iCreateItemOrder = {
+      menu,
+      order,
+      quantity,
+      total: totalItemOrder,
     };
 
-    let totalOrder: number = 0;
+    const itemOrder = await this.itemOrderRepository.create(newItem);
+    console.log(
+      '🚀 ~ file: CreateItemOrderService.ts:56 ~ CreateItemOrderService ~ itemOrder:',
+      itemOrder
+    );
 
-    totalOrder = SumTotalTotal(items, 'total');
-
-    const order = await this.orderRepository.create({
-      customer,
-      status,
-      items,
-      total: totalOrder,
-      obs: obs && obs,
-    });
-
-    return order;
+    return itemOrder;
   }
 }
 

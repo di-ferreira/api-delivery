@@ -28,7 +28,10 @@ class CustomerRepository implements iCustomerRepository {
   }
 
   public async findAll({ page, limit }: SearchParams): Promise<iCustomerList> {
-    const [customers, count] = await this.CustomRepository.createQueryBuilder()
+    const [customers, count] = await this.CustomRepository.createQueryBuilder(
+      'customer'
+    )
+      .leftJoinAndSelect('customer.address', 'address')
       .skip(limit * (page - 1))
       .take(limit)
       .getManyAndCount();
@@ -44,9 +47,10 @@ class CustomerRepository implements iCustomerRepository {
   }
 
   public async findByName(name: string): Promise<iCustomer[]> {
-    const costumers = await this.CustomRepository.findBy({
-      name,
-    });
+    const costumers = await this.CustomRepository.createQueryBuilder('customer')
+      .leftJoinAndSelect('customer.address', 'address')
+      .where('customer.name = :name', { name })
+      .getMany();
     return costumers;
   }
 
@@ -59,7 +63,10 @@ class CustomerRepository implements iCustomerRepository {
   }
 
   public async findByPhone(phone: string): Promise<iCustomer> {
-    const costumer = await this.CustomRepository.findOneBy({ phone });
+    const costumer = await this.CustomRepository.createQueryBuilder('customer')
+      .leftJoinAndSelect('customer.address', 'address')
+      .where('customer.phone = :phone', { phone })
+      .getOne();
     return costumer;
   }
 

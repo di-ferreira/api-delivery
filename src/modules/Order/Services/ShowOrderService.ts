@@ -1,5 +1,8 @@
-import { iOrder, iOrderRepository } from '@ProjectTypes/Order/iOrder';
-import { iShowProduct } from '@ProjectTypes/Product/iProduct';
+import {
+  iOrder,
+  iOrderRepository,
+  iShowOrder,
+} from '@ProjectTypes/Order/iOrder';
 import AppError from '@shared/errors/AppError';
 import OrderRepository from '../Repository';
 
@@ -10,12 +13,8 @@ class ShowOrderService {
     this.orderRepository = new OrderRepository();
   }
 
-  public async execute({ id }: iShowProduct): Promise<iOrder> {
+  public async execute({ id }: iShowOrder): Promise<iOrder> {
     const order = await this.orderRepository.findById(Number(id));
-    console.log(
-      '🚀 ~ file: ShowOrderService.ts:15 ~ ShowOrderService ~ execute ~ order:',
-      order
-    );
 
     if (!order) {
       throw new AppError('Order not found');
