@@ -29,6 +29,7 @@ export class ItemOrder implements iItemOrder {
 
   @ManyToOne((type) => Order, (order) => order.items, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'order_id' })
   order: iOrder;
@@ -36,6 +37,7 @@ export class ItemOrder implements iItemOrder {
   @ManyToOne((type) => Menu, (menu) => menu.itemOrder, {
     eager: true,
     nullable: false,
+    onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'menu_id' })
   menu: iMenu;

@@ -11,7 +11,7 @@ import {
 import { SearchParams } from '@ProjectTypes/index';
 import { ItemOrder } from '@modules/OrderItem/Entity';
 import AppDataSource from '@shared/infra/typeorm';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { Order } from '../Entity';
 
 export default class OrderRepository implements iOrderRepository {
@@ -47,13 +47,23 @@ export default class OrderRepository implements iOrderRepository {
   }
 
   public async findOrderOpenByCustomer(customer: iCustomer): Promise<iOrder> {
-    const type = await this.CustomRepository.findOne({
-      where: [
-        { customer, status: iStatusOrder.FILA },
-        { customer, status: iStatusOrder.TRANSITO },
-      ],
-    });
-    return type;
+    const order = await this.CustomRepository.createQueryBuilder('order')
+      .where(customer)
+      .andWhere(
+        new Brackets((qb) => {
+          qb.where('order.status = :status', {
+            status: iStatusOrder.FILA,
+          }).orWhere('order.status = :status', {
+            status: iStatusOrder.TRANSITO,
+          });
+        })
+      )
+      .getOne();
+    console.log(
+      '🚀 ~ file: index.ts:56 ~ OrderRepository ~ findOrderOpenByCustomer ~ order:',
+      order
+    );
+    return order;
   }
 
   public async findAll({ page, limit }: SearchParams): Promise<iOrderList> {

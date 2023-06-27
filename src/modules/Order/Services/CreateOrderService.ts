@@ -55,10 +55,6 @@ class CreateOrderService {
       }
       return CalcTotalItem(item);
     });
-    console.log(
-      '🚀 ~ file: CreateOrderService.ts:58 ~ CreateOrderService ~ constnewItems:iItemOrder[]=items.map ~ newItems:',
-      newItems
-    );
 
     const SumTotalTotal = (
       orderArray: iItemOrder[],
@@ -72,10 +68,6 @@ class CreateOrderService {
     let totalOrder: number = 0;
 
     totalOrder = SumTotalTotal(newItems, 'total');
-    console.log(
-      '🚀 ~ file: CreateOrderService.ts:55 ~ CreateOrderService ~ totalOrder:',
-      totalOrder
-    );
 
     const order = await this.orderRepository.create({
       customer,

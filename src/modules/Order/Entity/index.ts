@@ -24,6 +24,7 @@ export class Order implements iOrder {
   @ManyToOne((type) => Customer, (customer) => customer.id, {
     eager: true,
     nullable: false,
+    onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'cliente_id' })
   customer: iCustomer;
@@ -43,13 +44,13 @@ export class Order implements iOrder {
 
   @OneToMany((type) => ItemOrder, (ItemOrder) => ItemOrder.order, {
     eager: true,
-    cascade: true,
   })
   items: iItemOrder[];
 
   @ManyToOne(() => Address, (address) => address.order, {
     eager: true,
     nullable: true,
+    onDelete: 'SET NULL',
   })
   @JoinColumn([{ name: 'address_id', referencedColumnName: 'id' }])
   deliveryAddress: iAddress;
