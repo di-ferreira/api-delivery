@@ -1,8 +1,10 @@
 import { iAddress } from '@ProjectTypes/Address/iAddressService';
+import { iCashRegister } from '@ProjectTypes/CashRegister/iCashRegisterService';
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import { iOrder, iStatusOrder } from '@ProjectTypes/Order/iOrder';
 import { Address } from '@modules/Address/Entity';
+import { CashRegister } from '@modules/CashRegister/Entity';
 import { Customer } from '@modules/Customer/Entity';
 import { ItemOrder } from '@modules/OrderItem/Entity';
 import {
@@ -54,6 +56,13 @@ export class Order implements iOrder {
   })
   @JoinColumn([{ name: 'address_id', referencedColumnName: 'id' }])
   deliveryAddress: iAddress;
+
+  @ManyToOne(() => CashRegister, (cashRegister) => cashRegister.orders, {
+    eager: true,
+    onDelete: 'NO ACTION',
+  })
+  @JoinColumn([{ name: 'cash_register_id', referencedColumnName: 'id' }])
+  cashRegister: iCashRegister;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

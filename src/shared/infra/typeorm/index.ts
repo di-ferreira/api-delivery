@@ -1,4 +1,5 @@
 import { Address } from '@modules/Address/Entity';
+import { CashRegister } from '@modules/CashRegister/Entity';
 import { Customer } from '@modules/Customer/Entity';
 import { Menu } from '@modules/Menu/Entity';
 import { Order } from '@modules/Order/Entity';
@@ -10,7 +11,16 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 let DSConfig: DataSourceOptions = {
   type: 'better-sqlite3',
   database: './src/db/api_delivery.sqlite',
-  entities: [Customer, Address, TypeMenu, Menu, Product, Order, ItemOrder],
+  entities: [
+    Customer,
+    Address,
+    TypeMenu,
+    Menu,
+    Product,
+    Order,
+    ItemOrder,
+    CashRegister,
+  ],
   // migrations: ['./src/database/migrations/*.ts'],
   synchronize: true,
 };
