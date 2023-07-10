@@ -1,16 +1,14 @@
-import ItemOrderRoute from '@modules/OrderItem/Routes';
 import { Router } from 'express';
-import OrderController from '../Controller';
+import CashRegisterController from '../Controller';
 
-const Controller = new OrderController();
+const Controller = new CashRegisterController();
 
-const OrderRoute = Router();
+const CashRegisterRoute = Router();
 
-OrderRoute.get('/:id', Controller.show);
-OrderRoute.use('/:id/item', ItemOrderRoute);
-OrderRoute.put('/:id', Controller.update);
-OrderRoute.delete('/:id', Controller.delete);
-OrderRoute.post('/', Controller.create);
-OrderRoute.get('/', Controller.index);
+CashRegisterRoute.get('/:id', Controller.show);
+CashRegisterRoute.put('/:id', Controller.update);
+CashRegisterRoute.delete('/:id', Controller.delete);
+CashRegisterRoute.post('/', Controller.create);
+CashRegisterRoute.get('/', Controller.index);
 
-export default OrderRoute;
+export default CashRegisterRoute;

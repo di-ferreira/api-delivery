@@ -29,15 +29,10 @@ export default class ItemOrderRepository implements iItemOrderRepository {
       total,
       quantity,
     });
-    console.log(
-      '🚀 ~ file: index.ts:32 ~ ItemOrderRepository ~ itemOrder:',
-      itemOrder
-    );
 
     let newItem: iItemOrder;
     this.CustomRepository.save(itemOrder)
       .then((item) => {
-        console.log('item order Repositore success', item);
         newItem = item;
       })
       .catch((err) => {

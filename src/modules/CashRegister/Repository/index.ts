@@ -15,6 +15,15 @@ export default class CashRegisterRepository implements iCashRegisterRepository {
   constructor() {
     this.CustomRepository = AppDataSource.getRepository(CashRegister);
   }
+
+  public async findOpened(): Promise<iCashRegister> {
+    let cashRegister = await this.CustomRepository.findOne({
+      where: { open: true },
+    });
+
+    return cashRegister;
+  }
+
   public async findAll({
     page,
     limit,
@@ -34,6 +43,7 @@ export default class CashRegisterRepository implements iCashRegisterRepository {
 
     return result;
   }
+
   public async findById(id: number): Promise<iCashRegister> {
     let cashRegister = await this.CustomRepository.findOne({
       where: { id },
@@ -68,15 +78,9 @@ export default class CashRegisterRepository implements iCashRegisterRepository {
     return cashRegisters;
   }
 
-  public async create({
-    open,
-    openDate,
-    total,
-  }: iCreateCashRegister): Promise<iCashRegister> {
+  public async create({ open }: iCreateCashRegister): Promise<iCashRegister> {
     const cashRegister = this.CustomRepository.create({
       open,
-      openDate,
-      total,
     });
 
     await this.CustomRepository.save(cashRegister);

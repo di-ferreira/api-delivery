@@ -1,9 +1,9 @@
 import {
+  iAddress,
   iAddressRepository,
   iDeleteAddress,
 } from '@ProjectTypes/Address/iAddressService';
 import AppError from '@shared/errors/AppError';
-import { Address } from '../Entity';
 import AddressRepository from '../Repository';
 
 class DeleteAddressService {
@@ -13,7 +13,7 @@ class DeleteAddressService {
     this.addressRepository = new AddressRepository();
   }
 
-  public async execute({ id }: iDeleteAddress): Promise<Address> {
+  public async execute({ id }: iDeleteAddress): Promise<iAddress> {
     const address = await this.addressRepository.findById(id);
 
     if (!address) {

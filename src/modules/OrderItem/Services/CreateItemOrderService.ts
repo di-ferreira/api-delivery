@@ -49,10 +49,6 @@ class CreateItemOrderService {
     };
 
     const itemOrder = await this.itemOrderRepository.create(newItem);
-    console.log(
-      '🚀 ~ file: CreateItemOrderService.ts:56 ~ CreateItemOrderService ~ itemOrder:',
-      itemOrder
-    );
 
     return itemOrder;
   }

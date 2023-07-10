@@ -1,3 +1,4 @@
+import { iCashRegister } from '@ProjectTypes/CashRegister/iCashRegisterService';
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import {
@@ -29,6 +30,8 @@ export default class OrderRepository implements iOrderRepository {
     total,
     obs,
     items,
+    cashRegister,
+    deliveryAddress,
   }: iSaveOrder): Promise<iOrder> {
     const order = this.CustomRepository.create({
       customer,
@@ -36,6 +39,8 @@ export default class OrderRepository implements iOrderRepository {
       total,
       obs,
       items,
+      cashRegister,
+      deliveryAddress,
     });
 
     await this.CustomRepository.save(order);
@@ -59,17 +64,39 @@ export default class OrderRepository implements iOrderRepository {
         })
       )
       .getOne();
-    console.log(
-      '🚀 ~ file: index.ts:56 ~ OrderRepository ~ findOrderOpenByCustomer ~ order:',
-      order
-    );
+
     return order;
   }
 
+  public async findOrdersByCashRegister({
+    limit,
+    page,
+    param,
+  }: SearchParamsOrder): Promise<iOrderList> {
+    const cashRegister: iCashRegister = param;
+    const [menus, count] = await this.CustomRepository.findAndCount({
+      skip: limit * (page - 1),
+      take: limit,
+      where: { cashRegister },
+    });
+
+    const result: iOrderList = {
+      current_page: page,
+      data: menus,
+      per_page: limit,
+      total: count,
+    };
+
+    return result;
+  }
+
   public async findAll({ page, limit }: SearchParams): Promise<iOrderList> {
-    const [orders, count] = await this.CustomRepository.createQueryBuilder()
+    const [orders, count] = await this.CustomRepository.createQueryBuilder(
+      'order'
+    )
       .skip(limit * (page - 1))
       .take(limit)
+      .leftJoinAndSelect('order.items', 'item')
       .getManyAndCount();
 
     const result: iOrderList = {
@@ -142,5 +169,15 @@ export default class OrderRepository implements iOrderRepository {
 
   public async remove(order: iOrder): Promise<void> {
     await this.CustomRepository.remove(order);
+  }
+
+  public async findOrdersTotalByCashRegister(
+    cashRegister: iCashRegister
+  ): Promise<number> {
+    const { total } = await this.CustomRepository.createQueryBuilder('order')
+      .select('SUM(order.total)', 'total')
+      .getRawOne();
+
+    return total;
   }
 }

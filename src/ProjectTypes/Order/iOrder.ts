@@ -1,4 +1,5 @@
 import { iAddress } from '@ProjectTypes/Address/iAddressService';
+import { iCashRegister } from '@ProjectTypes/CashRegister/iCashRegisterService';
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import { SearchParams } from '..';
@@ -16,6 +17,7 @@ export interface iCreateOrder {
   customer: iCustomer;
   items: iItemOrder[];
   deliveryAddress?: iAddress;
+  cashRegister: iCashRegister;
   obs?: string;
 }
 export interface iSaveOrder {
@@ -23,6 +25,7 @@ export interface iSaveOrder {
   status: iStatusOrder;
   customer: iCustomer;
   items: iItemOrder[];
+  cashRegister: iCashRegister;
   deliveryAddress?: iAddress;
   obs?: string;
 }
@@ -40,6 +43,7 @@ export interface iUpdatedOrder {
   status?: iStatusOrder;
   items?: iItemOrder[];
   deliveryAddress?: iAddress;
+  cashRegister?: iCashRegister;
   obs?: string;
 }
 
@@ -50,6 +54,7 @@ export interface iOrder {
   status: iStatusOrder;
   items: iItemOrder[];
   deliveryAddress?: iAddress;
+  cashRegister: iCashRegister;
   obs?: string;
   createdAt?: Date;
   updateAt?: Date;
@@ -71,6 +76,14 @@ export interface iOrderRepository {
   findAll({ page, limit }: SearchParams): Promise<iOrderList>;
   findById(orderID: number): Promise<iOrder | null>;
   findOrderOpenByCustomer(customer: iCustomer): Promise<iOrder | null>;
+  findOrdersByCashRegister({
+    limit,
+    page,
+    param,
+  }: SearchParamsOrder): Promise<iOrderList>;
+
+  findOrdersTotalByCashRegister(cashRegister: iCashRegister): Promise<number>;
+
   findByCustomer({
     limit,
     page,

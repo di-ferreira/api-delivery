@@ -3,8 +3,6 @@ import { SearchParams } from '..';
 
 export interface iCreateCashRegister {
   open: boolean;
-  total: number;
-  openDate: Date;
 }
 
 export interface iShowCashRegister {
@@ -18,7 +16,6 @@ export interface iDeleteCashRegister {
 export interface iUpdatedCashRegister {
   id: number;
   open?: boolean;
-  total?: number;
 }
 
 export interface iCashRegister {
@@ -39,6 +36,7 @@ export interface iCashRegisterList {
 export interface iCashRegisterRepository {
   findAll({ page, limit }: SearchParams): Promise<iCashRegisterList>;
   findById(id: number): Promise<iCashRegister | null>;
+  findOpened(): Promise<iCashRegister | null>;
   closeCashRegister(): Promise<iCashRegister>;
   findBetweenDates(
     InitialDate: Date,

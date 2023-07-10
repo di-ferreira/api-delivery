@@ -1,61 +1,51 @@
 import { iCashRegisterController } from '@ProjectTypes/CashRegister/iCashRegisterController';
-import { iCreateOrder, iUpdatedOrder } from '@ProjectTypes/Order/iOrder';
+import { iUpdatedCashRegister } from '@ProjectTypes/CashRegister/iCashRegisterService';
 import { Request, Response } from 'express';
-import CreateOrderService from '../Services/CreateOrderService';
-import DeleteOrderService from '../Services/DeleteOrderService';
-import ListOrderService from '../Services/ListOrderService';
-import ShowOrderService from '../Services/ShowOrderService';
-import UpdateOrderService from '../Services/UpdateOrderService';
+import CreateCashRegisterService from '../Services/CreateCashRegisterService';
+import DeleteOrderService from '../Services/DeleteCashRegisterService';
+import ListCashRegisterService from '../Services/ListCashRegisterService';
+import ShowCashRegisterService from '../Services/ShowCashRegisterService';
+import UpdateCashRegisterService from '../Services/UpdateCashRegisterService';
 
 export default class CashRegisterController implements iCashRegisterController {
   public async index(request: Request, response: Response): Promise<Response> {
     const page = Number(request.query.page);
     const limit = Number(request.query.limit);
-    const listOrder = new ListOrderService();
+    const listCashRegister = new ListCashRegisterService();
 
-    const orders = await listOrder.execute({ page, limit });
+    const cashRegisters = await listCashRegister.execute({ page, limit });
 
-    return response.json(orders);
+    return response.json(cashRegisters);
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const showOrder = new ShowOrderService();
-    const order = await showOrder.execute({ id: Number(id) });
-    return response.json(order);
+    const showCashRegister = new ShowCashRegisterService();
+    const cashRegister = await showCashRegister.execute({ id: Number(id) });
+    return response.json(cashRegister);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { customer, items, status, obs } = request.body;
-    const createOrder = new CreateOrderService();
+    const createCashRegister = new CreateCashRegisterService();
 
-    let newMenu: iCreateOrder = {
-      customer,
-      items,
-      status,
-      obs,
-    };
+    const cashRegister = await createCashRegister.execute();
 
-    const menu = await createOrder.execute(newMenu);
-
-    return response.status(201).json(menu);
+    return response.status(201).json(cashRegister);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const { items, obs, status } = request.body;
+    const { open } = request.body;
 
-    const updateOrder = new UpdateOrderService();
+    const updateCashRegister = new UpdateCashRegisterService();
 
-    let updatedOrder: iUpdatedOrder = {
+    let updatedCashRegister: iUpdatedCashRegister = {
       id: Number(id),
-      items: items && items,
-      obs: obs && obs,
-      status: status && status,
+      open,
     };
 
-    const order = await updateOrder.execute(updatedOrder);
+    const order = await updateCashRegister.execute(updatedCashRegister);
     return response.json(order);
   }
 

@@ -1,3 +1,4 @@
+import CashRegisterRoute from '@modules/CashRegister/Routes';
 import CustomerRoute from '@modules/Customer/Routes';
 import MenuRoute from '@modules/Menu/Routes';
 import OrderRoute from '@modules/Order/Routes';
@@ -13,4 +14,5 @@ routes.use('/products', ProductRoute);
 routes.use('/types-menu', TypeMenuRoute);
 routes.use('/menus', MenuRoute);
 routes.use('/orders', OrderRoute);
+routes.use('/cash-register', CashRegisterRoute);
 export default routes;

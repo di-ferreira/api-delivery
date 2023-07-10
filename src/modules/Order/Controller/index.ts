@@ -29,16 +29,17 @@ export default class OrderController implements iOrderController {
     const { customer, items, status, obs } = request.body;
     const createOrder = new CreateOrderService();
 
-    let newMenu: iCreateOrder = {
+    let newOrder: iCreateOrder = {
       customer,
       items,
       status,
       obs,
+      cashRegister: null,
     };
 
-    const menu = await createOrder.execute(newMenu);
+    const order = await createOrder.execute(newOrder);
 
-    return response.status(201).json(menu);
+    return response.status(201).json(order);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
