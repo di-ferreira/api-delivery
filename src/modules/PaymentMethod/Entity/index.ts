@@ -1,28 +1,19 @@
+import { iPaymentMethod } from '@ProjectTypes/PaymentMethod/iPaymentMethod';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Enderecos } from './Enderecos';
 
-@Entity()
-export class Customer {
+@Entity('payment_method')
+export class PaymentMethod implements iPaymentMethod {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({
-    length: 100,
-  })
+  @Column()
   name: string;
-
-  @Column({ unique: true })
-  phone: string;
-
-  @OneToMany(() => Enderecos, (endereco) => endereco.cliente)
-  address: Enderecos[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

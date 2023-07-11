@@ -4,6 +4,7 @@ import { Customer } from '@modules/Customer/Entity';
 import { Menu } from '@modules/Menu/Entity';
 import { Order } from '@modules/Order/Entity';
 import { ItemOrder } from '@modules/OrderItem/Entity';
+import { PaymentMethod } from '@modules/PaymentMethod/Entity';
 import { Product } from '@modules/Product/Entity';
 import { TypeMenu } from '@modules/TypeMenu/Entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
@@ -20,6 +21,7 @@ let DSConfig: DataSourceOptions = {
     Order,
     ItemOrder,
     CashRegister,
+    PaymentMethod,
   ],
   // migrations: ['./src/database/migrations/*.ts'],
   synchronize: true,
