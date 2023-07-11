@@ -4,6 +4,7 @@ import { Customer } from '@modules/Customer/Entity';
 import { Menu } from '@modules/Menu/Entity';
 import { Order } from '@modules/Order/Entity';
 import { ItemOrder } from '@modules/OrderItem/Entity';
+import { Payment } from '@modules/Payment/Entity';
 import { PaymentMethod } from '@modules/PaymentMethod/Entity';
 import { Product } from '@modules/Product/Entity';
 import { TypeMenu } from '@modules/TypeMenu/Entity';
@@ -22,6 +23,7 @@ let DSConfig: DataSourceOptions = {
     ItemOrder,
     CashRegister,
     PaymentMethod,
+    Payment,
   ],
   // migrations: ['./src/database/migrations/*.ts'],
   synchronize: true,

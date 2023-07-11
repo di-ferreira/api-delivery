@@ -8,6 +8,7 @@ import {
   iOrder,
   iOrderRepository,
 } from '@ProjectTypes/Order/iOrder';
+import { iPayment } from '@ProjectTypes/Payment/iPayment';
 import CashRegisterRepository from '@modules/CashRegister/Repository';
 import ItemOrderRepository from '@modules/OrderItem/Repository';
 import AppError from '@shared/errors/AppError';
@@ -30,6 +31,7 @@ class CreateOrderService {
     items,
     obs,
     deliveryAddress,
+    payment,
   }: iCreateOrder): Promise<iOrder> {
     const orderExists = await this.orderRepository.findOrderOpenByCustomer(
       customer
@@ -77,6 +79,18 @@ class CreateOrderService {
 
     totalOrder = SumTotalTotal(newItems, 'total');
 
+    if (payment) {
+      let totalPayment: number = payment.reduce(
+        (total: number, pay: iPayment) => {
+          return (total += pay.value);
+        },
+        0
+      );
+      if (totalOrder !== totalPayment) {
+        throw new AppError('Payment value is diferent of total order.');
+      }
+    }
+
     const order = await this.orderRepository.create({
       customer,
       status,
@@ -85,6 +99,7 @@ class CreateOrderService {
       obs: obs && obs,
       deliveryAddress,
       cashRegister,
+      payment,
     });
 
     let savedItems: iItemOrder[] = [];

@@ -2,6 +2,7 @@ import { iAddress } from '@ProjectTypes/Address/iAddressService';
 import { iCashRegister } from '@ProjectTypes/CashRegister/iCashRegisterService';
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
 import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
+import { iPayment } from '@ProjectTypes/Payment/iPayment';
 import { SearchParams } from '..';
 
 export enum iStatusOrder {
@@ -17,6 +18,7 @@ export interface iCreateOrder {
   customer: iCustomer;
   items: iItemOrder[];
   deliveryAddress?: iAddress;
+  payment?: iPayment[];
   cashRegister: iCashRegister;
   obs?: string;
 }
@@ -26,6 +28,7 @@ export interface iSaveOrder {
   customer: iCustomer;
   items: iItemOrder[];
   cashRegister: iCashRegister;
+  payment?: iPayment[];
   deliveryAddress?: iAddress;
   obs?: string;
 }
@@ -44,6 +47,7 @@ export interface iUpdatedOrder {
   items?: iItemOrder[];
   deliveryAddress?: iAddress;
   cashRegister?: iCashRegister;
+  payment?: iPayment[];
   obs?: string;
 }
 
@@ -55,6 +59,7 @@ export interface iOrder {
   items: iItemOrder[];
   deliveryAddress?: iAddress;
   cashRegister: iCashRegister;
+  payment: iPayment[];
   obs?: string;
   createdAt?: Date;
   updateAt?: Date;

@@ -1,25 +1,34 @@
+import { iOrder } from '@ProjectTypes/Order/iOrder';
 import { iPayment } from '@ProjectTypes/Payment/iPayment';
 import { iPaymentMethod } from '@ProjectTypes/PaymentMethod/iPaymentMethod';
-import { Payment } from '@modules/Payment/Entity';
+import { Order } from '@modules/Order/Entity';
+import { PaymentMethod } from '@modules/PaymentMethod/Entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('payment_method')
-export class PaymentMethod implements iPaymentMethod {
+@Entity('payment')
+export class Payment implements iPayment {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
-  name: string;
+  value: number;
 
-  @OneToOne(() => Payment)
-  payment: iPayment;
+  @OneToOne(() => PaymentMethod)
+  @JoinColumn()
+  method: iPaymentMethod;
+
+  @ManyToOne(() => Order, (order) => order.payment)
+  @JoinColumn({ name: 'order_id' })
+  order: iOrder;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
