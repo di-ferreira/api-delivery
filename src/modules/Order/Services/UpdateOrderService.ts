@@ -4,15 +4,19 @@ import {
   iOrderRepository,
   iUpdatedOrder,
 } from '@ProjectTypes/Order/iOrder';
-import { iPayment } from '@ProjectTypes/Payment/iPayment';
+import { iPayment, iPaymentRepository } from '@ProjectTypes/Payment/iPayment';
+import { Payment } from '@modules/Payment/Entity';
+import PaymentRepository from '@modules/Payment/Repository';
 import AppError from '@shared/errors/AppError';
 import OrderRepository from '../Repository';
 
 class UpdateOrderService {
   private orderRepository: iOrderRepository;
+  private paymentRepository: iPaymentRepository;
 
   constructor() {
     this.orderRepository = new OrderRepository();
+    this.paymentRepository = new PaymentRepository();
   }
 
   public async execute({
@@ -65,6 +69,7 @@ class UpdateOrderService {
         },
         0
       );
+
       if (totalOrder !== totalPayment) {
         throw new AppError('Payment value is diferent of total order.');
       }
@@ -77,9 +82,17 @@ class UpdateOrderService {
     order.payment = payment;
     order.deliveryAddress = deliveryAddress;
 
-    await this.orderRepository.save(order);
+    const newOrder = await this.orderRepository.save(order);
 
-    return order;
+    payment.map(async (pay) => {
+      let newPay = new Payment();
+      newPay.method = pay.method;
+      newPay.order = order;
+      newPay.value = pay.value;
+      await this.paymentRepository.create(newPay);
+    });
+
+    return this.orderRepository.findById(newOrder.id);
   }
 }
 

@@ -34,7 +34,7 @@ export default class OrderController implements iOrderController {
       items,
       status,
       obs,
-      cashRegister: null,
+      cashRegister: undefined,
     };
 
     const order = await createOrder.execute(newOrder);

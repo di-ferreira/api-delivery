@@ -1,5 +1,9 @@
 import { iCashRegisterRepository } from '@ProjectTypes/CashRegister/iCashRegisterService';
 import {
+  iCustomer,
+  iCustomerRepository,
+} from '@ProjectTypes/Customer/iCustomerService';
+import {
   iItemOrder,
   iItemOrderRepository,
 } from '@ProjectTypes/ItemOrder/iItemOrder';
@@ -10,6 +14,7 @@ import {
 } from '@ProjectTypes/Order/iOrder';
 import { iPayment } from '@ProjectTypes/Payment/iPayment';
 import CashRegisterRepository from '@modules/CashRegister/Repository';
+import CustomerRepository from '@modules/Customer/Repository';
 import ItemOrderRepository from '@modules/OrderItem/Repository';
 import AppError from '@shared/errors/AppError';
 import OrderRepository from '../Repository';
@@ -18,11 +23,13 @@ class CreateOrderService {
   private orderRepository: iOrderRepository;
   private orderItemRepository: iItemOrderRepository;
   private cashRegisterRepository: iCashRegisterRepository;
+  private customerRepository: iCustomerRepository;
 
   constructor() {
     this.orderRepository = new OrderRepository();
     this.orderItemRepository = new ItemOrderRepository();
     this.cashRegisterRepository = new CashRegisterRepository();
+    this.customerRepository = new CustomerRepository();
   }
 
   public async execute({
@@ -33,8 +40,24 @@ class CreateOrderService {
     deliveryAddress,
     payment,
   }: iCreateOrder): Promise<iOrder> {
+    let customerExists: iCustomer;
+
+    if (typeof customer === 'number') {
+      customerExists = await this.customerRepository.findById(customer);
+    } else {
+      customerExists = await this.customerRepository.findById(customer.id);
+    }
+
+    if (!customerExists) {
+      throw new AppError('There is not exists customer with ID');
+    }
+
     const orderExists = await this.orderRepository.findOrderOpenByCustomer(
-      customer
+      customerExists
+    );
+    console.log(
+      '🚀 ~ file: CreateOrderService.ts:58 ~ CreateOrderService ~ orderExists:',
+      orderExists
     );
 
     const cashRegister = await this.cashRegisterRepository.findOpened();
@@ -90,11 +113,12 @@ class CreateOrderService {
         throw new AppError('Payment value is diferent of total order.');
       }
     }
+    console.log('hi');
 
     const order = await this.orderRepository.create({
       customer,
       status,
-      items: newItems,
+      items,
       total: totalOrder,
       obs: obs && obs,
       deliveryAddress,
@@ -102,26 +126,16 @@ class CreateOrderService {
       payment,
     });
 
-    let savedItems: iItemOrder[] = [];
-
-    newItems.map(async (item) => {
-      let newItem: iItemOrder = await this.orderItemRepository.create({
-        ...item,
-        order,
-      });
-      console.log(
-        '🚀 ~ file: CreateOrderService.ts:97 ~ CreateOrderService ~ newItems.map ~ newItem:',
-        newItem
-      );
-
-      savedItems.push(newItem);
-    });
+    console.log('hello');
+    let savedItems: iItemOrder[] = await this.orderItemRepository.findByOrder(
+      order
+    );
 
     const total = await this.orderRepository.findOrdersTotalByCashRegister(
       cashRegister
     );
 
-    const newCashRegister = await this.cashRegisterRepository.save({
+    await this.cashRegisterRepository.save({
       id: cashRegister.id,
       total,
       open: cashRegister.open,
@@ -129,7 +143,7 @@ class CreateOrderService {
       orders: [],
     });
 
-    return { ...order, cashRegister: newCashRegister, items: savedItems };
+    return { ...order, items: savedItems };
   }
 }
 

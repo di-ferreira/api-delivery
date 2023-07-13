@@ -48,6 +48,7 @@ export class Order implements iOrder {
 
   @OneToMany((type) => ItemOrder, (ItemOrder) => ItemOrder.order, {
     eager: true,
+    cascade: true,
   })
   items: iItemOrder[];
 

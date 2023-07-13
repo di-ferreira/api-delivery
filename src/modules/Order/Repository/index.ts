@@ -53,13 +53,13 @@ export default class OrderRepository implements iOrderRepository {
 
   public async findOrderOpenByCustomer(customer: iCustomer): Promise<iOrder> {
     const order = await this.CustomRepository.createQueryBuilder('order')
-      .where(customer)
+      .where('order.customer = :customer', { customer: customer.id })
       .andWhere(
         new Brackets((qb) => {
-          qb.where('order.status = :status', {
-            status: iStatusOrder.FILA,
-          }).orWhere('order.status = :status', {
-            status: iStatusOrder.TRANSITO,
+          qb.where('order.status = :status1', {
+            status1: iStatusOrder.FILA,
+          }).orWhere('order.status = :status2', {
+            status2: iStatusOrder.TRANSITO,
           });
         })
       )
@@ -112,9 +112,15 @@ export default class OrderRepository implements iOrderRepository {
   public async findById(orderID: number): Promise<iOrder> {
     let order = await this.CustomRepository.findOne({
       where: { id: orderID },
+      relations: {
+        cashRegister: true,
+        customer: true,
+        items: true,
+      },
     });
 
-    order.items = await this.CustomItemRepository.find({ where: { order } });
+    if (order)
+      order.items = await this.CustomItemRepository.find({ where: { order } });
 
     return order;
   }
