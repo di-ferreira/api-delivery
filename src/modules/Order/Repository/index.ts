@@ -24,27 +24,12 @@ export default class OrderRepository implements iOrderRepository {
     this.CustomItemRepository = AppDataSource.getRepository(ItemOrder);
   }
 
-  public async create({
-    customer,
-    status,
-    total,
-    obs,
-    items,
-    cashRegister,
-    deliveryAddress,
-  }: iSaveOrder): Promise<iOrder> {
-    const order = this.CustomRepository.create({
-      customer,
-      status,
-      total,
-      obs,
-      items,
-      cashRegister,
-      deliveryAddress,
-    });
+  public async create(data: iSaveOrder): Promise<iOrder> {
+    const order = this.CustomRepository.create(data);
 
-    await this.CustomRepository.save(order);
-    return order;
+    const orderSaved = await this.CustomRepository.save(order);
+
+    return orderSaved;
   }
 
   public async save(order: iOrder): Promise<iOrder> {
@@ -96,6 +81,7 @@ export default class OrderRepository implements iOrderRepository {
     )
       .skip(limit * (page - 1))
       .take(limit)
+      .leftJoinAndSelect('order.customer', 'customer')
       .leftJoinAndSelect('order.items', 'item')
       .getManyAndCount();
 

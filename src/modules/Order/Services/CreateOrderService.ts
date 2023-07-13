@@ -55,10 +55,6 @@ class CreateOrderService {
     const orderExists = await this.orderRepository.findOrderOpenByCustomer(
       customerExists
     );
-    console.log(
-      '🚀 ~ file: CreateOrderService.ts:58 ~ CreateOrderService ~ orderExists:',
-      orderExists
-    );
 
     const cashRegister = await this.cashRegisterRepository.findOpened();
 
@@ -86,6 +82,7 @@ class CreateOrderService {
       if (!item.menu.active) {
         throw new AppError('Order cannot have an inactive item');
       }
+
       return CalcTotalItem(item);
     });
 
@@ -113,12 +110,11 @@ class CreateOrderService {
         throw new AppError('Payment value is diferent of total order.');
       }
     }
-    console.log('hi');
 
     const order = await this.orderRepository.create({
-      customer,
+      customer: customerExists,
       status,
-      items,
+      items: newItems,
       total: totalOrder,
       obs: obs && obs,
       deliveryAddress,
@@ -126,7 +122,6 @@ class CreateOrderService {
       payment,
     });
 
-    console.log('hello');
     let savedItems: iItemOrder[] = await this.orderItemRepository.findByOrder(
       order
     );
@@ -143,7 +138,7 @@ class CreateOrderService {
       orders: [],
     });
 
-    return { ...order, items: savedItems };
+    return { ...order, items: savedItems, cashRegister };
   }
 }
 
