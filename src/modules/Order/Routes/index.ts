@@ -8,8 +8,8 @@ const Controller = new OrderController();
 const OrderRoute = Router();
 
 OrderRoute.get('/:id', Controller.show);
-OrderRoute.use('/:id/item', ItemOrderRoute);
-OrderRoute.use('/:id/payment', PaymentRoute);
+OrderRoute.use('/:id/items', ItemOrderRoute);
+OrderRoute.use('/:id/payments', PaymentRoute);
 OrderRoute.put('/:id', Controller.update);
 OrderRoute.delete('/:id', Controller.delete);
 OrderRoute.post('/', Controller.create);

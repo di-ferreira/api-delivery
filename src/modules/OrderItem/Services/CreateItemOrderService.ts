@@ -19,13 +19,8 @@ class CreateItemOrderService {
     total,
     quantity,
   }: iCreateItemOrder): Promise<iItemOrder> {
-    const itemOrderExists = await this.itemOrderRepository.findByOrder(order);
     let totalItemOrder: number = 0.0;
     let quantityItemOrder: number = 1;
-
-    if (itemOrderExists.length > 0) {
-      throw new AppError('There is already one order open this customer');
-    }
 
     if (!menu.active) {
       throw new AppError('Order cannot have an inactive item');
