@@ -82,7 +82,7 @@ export default class OrderRepository implements iOrderRepository {
       .skip(limit * (page - 1))
       .take(limit)
       .leftJoinAndSelect('order.customer', 'customer')
-      .leftJoinAndSelect('order.items', 'item')
+      .leftJoinAndSelect('order.items', 'items')
       .getManyAndCount();
 
     const result: iOrderList = {
@@ -104,9 +104,6 @@ export default class OrderRepository implements iOrderRepository {
         items: true,
       },
     });
-
-    if (order)
-      order.items = await this.CustomItemRepository.find({ where: { order } });
 
     return order;
   }
