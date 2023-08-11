@@ -1,6 +1,6 @@
-import { iCreateItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import { iItemOrderController } from '@ProjectTypes/ItemOrder/iItemOrderController';
 import { Request, Response } from 'express';
+import CreateItemOrderService from '../Services/CreateItemOrderService';
 import ListItemOrderService from '../Services/ListItemOrderService';
 import ShowItemOrderService from '../Services/ShowItemOrderService';
 
@@ -27,20 +27,19 @@ export default class ItemOrderController implements iItemOrderController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { menu, quantity, total, order } = request.body;
+    const { menu, quantity, total } = request.body;
+    const { id } = request.params;
 
-    // const createItemOrder = new CreateItemOrderService();
+    const createItemOrder = new CreateItemOrderService();
 
-    let newItem: iCreateItemOrder = {
+    const item = await createItemOrder.execute({
       menu,
-      order,
       quantity,
+      order: Number(id),
       total,
-    };
-    // const item = await createItemOrder.execute(newItem);
+    });
 
-    // return response.status(201).json(item);
-    return response.status(201).json(newItem);
+    return response.status(201).json(item);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {

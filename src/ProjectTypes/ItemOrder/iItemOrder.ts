@@ -6,7 +6,7 @@ export interface iCreateItemOrder {
   total?: number;
   quantity?: number;
   menu: iMenu;
-  order: iOrder;
+  order: iOrder | number;
 }
 
 export interface iShowItemOrder {

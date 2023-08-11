@@ -27,7 +27,7 @@ class CreateItemOrderService {
     let quantityItemOrder: number = 1;
     let orderExists: iOrder;
 
-    await this.orderRepository.findById(Number(order));
+    orderExists = await this.orderRepository.findById(Number(order));
     console.log(
       '🚀 ~ file: CreateItemOrderService.ts:31 ~ CreateItemOrderService ~ orderExists:',
       orderExists
