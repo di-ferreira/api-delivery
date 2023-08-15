@@ -1,0 +1,998 @@
+{
+	"info": {
+		"_postman_id": "22a63928-843f-4567-a745-5beaf05fb0d3",
+		"name": "delivery",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11769221"
+	},
+	"item": [
+		{
+			"name": "CUSTOMER",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Customer 03\",\r\n    \"phone\": \"21 9 9999-0016\",\r\n    \"street\": \"two\",\r\n    \"number\": \"40\",\r\n    \"district\": \"CE\",\r\n    \"city\": \"Araruama\",\r\n    \"state\": \"RJ\",\r\n    \"complement\": \"Arkram asilum\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/customers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/customers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Kurama\",\r\n    \"phone\": \"21 9 9999-0015\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/customers/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/customers/4",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ADDRESS",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"street\": \"Av Central\",\r\n    \"number\": \"1000\",\r\n    \"district\": \"13\",\r\n    \"city\": \"Central\",\r\n    \"state\": \"SP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/customers/1/addresses",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"1",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/customers/2/addresses",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"2",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"street\": \"two update\",\r\n    \"number\": \"350\",\r\n    \"district\": \"Two faces\",\r\n    \"city\": \"Gotham\",\r\n    \"state\": \"RJ\",\r\n    \"complement\": \"Arkram asilum\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/customers/5/addresses/4",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"5",
+								"addresses",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/customers/5/addresses/6",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"5",
+								"addresses",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUCTS",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"hot-dog\",\r\n    \"costPrice\": 5,\r\n    \"description\": \"salsage\",\r\n    \"minStock\": 10,\r\n    \"stock\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/products",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/products",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n  \"name\": \"grape juice\",\r\n    \"costPrice\": 0.75,\r\n    \"description\": \"\",\r\n    \"minStock\": 10,\r\n    \"stock\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/products/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/products",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TYPE-MENU",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"drinks\",\r\n    \"description\": \"sodas, juices\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/types-menu",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"types-menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/types-menu",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"types-menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Sanduiches update\",\r\n    \"description\": \"hambuguers, hot-dogs\",\r\n    \"createdAt\": \"2023-06-21T18:29:56.000Z\",\r\n    \"updateAt\": \"2023-06-21T18:29:56.000Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/types-menu/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"types-menu",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/types-menu/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"types-menu",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PAYMENT-METHODS",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"PIX\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/payment-methods",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"payment-methods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/payment-methods",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"payment-methods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"DÉBITO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/payment-methods/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"payment-methods",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/payment-methods/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"payment-methods",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MENU",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"hamburguer\",\r\n    \"description\": \"\",\r\n    \"products\": [\r\n        {\r\n            \"name\": \"hamburguer\",\r\n            \"costPrice\": 10,\r\n            \"description\": null,\r\n            \"minStock\": 100,\r\n            \"stock\": 500\r\n        }\r\n    ],\r\n    \"type\": {\r\n        \"id\": 1,\r\n        \"name\": \"Sanduiches\",\r\n        \"description\": \"hambuguers, hot-dogs\",\r\n        \"createdAt\": \"2023-07-12T17:13:04.000Z\",\r\n        \"updateAt\": \"2023-07-12T17:13:04.000Z\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/menus",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"menus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/menus/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"menus",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"hotdog\",\r\n    \"price\": 10,\r\n    \"description\": \"hot dog\",\r\n    \"active\": true,\r\n    \"createdAt\": \"2023-07-12T17:15:27.000Z\",\r\n    \"updateAt\": \"2023-07-12T17:15:27.000Z\",\r\n    \"type\": {\r\n        \"id\": 1,\r\n        \"name\": \"Sanduiches\",\r\n        \"description\": \"hambuguers, hot-dogs\",\r\n        \"createdAt\": \"2023-07-12T17:13:04.000Z\",\r\n        \"updateAt\": \"2023-07-12T17:13:04.000Z\"\r\n    },\r\n    \"products\": [\r\n        {\r\n            \"id\": 2,\r\n            \"name\": \"hot-dog\",\r\n            \"costPrice\": 5,\r\n            \"description\": \"salsage\",\r\n            \"minStock\": 10,\r\n            \"stock\": 100,\r\n            \"createdAt\": \"2023-06-21T18:06:08.000Z\",\r\n            \"updateAt\": \"2023-07-12T17:17:10.000Z\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/menus/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"menus",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/menus/5",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"menus",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ORDER",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"total\": 0.0,\r\n    \"quantity\": 5,\r\n    \"menu\": {\r\n        \"id\": 3,\r\n        \"name\": \"hamburguer\",\r\n        \"price\": 10,\r\n        \"description\": \"\",\r\n        \"active\": true,\r\n        \"createdAt\": \"2023-07-14T12:19:19.000Z\",\r\n        \"updateAt\": \"2023-07-14T12:19:19.000Z\",\r\n        \"type\": {\r\n            \"id\": 1,\r\n            \"name\": \"Sanduiches\",\r\n            \"description\": \"hambuguers, hot-dogs\",\r\n            \"createdAt\": \"2023-07-12T17:13:04.000Z\",\r\n            \"updateAt\": \"2023-07-12T17:13:04.000Z\"\r\n        },\r\n        \"products\": [\r\n            {\r\n                \"id\": 3,\r\n                \"name\": \"hamburguer\",\r\n                \"costPrice\": 10,\r\n                \"description\": null,\r\n                \"minStock\": 100,\r\n                \"stock\": 500,\r\n                \"createdAt\": \"2023-07-14T12:19:19.000Z\",\r\n                \"updateAt\": \"2023-07-14T12:19:19.000Z\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/orders/3/items",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"3",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/orders/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"total\": 42.5,\r\n    \"obs\": \"obs test\",\r\n    \"status\": \"pronto\",\r\n    \"payment\": [\r\n        {\r\n            \"value\": 42.5,\r\n            \"method\": {\r\n                \"id\": 2,\r\n                \"name\": \"PIX\",\r\n                \"createdAt\": \"2023-07-11T12:19:04.000Z\",\r\n                \"updateAt\": \"2023-07-11T12:19:04.000Z\"\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/orders/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/orders/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ORDER ITEMS",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"total\": 0.0,\r\n    \"quantity\": 5,\r\n    \"menu\": {\r\n        \"id\": 3,\r\n        \"name\": \"hamburguer\",\r\n        \"price\": 10,\r\n        \"description\": \"\",\r\n        \"active\": true,\r\n        \"createdAt\": \"2023-07-14T12:19:19.000Z\",\r\n        \"updateAt\": \"2023-07-14T12:19:19.000Z\",\r\n        \"type\": {\r\n            \"id\": 1,\r\n            \"name\": \"Sanduiches\",\r\n            \"description\": \"hambuguers, hot-dogs\",\r\n            \"createdAt\": \"2023-07-12T17:13:04.000Z\",\r\n            \"updateAt\": \"2023-07-12T17:13:04.000Z\"\r\n        },\r\n        \"products\": [\r\n            {\r\n                \"id\": 3,\r\n                \"name\": \"hamburguer\",\r\n                \"costPrice\": 10,\r\n                \"description\": null,\r\n                \"minStock\": 100,\r\n                \"stock\": 500,\r\n                \"createdAt\": \"2023-07-14T12:19:19.000Z\",\r\n                \"updateAt\": \"2023-07-14T12:19:19.000Z\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/orders/3/items",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"3",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/orders/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"total\": 42.5,\r\n    \"obs\": \"obs test\",\r\n    \"status\": \"pronto\",\r\n    \"payment\": [\r\n        {\r\n            \"value\": 42.5,\r\n            \"method\": {\r\n                \"id\": 2,\r\n                \"name\": \"PIX\",\r\n                \"createdAt\": \"2023-07-11T12:19:04.000Z\",\r\n                \"updateAt\": \"2023-07-11T12:19:04.000Z\"\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/orders/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/orders/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CASH-REGISTER",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"status\": \"na fila\",\r\n    \"customer\": 2,\r\n    \"obs\": \"obs test\",\r\n    \"items\": [\r\n        {\r\n            \"total\": 0.0,\r\n            \"quantity\": 2,\r\n            \"menu\": {\r\n                \"id\": 1,\r\n                \"name\": \"Big Pizza Calabreza\",\r\n                \"price\": 20.5,\r\n                \"description\": \"Pizza with cheese border\",\r\n                \"active\": true,\r\n                \"createdAt\": \"2023-06-22T18:16:30.000Z\",\r\n                \"updateAt\": \"2023-06-22T18:16:31.000Z\",\r\n                \"type\": {\r\n                    \"id\": 2,\r\n                    \"name\": \"Massas\",\r\n                    \"description\": \"Macarrões, Pizzas...\",\r\n                    \"createdAt\": \"2023-06-22T18:16:30.000Z\",\r\n                    \"updateAt\": \"2023-06-22T18:16:30.000Z\"\r\n                },\r\n                \"products\": [\r\n                    {\r\n                        \"id\": 5,\r\n                        \"name\": \"pizza calabresa\",\r\n                        \"costPrice\": 20.5,\r\n                        \"description\": \"pizza with cheese border\",\r\n                        \"minStock\": 10,\r\n                        \"stock\": 100,\r\n                        \"createdAt\": \"2023-06-22T18:16:30.000Z\",\r\n                        \"updateAt\": \"2023-06-22T18:16:31.000Z\"\r\n                    }\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"total\": 0.0,\r\n            \"quantity\": 2,\r\n            \"menu\": {\r\n                \"id\": 3,\r\n                \"name\": \"orange juice\",\r\n                \"price\": 0.75,\r\n                \"description\": \"Natural orange juice\",\r\n                \"active\": true,\r\n                \"createdAt\": \"2023-06-22T18:16:31.000Z\",\r\n                \"updateAt\": \"2023-06-22T18:16:31.000Z\",\r\n                \"type\": {\r\n                    \"id\": 3,\r\n                    \"name\": \"Bebidas\",\r\n                    \"description\": \"sucos, refrigerantes\",\r\n                    \"createdAt\": \"2023-06-22T18:16:30.000Z\",\r\n                    \"updateAt\": \"2023-06-22T18:16:30.000Z\"\r\n                },\r\n                \"products\": [\r\n                    {\r\n                        \"id\": 4,\r\n                        \"name\": \"grape juice\",\r\n                        \"costPrice\": 0.5,\r\n                        \"description\": \"cold grape juice\",\r\n                        \"minStock\": 10,\r\n                        \"stock\": 100,\r\n                        \"createdAt\": \"2023-06-22T18:16:30.000Z\",\r\n                        \"updateAt\": \"2023-06-22T18:16:31.000Z\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/cash-registers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"cash-registers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/cash-registers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"cash-registers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"open\":false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/v1/cash-register/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"cash-register",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/v1/cash-register",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1",
+								"cash-register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "http://localhost:3000"
+		}
+	]
+}
