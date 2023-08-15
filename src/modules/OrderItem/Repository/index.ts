@@ -47,7 +47,6 @@ export default class ItemOrderRepository implements iItemOrderRepository {
   }
 
   public async findByOrder(orderFind: iOrder): Promise<iItemOrder[]> {
-    console.log(orderFind);
     return await this.CustomItemRepository.find({
       relations: { order: true },
       where: { order: { id: orderFind.id } },
