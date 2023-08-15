@@ -1,29 +1,26 @@
 import {
-  iDeleteOrder,
-  iOrder,
-  iOrderRepository,
-} from '@ProjectTypes/Order/iOrder';
+  iDeleteItemOrder,
+  iItemOrderRepository,
+} from '@ProjectTypes/ItemOrder/iItemOrder';
 import AppError from '@shared/errors/AppError';
-import OrderRepository from '../Repository';
+import ItemOrderRepository from '../Repository';
 
-class DeleteOrderService {
-  private orderRepository: iOrderRepository;
+export default class DeleteItemOrderService {
+  private itemOrderRepository: iItemOrderRepository;
 
   constructor() {
-    this.orderRepository = new OrderRepository();
+    this.itemOrderRepository = new ItemOrderRepository();
   }
 
-  public async execute({ id }: iDeleteOrder): Promise<iOrder> {
-    const order = await this.orderRepository.findById(id);
+  public async execute({ id }: iDeleteItemOrder): Promise<[]> {
+    const itemOrder = await this.itemOrderRepository.findById(id);
 
-    if (!order) {
-      throw new AppError('Order not found');
+    if (!itemOrder) {
+      throw new AppError('Item Order not found');
     }
 
-    await this.orderRepository.remove(order);
+    await this.itemOrderRepository.remove(itemOrder);
 
-    return order;
+    return [];
   }
 }
-
-export default DeleteOrderService;

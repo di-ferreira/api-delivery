@@ -8,7 +8,7 @@ import OrderRepository from '@modules/Order/Repository';
 import AppError from '@shared/errors/AppError';
 import ItemOrderRepository from '../Repository';
 
-class CreateItemOrderService {
+export default class CreateItemOrderService {
   private itemOrderRepository: iItemOrderRepository;
   private orderRepository: iOrderRepository;
 
@@ -28,10 +28,6 @@ class CreateItemOrderService {
     let orderExists: iOrder;
 
     orderExists = await this.orderRepository.findById(Number(order));
-    console.log(
-      '🚀 ~ file: CreateItemOrderService.ts:31 ~ CreateItemOrderService ~ orderExists:',
-      orderExists
-    );
 
     if (!orderExists) {
       throw new AppError('No have a Order with this ID');
@@ -63,5 +59,3 @@ class CreateItemOrderService {
     return itemOrder;
   }
 }
-
-export default CreateItemOrderService;

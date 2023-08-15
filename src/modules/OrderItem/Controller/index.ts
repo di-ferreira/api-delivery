@@ -1,8 +1,11 @@
+import { iUpdatedItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import { iItemOrderController } from '@ProjectTypes/ItemOrder/iItemOrderController';
 import { Request, Response } from 'express';
 import CreateItemOrderService from '../Services/CreateItemOrderService';
+import DeleteItemOrderService from '../Services/DeleteItemOrderService';
 import ListItemOrderService from '../Services/ListItemOrderService';
 import ShowItemOrderService from '../Services/ShowItemOrderService';
+import { UpdateItemOrderService } from '../Services/UpdateItemOrderService';
 
 export default class ItemOrderController implements iItemOrderController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -10,9 +13,9 @@ export default class ItemOrderController implements iItemOrderController {
     const limit = Number(request.query.limit);
     const { id } = request.params;
     const order = Number(id);
-    const listOrder = new ListItemOrderService();
+    const listItemOrder = new ListItemOrderService();
 
-    const items = await listOrder.execute({ page, limit, order });
+    const items = await listItemOrder.execute({ page, limit, order });
 
     return response.json(items);
   }
@@ -43,29 +46,26 @@ export default class ItemOrderController implements iItemOrderController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    // const { id } = request.params;
+    const { id, id_order } = request.params;
 
-    // const { items, obs, status } = request.body;
+    const { menu, quantity } = request.body;
 
-    // const updateOrder = new UpdateOrderService();
+    const updateItemOrder = new UpdateItemOrderService();
 
-    // let updatedOrder: iUpdatedOrder = {
-    //   id: Number(id),
-    //   items: items && items,
-    //   obs: obs && obs,
-    //   status: status && status,
-    // };
+    let updatedItemOrder: iUpdatedItemOrder = {
+      id: Number(id),
+      menu,
+      quantity,
+    };
 
-    // const order = await updateOrder.execute(updatedOrder);
-    // return response.json(order);
-    return response.json();
+    const itemOrder = await updateItemOrder.execute(updatedItemOrder);
+    return response.json(itemOrder);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    // const { id } = request.params;
-    // const deleteOrder = new DeleteOrderService();
-    // await deleteOrder.execute({ id: Number(id) });
-    // return response.status(204).json([]);
-    return response.status(204).json([]);
+    const { id } = request.params;
+    const deleteItemOrder = new DeleteItemOrderService();
+    const result = await deleteItemOrder.execute({ id: Number(id) });
+    return response.status(204).json(result);
   }
 }

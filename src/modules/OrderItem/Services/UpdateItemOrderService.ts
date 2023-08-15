@@ -1,38 +1,36 @@
 import {
-  iOrder,
-  iOrderRepository,
-  iUpdatedOrder,
-} from '@ProjectTypes/Order/iOrder';
+  iItemOrder,
+  iItemOrderRepository,
+  iUpdatedItemOrder,
+} from '@ProjectTypes/ItemOrder/iItemOrder';
 import AppError from '@shared/errors/AppError';
-import OrderRepository from '../Repository';
+import ItemOrderRepository from '../Repository';
 
-class UpdateOrderService {
-  private orderRepository: iOrderRepository;
+export class UpdateItemOrderService {
+  private itemOrderRepository: iItemOrderRepository;
 
   constructor() {
-    this.orderRepository = new OrderRepository();
+    this.itemOrderRepository = new ItemOrderRepository();
   }
 
   public async execute({
     id,
-    items,
-    obs,
-    status,
-  }: iUpdatedOrder): Promise<iOrder> {
-    const order = await this.orderRepository.findById(id);
+    menu,
+    quantity,
+    total,
+  }: iUpdatedItemOrder): Promise<iItemOrder> {
+    const item = await this.itemOrderRepository.findById(id);
 
-    if (!order) {
-      throw new AppError('Order not found');
+    if (!item) {
+      throw new AppError('Item Order not found');
     }
 
-    order.items = items;
-    order.obs = obs;
-    order.status = status;
+    item.menu = menu;
+    item.quantity = quantity;
+    item.total = menu.price * quantity;
 
-    await this.orderRepository.save(order);
+    await this.itemOrderRepository.save(item);
 
-    return order;
+    return item;
   }
 }
-
-export default UpdateOrderService;
