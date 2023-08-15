@@ -9,13 +9,11 @@ import { UpdateItemOrderService } from '../Services/UpdateItemOrderService';
 
 export default class ItemOrderController implements iItemOrderController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const page = Number(request.query.page);
-    const limit = Number(request.query.limit);
     const { id } = request.params;
     const order = Number(id);
     const listItemOrder = new ListItemOrderService();
 
-    const items = await listItemOrder.execute({ page, limit, order });
+    const items = await listItemOrder.execute({ order });
 
     return response.json(items);
   }

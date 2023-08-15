@@ -1,6 +1,6 @@
 import {
   SearchParamsItemOrder,
-  iItemOrderList,
+  iItemOrder,
   iItemOrderRepository,
 } from '@ProjectTypes/ItemOrder/iItemOrder';
 import { iOrder, iOrderRepository } from '@ProjectTypes/Order/iOrder';
@@ -18,37 +18,28 @@ export default class ListItemOrderService {
   }
 
   public async execute({
-    page,
-    limit,
     order,
-  }: SearchParamsItemOrder): Promise<iItemOrderList> {
-    let items: iItemOrderList = {
-      current_page: page ? page : 1,
-      data: [],
-      per_page: limit ? limit : 15,
-      total: 0,
-    };
+  }: SearchParamsItemOrder): Promise<iItemOrder[]> {
     let orderExists: iOrder;
 
-    if (typeof order === 'number') {
-      this.orderRepository.findById(Number(order)).then((res) => {
-        orderExists = res;
-      });
-    } else if (typeof order === 'object') {
-      orderExists = order;
-    } else {
-      throw new AppError('This Item have a type unknown');
+    switch (typeof order) {
+      case 'number':
+        await this.orderRepository.findById(Number(order)).then((res) => {
+          orderExists = res;
+        });
+        break;
+
+      case 'object':
+        orderExists = order;
+        break;
+
+      default:
+        throw new AppError('This Item have a type unknown');
+        break;
     }
 
-    const newOrders = await this.itemOrderRepository.findAll(
-      {
-        page: items.current_page,
-        limit: items.per_page,
-      },
-      orderExists
-    );
-    items = { ...newOrders };
+    const newOrders = await this.itemOrderRepository.findByOrder(orderExists);
 
-    return items;
+    return newOrders;
   }
 }

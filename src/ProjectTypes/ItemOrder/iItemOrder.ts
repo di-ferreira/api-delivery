@@ -42,8 +42,6 @@ export interface iItemOrderList {
 }
 
 export interface SearchParamsItemOrder {
-  page: number;
-  limit: number;
   order: iOrder | number;
 }
 
