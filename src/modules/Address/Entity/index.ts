@@ -29,7 +29,8 @@ export class Address implements iAddress {
   @Column()
   city: string;
 
-  @Column({ type: 'text', length: 2 })
+  // @Column({ type: 'text', length: 2 })
+  @Column({ type: 'text' })
   state: string;
 
   @Column({ nullable: true })

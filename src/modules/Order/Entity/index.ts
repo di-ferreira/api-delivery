@@ -27,7 +27,7 @@ export class Order implements iOrder {
 
   @ManyToOne((type) => Customer, (customer) => customer.id, {
     eager: true,
-    nullable: false,
+    // nullable: false,
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'cliente_id' })
@@ -40,7 +40,7 @@ export class Order implements iOrder {
   obs: string;
 
   @Column({
-    type: 'text',
+    type: 'enum',
     enum: iStatusOrder,
     default: iStatusOrder.FILA,
   })

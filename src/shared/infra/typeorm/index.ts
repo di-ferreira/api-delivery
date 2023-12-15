@@ -11,8 +11,13 @@ import { TypeMenu } from '@modules/TypeMenu/Entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 let DSConfig: DataSourceOptions = {
-  type: 'better-sqlite3',
-  database: './src/db/api_delivery.sqlite',
+  type: 'mariadb',
+  database: 'api_delivery',
+  host: 'localhost',
+  password: '',
+  port: 3306,
+  username: 'root',
+  // database: './src/db/api_delivery.sqlite',
   entities: [
     Customer,
     Address,

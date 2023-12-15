@@ -35,8 +35,8 @@ export class ItemOrder implements iItemOrder {
   order: iOrder;
 
   @ManyToOne((type) => Menu, (menu) => menu.itemOrder, {
-    eager: true,
-    nullable: false,
+    // eager: true,
+    // nullable: false,
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'menu_id' })
