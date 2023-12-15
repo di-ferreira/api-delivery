@@ -5,10 +5,10 @@ const Controller = new ItemOrderController();
 
 const ItemOrderRoute = Router();
 
-ItemOrderRoute.post('/', Controller.create);
-ItemOrderRoute.get('/', Controller.index);
-ItemOrderRoute.get('/:id', Controller.show);
-ItemOrderRoute.put('/:id', Controller.update);
-ItemOrderRoute.delete('/:id', Controller.delete);
+ItemOrderRoute.post('/:id/items', Controller.create);
+ItemOrderRoute.get('/:id/items', Controller.index);
+ItemOrderRoute.get('/:id_order/items/:id', Controller.show);
+ItemOrderRoute.put('/:id_order/items/:id', Controller.update);
+ItemOrderRoute.delete('/:id_order/items/:id', Controller.delete);
 
 export default ItemOrderRoute;

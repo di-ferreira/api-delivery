@@ -1,6 +1,5 @@
 import { iCashRegister } from '@ProjectTypes/CashRegister/iCashRegisterService';
 import { iCustomer } from '@ProjectTypes/Customer/iCustomerService';
-import { iItemOrder } from '@ProjectTypes/ItemOrder/iItemOrder';
 import {
   SearchParamsOrder,
   iOrder,
@@ -10,18 +9,15 @@ import {
   iStatusOrder,
 } from '@ProjectTypes/Order/iOrder';
 import { SearchParams } from '@ProjectTypes/index';
-import { ItemOrder } from '@modules/OrderItem/Entity';
 import AppDataSource from '@shared/infra/typeorm';
 import { Brackets, Repository } from 'typeorm';
 import { Order } from '../Entity';
 
 export default class OrderRepository implements iOrderRepository {
   private CustomRepository: Repository<iOrder>;
-  private CustomItemRepository: Repository<iItemOrder>;
 
   constructor() {
     this.CustomRepository = AppDataSource.getRepository(Order);
-    this.CustomItemRepository = AppDataSource.getRepository(ItemOrder);
   }
 
   public async create(data: iSaveOrder): Promise<iOrder> {

@@ -18,7 +18,7 @@ class CreateProductService {
     minStock,
     name,
     stock,
-    describe,
+    description,
   }: iCreateProduct): Promise<iProduct> {
     const productExists = await this.productRepository.findByName(name);
 
@@ -31,7 +31,7 @@ class CreateProductService {
       minStock,
       name,
       stock,
-      describe,
+      description,
     });
 
     return product;
